@@ -13,4 +13,14 @@ public class MedicalData {
     private String addictions;
     private String medicaments;
 
+    public MedicalData(UUID patientId, int weight, int height, String medicalConditions, String allergies, String addictions, String medicaments) {
+        this.medicalDataId = UUID.randomUUID();
+        this.patientId = patientId;
+        this.weight = weight;
+        this.height = height;
+        this.medicalConditions = medicalConditions;
+        this.allergies = allergies;
+        this.addictions = addictions;
+        this.medicaments = medicaments;
+    }
 }
