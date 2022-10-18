@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Doctor extends User {
 
-    private UUID userId;
+    private UUID doctorId;
     private String about;
     private List<Speciality> medicalSpecialities;
 
