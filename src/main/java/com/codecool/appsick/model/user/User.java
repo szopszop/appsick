@@ -1,13 +1,16 @@
 package com.codecool.appsick.model.user;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Getter
-@Setter
-public class User {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public abstract class User {
 
     private UUID userId;
     private String firstName;
@@ -19,13 +22,7 @@ public class User {
     private String password;
 
     public enum Sex {
-        MALE, FEMALE;
-    }
-
-    public User(String email, String password) {
-        this.userId = UUID.randomUUID();
-        this.email = email;
-        this.password = password;
+        MALE, FEMALE
     }
 
 }

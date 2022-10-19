@@ -1,18 +1,22 @@
 package com.codecool.appsick.model.user;
 
+import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 public class Doctor extends User {
 
-    private UUID doctorId;
     private String about;
     private List<Speciality> medicalSpecialities;
 
-    public Doctor(String email, String password) {
-        super(email, password);
-        medicalSpecialities = new ArrayList<>();
+    public Doctor(UUID userId, String firstName, String lastName, LocalDate birthDate, Sex sex, String telephoneNumber, String email, String password, String about) {
+        super(userId, firstName, lastName, birthDate, sex, telephoneNumber, email, password);
+        this.about = about;
+        this.medicalSpecialities = new ArrayList<>();
     }
 
     public enum Speciality {
@@ -92,10 +96,16 @@ public class Doctor extends User {
         CLINICAL_TRANSPLANTOLOGY,
         UROLOGY,
         CHILDRENS_UROLOGY,
-        PUBLIC_HEALTH;
+        PUBLIC_HEALTH
     }
 
-    public List<Speciality> getSpecialities() {
-        return medicalSpecialities;
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

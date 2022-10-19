@@ -1,8 +1,13 @@
 package com.codecool.appsick.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
 public class Visit {
 
     private UUID visitId;
@@ -19,16 +24,5 @@ public class Visit {
         MISSED,
         MOVED,
         COMPLETED;
-    }
-
-    public Visit(UUID patientId, UUID doctorId, UUID clinicId, LocalDate date, boolean online, String reason, VisitStatus status) {
-        this.visitId = UUID.randomUUID();
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.clinicId = clinicId;
-        this.date = date;
-        this.online = online;
-        this.reason = reason;
-        this.status = status;
     }
 }
