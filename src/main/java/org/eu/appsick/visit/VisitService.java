@@ -7,8 +7,11 @@ import java.util.UUID;
 @Service
 public class VisitService {
 
-    // TODO: dependency injection
-    private final VisitDao visitDao = new VisitDaoOrm();
+    private final VisitDao visitDao;
+
+    public VisitService(VisitDao visitDao){
+        this.visitDao = visitDao;
+    }
 
     public Visit getById(String id){
         UUID uuid = UUID.fromString(id);

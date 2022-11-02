@@ -2,11 +2,14 @@ package org.eu.appsick.visit;
 
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public class VisitDaoOrm implements VisitDao {
 
     private final List<Visit> visitList;

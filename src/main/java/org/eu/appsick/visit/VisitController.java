@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/visit")
 public class VisitController {
 
-    // TODO: dependency injection
-    private final VisitDao visitDao = new VisitDaoOrm();
+    private final VisitDao visitDao;
+
+    public VisitController(VisitDao visitDao){
+        this.visitDao = visitDao;
+    }
     @GetMapping(value = "/{visit_id}", produces = "application/json")
     public String getVisit(@PathVariable String visit_id){
         return null;
