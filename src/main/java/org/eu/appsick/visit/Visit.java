@@ -19,7 +19,13 @@ public class Visit {
     private VisitStatus status;
 
     // Constructor for a new visit
-    public Visit(UUID patientId, UUID doctorId, UUID clinicId, LocalDate date, boolean online, String reason, VisitStatus status) {
+    public Visit(UUID patientId,
+                 UUID doctorId,
+                 UUID clinicId,
+                 LocalDate date,
+                 boolean online,
+                 String reason,
+                 VisitStatus status) {
         this.visitId = UUID.randomUUID();
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -30,7 +36,14 @@ public class Visit {
         this.status = status;
     }
     // Constructor for an already existing visit
-    public Visit(UUID visitId, UUID patientId, UUID doctorId, UUID clinicId, LocalDate date, boolean online, String reason, VisitStatus status) {
+    public Visit(UUID visitId,
+                 UUID patientId,
+                 UUID doctorId,
+                 UUID clinicId,
+                 LocalDate date,
+                 boolean online,
+                 String reason,
+                 VisitStatus status) {
         this.visitId = visitId;
         this.patientId = patientId;
         this.doctorId = doctorId;

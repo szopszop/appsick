@@ -60,20 +60,22 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public boolean editVisit(UUID visitId, Visit editedVisit) {
-        Visit oldVisit = null;
-        for (Visit visit : visitList) {
-            if (visit.getVisitId().equals(editedVisit.getVisitId())) {
-                oldVisit = visit;
-            }
-        }
+    public boolean editVisit(UUID visitId,
+                             UUID patientId,
+                             UUID doctorId,
+                             UUID clinicId,
+                             LocalDate date,
+                             boolean online,
+                             String reason,
+                             Visit.VisitStatus status) {
+        Visit oldVisit = getVisit(visitId);
         if (oldVisit != null) {
-            oldVisit.setPatientId(editedVisit.getPatientId());
-            oldVisit.setClinicId(editedVisit.getClinicId());
-            oldVisit.setDate(editedVisit.getDate());
-            oldVisit.setOnline(editedVisit.isOnline());
-            oldVisit.setReason(editedVisit.getReason());
-            oldVisit.setStatus(editedVisit.getStatus());
+            oldVisit.setPatientId(patientId);
+            oldVisit.setClinicId(clinicId);
+            oldVisit.setDate(date);
+            oldVisit.setOnline(online);
+            oldVisit.setReason(reason);
+            oldVisit.setStatus(status);
         }
         return oldVisit != null;
     }
