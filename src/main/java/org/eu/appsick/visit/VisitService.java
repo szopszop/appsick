@@ -29,13 +29,13 @@ public class VisitService {
         return visitDao.getVisit(uuid);
     }
 
-    public List<Visit> getPatientVisits(String userId){
-        UUID uuid = UUID.fromString(userId);
+    public List<Visit> getPatientVisits(String patientId){
+        UUID uuid = UUID.fromString(patientId);
         Patient patient = patientDao.getById(uuid);
         return visitDao.getVisitList(patient);
     }
-    public List<Visit> getDoctorVisits(String userId){
-        UUID uuid = UUID.fromString(userId);
+    public List<Visit> getDoctorVisits(String doctorId){
+        UUID uuid = UUID.fromString(doctorId);
         Doctor doctor = doctorDao.getById(uuid);
         return visitDao.getVisitList(doctor);
     }
