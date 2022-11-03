@@ -13,6 +13,6 @@ public interface VisitDao {
     List<Visit> getVisitList(Doctor doctor);
     void addVisit(Visit visit);
     void deleteVisit(Visit visit);
-
+    void editVisit(UUID uuid, Visit editedVisit);
 
 }

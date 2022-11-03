@@ -6,26 +6,28 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/visit")
 public class VisitController {
 
-    private final VisitDao visitDao;
+    private final VisitService visitService;
 
-    public VisitController(VisitDao visitDao){
-        this.visitDao = visitDao;
+    public VisitController(VisitService visitService){
+        this.visitService = visitService;
     }
+
     @GetMapping(value = "/{visit_id}", produces = "application/json")
     public String getVisit(@PathVariable String visit_id){
         return null;
     }
-    @PostMapping("/patient/{patient_id}")
+
+    @PostMapping(value = "/patient/{patient_id}", produces = "application/json")
     public String postVisit(@PathVariable String patient_id){
         return null;
     }
 
-    @PutMapping("/{visit_id}")
+    @PutMapping(value = "/{visit_id}", produces = "application/json")
     public String putVisit(@PathVariable String visit_id){
         return null;
     }
 
-    @DeleteMapping("/{visit_id}")
+    @DeleteMapping(value = "/{visit_id}", produces = "application/json")
     public String deleteVisit(@PathVariable String visit_id){
         return null;
     }

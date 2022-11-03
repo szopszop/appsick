@@ -11,13 +11,10 @@ import java.util.UUID;
 
 @Component
 public class VisitDaoOrm implements VisitDao {
-
     private final List<Visit> visitList;
-
     public VisitDaoOrm(){
         this.visitList = new ArrayList<>();
     }
-
 
     @Override
     public Visit getVisit(UUID visitId) {
@@ -59,6 +56,11 @@ public class VisitDaoOrm implements VisitDao {
     @Override
     public void deleteVisit(Visit visit) {
         visitList.remove(visit);
+    }
+
+    @Override
+    public void editVisit(UUID visitId, Visit editedVisit){
+
     }
 
 }
