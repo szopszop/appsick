@@ -11,8 +11,8 @@ public interface VisitDao {
     Visit getVisit(UUID visitId);
     List<Visit> getVisitList(Patient patient);
     List<Visit> getVisitList(Doctor doctor);
-    void addVisit(Visit visit);
-    void deleteVisit(Visit visit);
-    void editVisit(UUID uuid, Visit editedVisit);
+    boolean addVisit(Visit visit);
+    boolean deleteVisit(Visit visit);
+    boolean editVisit(UUID uuid, Visit editedVisit);
 
 }
