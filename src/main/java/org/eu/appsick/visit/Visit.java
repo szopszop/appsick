@@ -1,6 +1,5 @@
 package org.eu.appsick.visit;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -35,6 +34,7 @@ public class Visit {
         this.reason = reason;
         this.status = status;
     }
+
     // Constructor for an already existing visit
     public Visit(UUID visitId,
                  UUID patientId,
