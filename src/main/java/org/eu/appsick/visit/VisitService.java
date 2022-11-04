@@ -23,20 +23,17 @@ public class VisitService {
         this.doctorDao = doctorDao;
     }
 
-    public Visit getById(String id) {
-        UUID uuid = UUID.fromString(id);
-        return visitDao.getVisit(uuid);
+    public Visit getById(UUID id) {
+        return visitDao.getVisit(id);
     }
 
-    public List<Visit> getPatientVisits(String patientId) {
-        UUID uuid = UUID.fromString(patientId);
-        Patient patient = patientDao.getById(uuid);
+    public List<Visit> getPatientVisits(UUID patientId) {
+        Patient patient = patientDao.getById(patientId);
         return visitDao.getVisitList(patient);
     }
 
-    public List<Visit> getDoctorVisits(String doctorId) {
-        UUID uuid = UUID.fromString(doctorId);
-        Doctor doctor = doctorDao.getById(uuid);
+    public List<Visit> getDoctorVisits(UUID doctorId) {
+        Doctor doctor = doctorDao.getById(doctorId);
         return visitDao.getVisitList(doctor);
     }
 

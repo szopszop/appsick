@@ -21,17 +21,17 @@ public class VisitController {
     }
 
     @GetMapping(value = "/{visit_id}", produces = "application/json")
-    public String getVisit(@PathVariable String visit_id) {
+    public String getVisit(@PathVariable UUID visit_id) {
         return visitService.getById(visit_id).toString();
     }
 
     @GetMapping(value = "/doctor/{doctor_id}")
-    public String getDoctorVisits(@PathVariable String doctor_id) {
+    public String getDoctorVisits(@PathVariable UUID doctor_id) {
         return visitService.getDoctorVisits(doctor_id).toString();
     }
 
     @GetMapping(value = "/patient/{patient_id}")
-    public String getVisits(@PathVariable String patient_id) {
+    public String getVisits(@PathVariable UUID patient_id) {
         return visitService.getPatientVisits(patient_id).toString();
     }
 
