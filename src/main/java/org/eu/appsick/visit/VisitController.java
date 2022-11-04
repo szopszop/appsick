@@ -11,10 +11,10 @@ import java.util.UUID;
 @RequestMapping("/api/visit")
 public class VisitController {
 
-    private final MyVisitService myVisitService;
+    private final VisitService myVisitService;
 
     @Autowired
-    public VisitController(MyVisitService myVisitService) {
+    public VisitController(VisitService myVisitService) {
         this.myVisitService = myVisitService;
     }
 
