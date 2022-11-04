@@ -2,7 +2,7 @@ package org.eu.appsick.visit;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -12,7 +12,7 @@ public class Visit {
     private UUID patientId;
     private UUID doctorId;
     private UUID clinicId;
-    private LocalDate date;
+    private LocalDateTime date;
     private boolean online;
     private String reason;
     private VisitStatus status;
@@ -21,7 +21,7 @@ public class Visit {
     public Visit(UUID patientId,
                  UUID doctorId,
                  UUID clinicId,
-                 LocalDate date,
+                 LocalDateTime date,
                  boolean online,
                  String reason,
                  VisitStatus status) {
@@ -40,7 +40,7 @@ public class Visit {
                  UUID patientId,
                  UUID doctorId,
                  UUID clinicId,
-                 LocalDate date,
+                 LocalDateTime date,
                  boolean online,
                  String reason,
                  VisitStatus status) {
