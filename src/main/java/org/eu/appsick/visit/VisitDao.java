@@ -3,7 +3,7 @@ package org.eu.appsick.visit;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public interface VisitDao {
                       UUID patientId,
                       UUID doctorId,
                       UUID clinicId,
-                      LocalDate date,
+                      LocalDateTime date,
                       boolean online,
                       String reason,
                       Visit.VisitStatus status);

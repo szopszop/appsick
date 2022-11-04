@@ -4,7 +4,7 @@ import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +51,7 @@ public class VisitDaoOrm implements VisitDao {
 
     @Override
     public boolean addVisit(Visit visit) {
+        visit.setVisitId(UUID.randomUUID()); // to remove when hybernate
         return visitList.add(visit);
     }
 
@@ -64,7 +65,7 @@ public class VisitDaoOrm implements VisitDao {
                              UUID patientId,
                              UUID doctorId,
                              UUID clinicId,
-                             LocalDate date,
+                             LocalDateTime date,
                              boolean online,
                              String reason,
                              Visit.VisitStatus status) {
