@@ -51,6 +51,7 @@ public class VisitDaoOrm implements VisitDao {
 
     @Override
     public boolean addVisit(Visit visit) {
+        visit.setVisitId(UUID.randomUUID()); // to remove when hybernate
         return visitList.add(visit);
     }
 
