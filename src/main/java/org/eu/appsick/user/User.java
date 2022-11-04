@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class User {
+public class User {
 
     private UUID userId;
     private String firstName;
