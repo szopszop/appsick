@@ -36,16 +36,14 @@ public class VisitController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> postVisit(@RequestBody String body) {
-        Visit newVisit = gson.fromJson(body, Visit.class);
+    public ResponseEntity<String> postVisit(@RequestBody Visit newVisit) {
         visitService.addVisit(newVisit);
-        return new ResponseEntity<>("Visit successfully added to database", HttpStatus.OK);
+        return new ResponseEntity<>("Visit successfully added to database with visitId: " + newVisit.getVisitId(), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{visit_id}")
-    public ResponseEntity<String> patchVisit(@PathVariable String visit_id, @RequestBody String body) {
-        Visit editedVisit = gson.fromJson(body, Visit.class);
-        return (visitService.editVisit(editedVisit.getVisitId(), editedVisit)) ?
+    public ResponseEntity<String> patchVisit(@PathVariable String visit_id, @RequestBody Visit editedVisit) {
+        return (visitService.editVisit(UUID.fromString(visit_id), editedVisit)) ?
                 new ResponseEntity<>("Visit successfully updated", HttpStatus.OK) :
                 new ResponseEntity<>("Visit doesn't exist", HttpStatus.NOT_FOUND);
     }
