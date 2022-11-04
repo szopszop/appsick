@@ -18,19 +18,19 @@ public class VisitController {
         this.myVisitService = myVisitService;
     }
 
-    @GetMapping(value = "/{visit_id}", produces = "application/json")
-    public String getVisit(@PathVariable UUID visit_id) {
-        return myVisitService.getById(visit_id).toString();
+    @GetMapping(value = "/{visitId}", produces = "application/json")
+    public String getVisit(@PathVariable UUID visitId) {
+        return myVisitService.getById(visitId).toString();
     }
 
-    @GetMapping(value = "/doctor/{doctor_id}")
-    public String getDoctorVisits(@PathVariable UUID doctor_id) {
-        return myVisitService.getDoctorVisits(doctor_id).toString();
+    @GetMapping(value = "/doctor/{doctorId}")
+    public String getDoctorVisits(@PathVariable UUID doctorId) {
+        return myVisitService.getDoctorVisits(doctorId).toString();
     }
 
-    @GetMapping(value = "/patient/{patient_id}")
-    public String getVisits(@PathVariable UUID patient_id) {
-        return myVisitService.getPatientVisits(patient_id).toString();
+    @GetMapping(value = "/patient/{patientId}")
+    public String getVisits(@PathVariable UUID patientId) {
+        return myVisitService.getPatientVisits(patientId).toString();
     }
 
     @PostMapping()
@@ -39,16 +39,16 @@ public class VisitController {
         return new ResponseEntity<>("Visit successfully added to database with visitId: " + newVisit.getVisitId(), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/{visit_id}")
-    public ResponseEntity<String> patchVisit(@PathVariable String visit_id, @RequestBody Visit editedVisit) {
-        return (myVisitService.editVisit(UUID.fromString(visit_id), editedVisit)) ?
+    @PatchMapping(value = "/{visitId}")
+    public ResponseEntity<String> patchVisit(@PathVariable String visitId, @RequestBody Visit editedVisit) {
+        return (myVisitService.editVisit(UUID.fromString(visitId), editedVisit)) ?
                 new ResponseEntity<>("Visit successfully updated", HttpStatus.OK) :
                 new ResponseEntity<>("Visit doesn't exist", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/{visit_id}")
-    public ResponseEntity<String> deleteVisit(@PathVariable String visit_id) {
-        myVisitService.deleteVisit(UUID.fromString(visit_id));
+    @DeleteMapping(value = "/{visitId}")
+    public ResponseEntity<String> deleteVisit(@PathVariable String visitId) {
+        myVisitService.deleteVisit(UUID.fromString(visitId));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
