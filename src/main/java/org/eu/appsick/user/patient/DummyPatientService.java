@@ -1,7 +1,10 @@
 package org.eu.appsick.user.patient;
 
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
+@Service
 public class DummyPatientService implements PatientService {
 
     @Override
@@ -9,7 +12,7 @@ public class DummyPatientService implements PatientService {
         return new Patient(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
-                12515251515,
+                "1251525",
                 false
                 );
     }
