@@ -3,19 +3,35 @@ package org.eu.appsick.user.doctor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eu.appsick.visit.Visit;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "doctors")
 public class Doctor {
 
+    @Id
+    @GeneratedValue
     private long doctorId;
     private String about;
+
+    @Enumerated
+    @ElementCollection
     private List<Speciality> medicalSpecialities;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "doctor"
+    )
+    private List<Visit> visits = new ArrayList<>();
 
     public enum Speciality {
         ALLERGOLOGY,

@@ -1,61 +1,87 @@
 package org.eu.appsick.visit;
 
+import org.eu.appsick.clinic.Clinic;
+import org.eu.appsick.clinic.ClinicRepository;
 import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.doctor.DoctorDao;
+import org.eu.appsick.user.doctor.DoctorRepository;
 import org.eu.appsick.user.patient.Patient;
-import org.eu.appsick.user.patient.PatientDao;
+import org.eu.appsick.user.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class MyVisitService implements VisitService{
-    private final VisitDao visitDao;
-    private final PatientDao patientDao;
-    private final DoctorDao doctorDao;
+    private final VisitRepository visitRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final ClinicRepository clinicRepository;
 
     @Autowired
-    public MyVisitService(VisitDao visitDao, PatientDao patientDao, DoctorDao doctorDao) {
-        this.visitDao = visitDao;
-        this.patientDao = patientDao;
-        this.doctorDao = doctorDao;
+    public MyVisitService(VisitRepository visitRepository, PatientRepository patientRepository, DoctorRepository doctorRepository, ClinicRepository clinicRepository) {
+        this.visitRepository = visitRepository;
+        this.patientRepository = patientRepository;
+        this.doctorRepository = doctorRepository;
+        this.clinicRepository = clinicRepository;
     }
 
-    public Visit getById(long id) {
-        return visitDao.getVisit(id);
+    public Optional<Visit> getById(long id) {
+        return visitRepository.findVisitByVisitId(id);
     }
 
     public List<Visit> getPatientVisits(long patientId) {
-        Patient patient = patientDao.getById(patientId);
-        return visitDao.getVisitList(patient);
+        Optional<Patient> patient = patientRepository.findByPatientId(patientId);
+        if (patient.isPresent()) return visitRepository.findVisitsByPatient(patient.get());
+        else return new ArrayList<>();
     }
 
     public List<Visit> getDoctorVisits(long doctorId) {
-        Doctor doctor = doctorDao.getById(doctorId);
-        return visitDao.getVisitList(doctor);
+        Optional<Doctor> doctor = doctorRepository.findByDoctorId(doctorId);
+        if (doctor.isPresent()) return visitRepository.findVisitsByDoctor(doctor.get());
+        else return new ArrayList<>();
+    }
+
+    public List<Visit> getClinicVisits(long clinicId) {
+        Optional<Clinic> clinic = clinicRepository.findByClinicId(clinicId);
+        if (clinic.isPresent()) return visitRepository.findVisitsByClinic(clinic.get());
+        else return new ArrayList<>();
     }
 
     public boolean addVisit(Visit visit) {
-        return visitDao.addVisit(visit);
+        visitRepository.save(visit);
+        return true;
     }
 
-    public boolean editVisit(long visitID, Visit editedVisit) {
-        return visitDao.editVisit(
-                visitID,
-                editedVisit.getPatientId(),
-                editedVisit.getDoctorId(),
-                editedVisit.getClinicId(),
-                editedVisit.getDate(),
-                editedVisit.isOnline(),
-                editedVisit.getReason(),
-                editedVisit.getStatus()
-        );
+    public boolean editVisit(long visitId, Visit editedVisit) {
+        Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
+        if (visit.isPresent()) {
+            Visit visitToUpdate = visit.get();
+            visitToUpdate.setPatient(editedVisit.getPatient());
+            visitToUpdate.setDoctor(editedVisit.getDoctor());
+            visitToUpdate.setClinic(editedVisit.getClinic());
+            visitToUpdate.setDate(editedVisit.getDate());
+            visitToUpdate.setOnline(editedVisit.isOnline());
+            visitToUpdate.setReason(editedVisit.getReason());
+            visitToUpdate.setStatus(editedVisit.getStatus());
+            return true;
+        }
+        return false;
     }
 
     public boolean deleteVisit(long visitId) {
-        return visitDao.deleteVisit(visitDao.getVisit(visitId));
+        Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
+        if (visit.isPresent()) {
+            visitRepository.delete(visit.get());
+            return true;
+        }
+        return false;
     }
 
+    //only for testing TODO: delete
+    public List<Visit> getAllVisits() {
+        return visitRepository.findAll();
+    }
 }

@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PatientController {
 
-    private PatientService patientService;
-
-    @Autowired
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
-    }
-
-    @GetMapping("/patient")
-    public Patient getPatient() {
-        return patientService.getPatient();
-    }
+//    private PatientService patientService;
+//
+//    @Autowired
+//    public PatientController(PatientService patientService) {
+//        this.patientService = patientService;
+//    }
+//
+//    @GetMapping("/patient")
+//    public Patient getPatient() {
+//        return patientService.getPatient();
+//    }
 }

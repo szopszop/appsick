@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ClinicController {
 
-    private ClinicService clinicService;
-
-    @Autowired
-    public ClinicController(ClinicService clinicService) {
-        this.clinicService = clinicService;
-    }
-
-    @GetMapping("/clinic")
-    public Clinic getClinics() {
-        return clinicService.getClinic();
-    }
+//    private ClinicService clinicService;
+//
+//    @Autowired
+//    public ClinicController(ClinicService clinicService) {
+//        this.clinicService = clinicService;
+//    }
+//
+//    @GetMapping("/clinic")
+//    public Clinic getClinics() {
+//        return clinicService.getClinic();
+//    }
 }

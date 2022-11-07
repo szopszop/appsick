@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -18,37 +20,43 @@ public class VisitController {
         this.myVisitService = myVisitService;
     }
 
+    @GetMapping()
+    public List<Visit> getAllVisits() {
+        return myVisitService.getAllVisits();
+    }
+
     @GetMapping(value = "/{visitId}", produces = "application/json")
-    public String getVisit(@PathVariable long visitId) {
-        return myVisitService.getById(visitId).toString();
+    public Optional<Visit> getVisit(@PathVariable long visitId) {
+        return myVisitService.getById(visitId);
     }
 
     @GetMapping(value = "/doctor/{doctorId}")
-    public String getDoctorVisits(@PathVariable long doctorId) {
-        return myVisitService.getDoctorVisits(doctorId).toString();
+    public List<Visit> getDoctorVisits(@PathVariable long doctorId) {
+        return myVisitService.getDoctorVisits(doctorId);
     }
 
     @GetMapping(value = "/patient/{patientId}")
-    public String getVisits(@PathVariable long patientId) {
-        return myVisitService.getPatientVisits(patientId).toString();
+    public List<Visit> getVisits(@PathVariable long patientId) {
+        return myVisitService.getPatientVisits(patientId);
     }
 
     @PostMapping()
-    public ResponseEntity<String> postVisit(@RequestBody Visit newVisit) {
+    public ResponseEntity<Visit> postVisit(@RequestBody Visit newVisit) {
         myVisitService.addVisit(newVisit);
-        return new ResponseEntity<>("Visit successfully added to database with visitId: " + newVisit.getVisitId(), HttpStatus.OK);
+        return new ResponseEntity<>(newVisit, HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{visitId}")
-    public ResponseEntity<String> patchVisit(@PathVariable long visitId, @RequestBody Visit editedVisit) {
+    public ResponseEntity<Visit> patchVisit(@PathVariable long visitId, @RequestBody Visit editedVisit) {
         return (myVisitService.editVisit(visitId, editedVisit)) ?
-                new ResponseEntity<>("Visit successfully updated", HttpStatus.OK) :
-                new ResponseEntity<>("Visit doesn't exist", HttpStatus.NOT_FOUND);
+                new ResponseEntity<>(editedVisit, HttpStatus.OK) :
+                new ResponseEntity<>(editedVisit, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{visitId}")
     public ResponseEntity<String> deleteVisit(@PathVariable long visitId) {
-        myVisitService.deleteVisit(visitId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return (myVisitService.deleteVisit(visitId)) ?
+                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
