@@ -9,7 +9,7 @@ public class DummyPatientService implements PatientService {
         return new Patient(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
-                12515251515,
+                "12515251515",
                 false
                 );
     }
