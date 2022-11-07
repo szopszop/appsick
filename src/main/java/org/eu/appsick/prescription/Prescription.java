@@ -14,16 +14,16 @@ import java.util.UUID;
 public class Prescription {
 
     private UUID prescriptionId;
-    private Patient patient;
-    private Doctor doctor;
+    private UUID patientId;
+    private UUID doctorId;
     private LocalDate prescriptionDate;
     private int prescriptionCode;
     private List<Product> productList;
 
-    public Prescription(UUID prescriptionId, Patient patient, Doctor doctor, LocalDate prescriptionDate, int prescriptionCode) {
+    public Prescription(UUID prescriptionId, UUID patientId, UUID doctorId, LocalDate prescriptionDate, int prescriptionCode) {
         this.prescriptionId = prescriptionId;
-        this.patient = patient;
-        this.doctor = doctor;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
         this.prescriptionDate = prescriptionDate;
         this.prescriptionCode = prescriptionCode;
         this.productList = new ArrayList<>();

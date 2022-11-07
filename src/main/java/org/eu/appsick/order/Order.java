@@ -15,16 +15,16 @@ public class Order {
 
     private UUID orderId;
     private LocalDate orderDate;
-    private Patient patient;
-    private Prescription prescription;
+    private UUID patientId;
+    private UUID prescriptionId;
     private List<Product> productList;
     private String deliveryAddress;
 
-    public Order(UUID orderId, LocalDate orderDate, Patient patient, Prescription prescription, String deliveryAddress) {
+    public Order(UUID orderId, LocalDate orderDate, UUID patientId, UUID prescriptionId, String deliveryAddress) {
         this.orderId = orderId;
         this.orderDate = orderDate;
-        this.patient = patient;
-        this.prescription = prescription;
+        this.patientId = patientId;
+        this.prescriptionId = prescriptionId;
         this.deliveryAddress = deliveryAddress;
         this.productList = new ArrayList<>();
     }

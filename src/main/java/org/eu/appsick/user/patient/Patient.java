@@ -11,6 +11,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper=true)
 public class Patient extends User {
 
+    private UUID patientId;
     private UUID medicalDataId;
     private String pesel;
     private boolean premium;

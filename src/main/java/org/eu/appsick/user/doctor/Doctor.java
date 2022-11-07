@@ -11,6 +11,7 @@ import java.util.UUID;
 @Data
 public class Doctor extends User {
 
+    private UUID doctorId;
     private String about;
     private List<Speciality> medicalSpecialities;
 
