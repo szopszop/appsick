@@ -27,12 +27,12 @@ public class Clinic {
     private String longitude;
     private String latitude;
 
+    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "clinic"
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Visit> visits = new ArrayList<>();
 
 }

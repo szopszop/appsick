@@ -25,12 +25,12 @@ public class Patient {
     private String pesel;
     private boolean premium;
 
+    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "patient"
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Visit> visits = new ArrayList<>();
 
 }

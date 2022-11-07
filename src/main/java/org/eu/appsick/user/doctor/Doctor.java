@@ -29,12 +29,12 @@ public class Doctor {
     @ElementCollection
     private List<Speciality> medicalSpecialities;
 
+    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "doctor"
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Visit> visits = new ArrayList<>();
 
     public enum Speciality {
