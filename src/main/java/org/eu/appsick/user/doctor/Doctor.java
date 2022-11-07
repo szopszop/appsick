@@ -1,29 +1,21 @@
 package org.eu.appsick.user.doctor;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.eu.appsick.user.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor extends User {
+public class Doctor {
 
-    private UUID doctorId;
+    private long doctorId;
     private String about;
     private List<Speciality> medicalSpecialities;
 
-    public Doctor(UUID userId, String firstName, String lastName, LocalDate birthDate, Sex sex, String telephoneNumber, String email, String password, String about) {
-        super(userId, firstName, lastName, birthDate, sex, telephoneNumber, email, password);
-        this.about = about;
-        this.medicalSpecialities = new ArrayList<>();
-    }
 
     public enum Speciality {
         ALLERGOLOGY,
@@ -105,13 +97,4 @@ public class Doctor extends User {
         PUBLIC_HEALTH
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

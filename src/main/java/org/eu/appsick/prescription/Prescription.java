@@ -8,19 +8,18 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class Prescription {
 
-    private UUID prescriptionId;
-    private UUID patientId;
-    private UUID doctorId;
+    private long prescriptionId;
+    private long patientId;
+    private long doctorId;
     private LocalDate prescriptionDate;
     private int prescriptionCode;
     private List<Product> productList;
 
-    public Prescription(UUID prescriptionId, UUID patientId, UUID doctorId, LocalDate prescriptionDate, int prescriptionCode) {
+    public Prescription(long prescriptionId, long patientId, long doctorId, LocalDate prescriptionDate, int prescriptionCode) {
         this.prescriptionId = prescriptionId;
         this.patientId = patientId;
         this.doctorId = doctorId;

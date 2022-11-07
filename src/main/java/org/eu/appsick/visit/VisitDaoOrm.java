@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Repository
 public class VisitDaoOrm implements VisitDao {
@@ -18,9 +18,9 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public Visit getVisit(UUID visitId) {
+    public Visit getVisit(long visitId) {
         for (Visit visit : visitList) {
-            if (visit.getVisitId().equals(visitId)) {
+            if (visit.getVisitId() == visitId) {
                 return visit;
             }
         }
@@ -31,7 +31,7 @@ public class VisitDaoOrm implements VisitDao {
     public List<Visit> getVisitList(Patient patient) {
         List<Visit> visits = new ArrayList<>();
         for (Visit visit : visitList) {
-            if (visit.getPatientId().equals(patient.getUserId())) {
+            if (visit.getPatientId() == patient.getPatientId()) {
                 visits.add(visit);
             }
         }
@@ -42,7 +42,7 @@ public class VisitDaoOrm implements VisitDao {
     public List<Visit> getVisitList(Doctor doctor) {
         List<Visit> visits = new ArrayList<>();
         for (Visit visit : visitList) {
-            if (visit.getPatientId().equals(doctor.getUserId())) {
+            if (visit.getDoctorId() == doctor.getDoctorId()) {
                 visits.add(visit);
             }
         }
@@ -51,7 +51,7 @@ public class VisitDaoOrm implements VisitDao {
 
     @Override
     public boolean addVisit(Visit visit) {
-        visit.setVisitId(UUID.randomUUID()); // to remove when hybernate
+        visit.setVisitId(155); // to remove when hybernate
         return visitList.add(visit);
     }
 
@@ -61,10 +61,10 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public boolean editVisit(UUID visitId,
-                             UUID patientId,
-                             UUID doctorId,
-                             UUID clinicId,
+    public boolean editVisit(long visitId,
+                             long patientId,
+                             long doctorId,
+                             long clinicId,
                              LocalDateTime date,
                              boolean online,
                              String reason,

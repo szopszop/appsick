@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 public class MyVisitService implements VisitService{
@@ -23,16 +23,16 @@ public class MyVisitService implements VisitService{
         this.doctorDao = doctorDao;
     }
 
-    public Visit getById(UUID id) {
+    public Visit getById(long id) {
         return visitDao.getVisit(id);
     }
 
-    public List<Visit> getPatientVisits(UUID patientId) {
+    public List<Visit> getPatientVisits(long patientId) {
         Patient patient = patientDao.getById(patientId);
         return visitDao.getVisitList(patient);
     }
 
-    public List<Visit> getDoctorVisits(UUID doctorId) {
+    public List<Visit> getDoctorVisits(long doctorId) {
         Doctor doctor = doctorDao.getById(doctorId);
         return visitDao.getVisitList(doctor);
     }
@@ -41,7 +41,7 @@ public class MyVisitService implements VisitService{
         return visitDao.addVisit(visit);
     }
 
-    public boolean editVisit(UUID visitID, Visit editedVisit) {
+    public boolean editVisit(long visitID, Visit editedVisit) {
         return visitDao.editVisit(
                 visitID,
                 editedVisit.getPatientId(),
@@ -54,7 +54,7 @@ public class MyVisitService implements VisitService{
         );
     }
 
-    public boolean deleteVisit(UUID visitId) {
+    public boolean deleteVisit(long visitId) {
         return visitDao.deleteVisit(visitDao.getVisit(visitId));
     }
 

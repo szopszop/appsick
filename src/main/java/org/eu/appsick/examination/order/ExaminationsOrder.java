@@ -8,12 +8,11 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class ExaminationsOrder {
 
-    private UUID examinationsOrderId;
+    private long examinationsOrderId;
     private String examinationsOrderName;
     private Patient patient;
     private Doctor doctor;
@@ -21,7 +20,7 @@ public class ExaminationsOrder {
     private LocalDate examinationsOrderDate;
     private List<Examination> examinations;
 
-    public ExaminationsOrder(UUID examinationsOrderId, Patient patient, Doctor doctor, boolean completed, LocalDate examinationsOrderDate) {
+    public ExaminationsOrder(long examinationsOrderId, Patient patient, Doctor doctor, boolean completed, LocalDate examinationsOrderDate) {
         this.examinationsOrderId = examinationsOrderId;
         this.patient = patient;
         this.doctor = doctor;

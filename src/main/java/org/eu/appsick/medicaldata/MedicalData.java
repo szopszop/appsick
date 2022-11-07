@@ -3,14 +3,13 @@ package org.eu.appsick.medicaldata;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 class MedicalData {
 
-    private UUID medicalDataId;
-    private UUID patientId;
+    private long medicalDataId;
+    private long patientId;
     private int weight;
     private int height;
     private String medicalConditions;

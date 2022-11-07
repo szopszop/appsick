@@ -1,26 +1,23 @@
 package org.eu.appsick.order;
 
-import org.eu.appsick.prescription.Prescription;
-import org.eu.appsick.product.Product;
-import org.eu.appsick.user.patient.Patient;
 import lombok.Data;
+import org.eu.appsick.product.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class Order {
 
-    private UUID orderId;
+    private long orderId;
     private LocalDate orderDate;
-    private UUID patientId;
-    private UUID prescriptionId;
+    private long patientId;
+    private long prescriptionId;
     private List<Product> productList;
     private String deliveryAddress;
 
-    public Order(UUID orderId, LocalDate orderDate, UUID patientId, UUID prescriptionId, String deliveryAddress) {
+    public Order(long orderId, LocalDate orderDate, long patientId, long prescriptionId, String deliveryAddress) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.patientId = patientId;

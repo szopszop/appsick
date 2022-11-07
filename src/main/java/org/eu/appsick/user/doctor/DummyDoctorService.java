@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class DummyDoctorService implements DoctorService {
@@ -12,7 +11,7 @@ public class DummyDoctorService implements DoctorService {
     @Override
     public Doctor getDoctor() {
         return new Doctor(
-                UUID.randomUUID(),
+                125,
                 "Doctor",
                 new ArrayList<>(List.of(Doctor.Speciality.MEDICAL_MICROBIOLOGY))
         );

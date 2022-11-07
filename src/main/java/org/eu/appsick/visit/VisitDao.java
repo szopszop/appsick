@@ -5,19 +5,19 @@ import org.eu.appsick.user.patient.Patient;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+
 
 public interface VisitDao {
 
-    Visit getVisit(UUID visitId);
+    Visit getVisit(long visitId);
     List<Visit> getVisitList(Patient patient);
     List<Visit> getVisitList(Doctor doctor);
     boolean addVisit(Visit visit);
     boolean deleteVisit(Visit visit);
-    boolean editVisit(UUID uuid,
-                      UUID patientId,
-                      UUID doctorId,
-                      UUID clinicId,
+    boolean editVisit(long visitId,
+                      long patientId,
+                      long doctorId,
+                      long clinicId,
                       LocalDateTime date,
                       boolean online,
                       String reason,

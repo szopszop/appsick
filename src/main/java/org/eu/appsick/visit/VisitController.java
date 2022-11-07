@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/visit")
@@ -19,17 +19,17 @@ public class VisitController {
     }
 
     @GetMapping(value = "/{visitId}", produces = "application/json")
-    public String getVisit(@PathVariable UUID visitId) {
+    public String getVisit(@PathVariable long visitId) {
         return myVisitService.getById(visitId).toString();
     }
 
     @GetMapping(value = "/doctor/{doctorId}")
-    public String getDoctorVisits(@PathVariable UUID doctorId) {
+    public String getDoctorVisits(@PathVariable long doctorId) {
         return myVisitService.getDoctorVisits(doctorId).toString();
     }
 
     @GetMapping(value = "/patient/{patientId}")
-    public String getVisits(@PathVariable UUID patientId) {
+    public String getVisits(@PathVariable long patientId) {
         return myVisitService.getPatientVisits(patientId).toString();
     }
 
@@ -40,15 +40,15 @@ public class VisitController {
     }
 
     @PatchMapping(value = "/{visitId}")
-    public ResponseEntity<String> patchVisit(@PathVariable String visitId, @RequestBody Visit editedVisit) {
-        return (myVisitService.editVisit(UUID.fromString(visitId), editedVisit)) ?
+    public ResponseEntity<String> patchVisit(@PathVariable long visitId, @RequestBody Visit editedVisit) {
+        return (myVisitService.editVisit(visitId, editedVisit)) ?
                 new ResponseEntity<>("Visit successfully updated", HttpStatus.OK) :
                 new ResponseEntity<>("Visit doesn't exist", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{visitId}")
-    public ResponseEntity<String> deleteVisit(@PathVariable String visitId) {
-        myVisitService.deleteVisit(UUID.fromString(visitId));
+    public ResponseEntity<String> deleteVisit(@PathVariable long visitId) {
+        myVisitService.deleteVisit(visitId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

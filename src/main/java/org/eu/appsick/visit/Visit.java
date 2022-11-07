@@ -4,18 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Visit {
 
-    private UUID visitId;
-    private UUID patientId;
-    private UUID doctorId;
-    private UUID clinicId;
+    private long visitId;
+    private long patientId;
+    private long doctorId;
+    private long clinicId;
     private LocalDateTime date;
     private boolean online;
     private String reason;
