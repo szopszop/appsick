@@ -28,7 +28,7 @@ public class Patient {
     @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "patient"
     )
     private List<Visit> visits = new ArrayList<>();

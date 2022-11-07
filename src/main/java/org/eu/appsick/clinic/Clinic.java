@@ -30,7 +30,7 @@ public class Clinic {
     @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "clinic"
     )
     private List<Visit> visits = new ArrayList<>();
