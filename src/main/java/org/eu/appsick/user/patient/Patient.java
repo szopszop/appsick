@@ -1,5 +1,8 @@
 package org.eu.appsick.user.patient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "patients")
+@Table
 public class Patient {
 
     @Id
@@ -27,6 +30,7 @@ public class Patient {
             fetch = FetchType.LAZY,
             mappedBy = "patient"
     )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Visit> visits = new ArrayList<>();
 
 }

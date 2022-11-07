@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Optional<Visit> findVisitByVisitId(long visitId);
+
     List<Visit> findVisitsByPatient(Patient patient);
     List<Visit> findVisitsByDoctor(Doctor doctor);
     List<Visit> findVisitsByClinic(Clinic clinic);

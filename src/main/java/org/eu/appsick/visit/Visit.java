@@ -1,5 +1,8 @@
 package org.eu.appsick.visit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "visits")
+@Table
 public class Visit {
 
     @Id
@@ -22,12 +25,15 @@ public class Visit {
     private long visitId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
     private LocalDateTime date;
