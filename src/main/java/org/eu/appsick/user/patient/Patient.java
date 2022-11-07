@@ -1,5 +1,7 @@
 package org.eu.appsick.user.patient;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.eu.appsick.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +11,8 @@ import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient extends User {
 
     private UUID patientId;

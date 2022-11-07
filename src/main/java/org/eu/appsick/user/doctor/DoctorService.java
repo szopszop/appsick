@@ -1,4 +1,9 @@
 package org.eu.appsick.user.doctor;
 
-public class DoctorService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface DoctorService {
+
+    Doctor getDoctor();
 }

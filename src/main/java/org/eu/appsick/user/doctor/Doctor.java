@@ -1,5 +1,7 @@
 package org.eu.appsick.user.doctor;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.eu.appsick.user.User;
 import lombok.Data;
 
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Doctor extends User {
 
     private UUID doctorId;

@@ -11,8 +11,8 @@ import java.util.UUID;
 @Primary
 public class DummyVisitService implements VisitService {
     @Override
-    public Visit getById(UUID id) {
-        return new Visit(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+    public Visit getById(long id) {
+        return new Visit(125, 125, 125, 125,
                 LocalDateTime.now(), true, "tete", Visit.VisitStatus.PENDING);
     }
 
@@ -31,13 +31,13 @@ public class DummyVisitService implements VisitService {
         return false;
     }
 
-    @Override
-    public boolean editVisit(UUID visitID, Visit editedVisit) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteVisit(UUID visitId) {
-        return false;
-    }
+//    @Override
+//    public boolean editVisit(UUID visitID, Visit editedVisit) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean deleteVisit(UUID visitId) {
+//        return false;
+//    }
 }
