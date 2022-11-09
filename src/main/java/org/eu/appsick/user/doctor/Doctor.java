@@ -19,6 +19,7 @@ public class Doctor {
     @GeneratedValue
     private long doctorId;
     private String about;
+    private long userId;
 
     @Enumerated
     @ElementCollection

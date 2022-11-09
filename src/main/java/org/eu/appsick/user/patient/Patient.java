@@ -21,5 +21,6 @@ public class Patient {
     private long patientId;
     private String pesel;
     private boolean premium;
+    private long userId;
 
 }
