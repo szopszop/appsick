@@ -1,6 +1,8 @@
 package org.eu.appsick.user.doctor;
 
+import java.util.Optional;
+
 public interface DoctorService {
 
-    Doctor getDoctor();
+    Optional<Doctor> getDoctorById(long doctorId);
 }

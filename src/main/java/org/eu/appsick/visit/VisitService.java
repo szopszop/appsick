@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface VisitService {
 
-    Optional<Visit> getById(long id);
+    Optional<Visit> getVisitById(long id);
     List<Visit> getPatientVisits(long patientId);
     List<Visit> getDoctorVisits(long doctorId);
     List<Visit> getClinicVisits(long clinicId);

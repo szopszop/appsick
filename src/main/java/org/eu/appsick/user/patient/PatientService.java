@@ -1,6 +1,8 @@
 package org.eu.appsick.user.patient;
 
+import java.util.Optional;
+
 public interface PatientService {
 
-    Patient getPatient();
+    Optional<Patient> getPatientById(long patientId);
 }

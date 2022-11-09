@@ -1,1 +1,12 @@
 spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/DBNAME
+spring.datasource.username=USER
+spring.datasource.password=PASSWORD
+# jpa params
+# korzystam z istniej?cej struktury - nie jest za ka?dym razem tworzona na nowo
+spring.jpa.hibernate.ddl-auto=update
+# wy?wietlanie w konsoli zapyta? SQL
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL81Dialect
