@@ -25,18 +25,18 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public List<Visit> getVisitsByPatient(Patient patient) {
-        return visitRepository.findVisitsByPatient(patient);
+    public List<Visit> getVisitsByPatientId(long patientId) {
+        return visitRepository.findVisitsByPatientId(patientId);
     }
 
     @Override
-    public List<Visit> getVisitsByDoctor(Doctor doctor) {
-        return visitRepository.findVisitsByDoctor(doctor);
+    public List<Visit> getVisitsByDoctorId(long doctorId) {
+        return visitRepository.findVisitsByDoctorId(doctorId);
     }
 
     @Override
-    public List<Visit> getVisitsByClinic(Clinic clinic) {
-        return visitRepository.findVisitsByClinic(clinic);
+    public List<Visit> getVisitsByClinicId(long clinicId) {
+        return visitRepository.findVisitsByClinicId(clinicId);
     }
 
     @Override

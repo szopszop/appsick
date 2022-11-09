@@ -16,16 +16,10 @@ import java.util.Optional;
 @Service
 public class MyVisitService implements VisitService{
     private final VisitDao visitDao;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
-    private final ClinicService clinicService;
 
     @Autowired
-    public MyVisitService(VisitDao visitDao, PatientService patientService, DoctorService doctorService, ClinicService clinicService) {
+    public MyVisitService(VisitDao visitDao) {
         this.visitDao = visitDao;
-        this.patientService = patientService;
-        this.doctorService = doctorService;
-        this.clinicService = clinicService;
     }
 
     public Optional<Visit> getVisitById(long id) {
@@ -33,21 +27,15 @@ public class MyVisitService implements VisitService{
     }
 
     public List<Visit> getPatientVisits(long patientId) {
-        Optional<Patient> patient = patientService.getPatientById(patientId);
-        if (patient.isPresent()) return visitDao.getVisitsByPatient(patient.get());
-        else return new ArrayList<>();
+        return visitDao.getVisitsByPatientId(patientId);
     }
 
     public List<Visit> getDoctorVisits(long doctorId) {
-        Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
-        if (doctor.isPresent()) return visitDao.getVisitsByDoctor(doctor.get());
-        else return new ArrayList<>();
+        return visitDao.getVisitsByDoctorId(doctorId);
     }
 
     public List<Visit> getClinicVisits(long clinicId) {
-        Optional<Clinic> clinic = clinicService.getClinicById(clinicId);
-        if (clinic.isPresent()) return visitDao.getVisitsByClinic(clinic.get());
-        else return new ArrayList<>();
+        return visitDao.getVisitsByClinicId(clinicId);
     }
 
     public boolean addVisit(Visit visit) {
