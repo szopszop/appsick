@@ -26,16 +26,16 @@ public class MyVisitService implements VisitService{
         return visitDao.getVisitById(id);
     }
 
-    public List<Visit> getPatientVisits(long patientId) {
-        return visitDao.getVisitsByPatientId(patientId);
+    public List<Visit> getPatientVisits(Patient patient) {
+        return visitDao.getVisitsByPatient(patient);
     }
 
-    public List<Visit> getDoctorVisits(long doctorId) {
-        return visitDao.getVisitsByDoctorId(doctorId);
+    public List<Visit> getDoctorVisits(Doctor doctor) {
+        return visitDao.getVisitsByDoctor(doctor);
     }
 
-    public List<Visit> getClinicVisits(long clinicId) {
-        return visitDao.getVisitsByClinicId(clinicId);
+    public List<Visit> getClinicVisits(Clinic clinic) {
+        return visitDao.getVisitsByClinic(clinic);
     }
 
     public boolean addVisit(Visit visit) {
@@ -47,9 +47,9 @@ public class MyVisitService implements VisitService{
         Optional<Visit> visit = visitDao.getVisitById(visitId);
         if (visit.isPresent()) {
             Visit visitToUpdate = visit.get();
-            visitToUpdate.setPatientId(editedVisit.getPatientId());
-            visitToUpdate.setDoctorId(editedVisit.getDoctorId());
-            visitToUpdate.setClinicId(editedVisit.getClinicId());
+            visitToUpdate.setPatient(editedVisit.getPatient());
+            visitToUpdate.setDoctor(editedVisit.getDoctor());
+            visitToUpdate.setClinic(editedVisit.getClinic());
             visitToUpdate.setDate(editedVisit.getDate());
             visitToUpdate.setOnline(editedVisit.isOnline());
             visitToUpdate.setReason(editedVisit.getReason());
@@ -68,8 +68,4 @@ public class MyVisitService implements VisitService{
         return false;
     }
 
-    //only for testing TODO: delete
-    public List<Visit> getAllVisits() {
-        return visitDao.getAll();
-    }
 }

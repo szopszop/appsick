@@ -11,12 +11,11 @@ public interface VisitDao {
 
     Optional<Visit> getVisitById(long id);
 
-    List<Visit> getVisitsByPatientId(long patientId);
-    List<Visit> getVisitsByDoctorId(long doctorId);
-    List<Visit> getVisitsByClinicId(long clinicId);
+    List<Visit> getVisitsByPatient(Patient patient);
+    List<Visit> getVisitsByDoctor(Doctor doctor);
+    List<Visit> getVisitsByClinic(Clinic clinic);
 
     void add(Visit visit);
     void remove(Visit visit);
 
-    List<Visit> getAll(); //only for testing TODO: delete
 }

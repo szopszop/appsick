@@ -25,18 +25,18 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public List<Visit> getVisitsByPatientId(long patientId) {
-        return visitRepository.findVisitsByPatientId(patientId);
+    public List<Visit> getVisitsByPatient(Patient patient) {
+        return visitRepository.findVisitsByPatient(patient);
     }
 
     @Override
-    public List<Visit> getVisitsByDoctorId(long doctorId) {
-        return visitRepository.findVisitsByDoctorId(doctorId);
+    public List<Visit> getVisitsByDoctor(Doctor doctor) {
+        return visitRepository.findVisitsByDoctor(doctor);
     }
 
     @Override
-    public List<Visit> getVisitsByClinicId(long clinicId) {
-        return visitRepository.findVisitsByClinicId(clinicId);
+    public List<Visit> getVisitsByClinic(Clinic clinic) {
+        return visitRepository.findVisitsByClinic(clinic);
     }
 
     @Override
@@ -49,9 +49,4 @@ public class VisitDaoOrm implements VisitDao {
         visitRepository.delete(visit);
     }
 
-    //only for testing TODO: delete
-    @Override
-    public List<Visit> getAll() {
-        return visitRepository.findAll();
-    }
 }
