@@ -34,28 +34,96 @@ public class VisitController {
     }
 
     @GetMapping(value = "/{visitId}", produces = "application/json")
-    public Optional<Visit> getVisit(@PathVariable long visitId) {
-        return visitService.getVisitById(visitId);
+    public VisitDto getVisit(@PathVariable long visitId) {
+        Optional<Visit> visitById = visitService.getVisitById(visitId);
+        if (visitById.isPresent()) {
+            Visit visit = visitById.get();
+            return new VisitDto(
+                    visit.getDate(),
+                    visit.getReason(),
+                    visit.getDoctor().getUser().getFirstName(),
+                    visit.getDoctor().getUser().getLastName(),
+                    visit.getDoctor().getMedicalSpecialities(),
+                    visit.getClinic().getClinicName(),
+                    visit.getClinic().getLongitude(),
+                    visit.getClinic().getLatitude()
+            );
+        }
+        return null;
     }
 
     @GetMapping(value = "/doctor/{doctorId}")
-    public List<Visit> getDoctorVisits(@PathVariable long doctorId) {
+    public List<VisitDto> getDoctorVisits(@PathVariable long doctorId) {
         Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
-        if (doctor.isPresent()) return visitService.getDoctorVisits(doctor.get());
+        if (doctor.isPresent()) {
+            List<Visit> doctorVisits = visitService.getDoctorVisits(doctor.get());
+            List<VisitDto> doctorVisitsDto = new ArrayList<>();
+            for (Visit visit : doctorVisits) {
+                doctorVisitsDto.add(
+                        new VisitDto(
+                                visit.getDate(),
+                                visit.getReason(),
+                                visit.getDoctor().getUser().getFirstName(),
+                                visit.getDoctor().getUser().getLastName(),
+                                visit.getDoctor().getMedicalSpecialities(),
+                                visit.getClinic().getClinicName(),
+                                visit.getClinic().getLongitude(),
+                                visit.getClinic().getLatitude()
+                        )
+                );
+            }
+            return doctorVisitsDto;
+        }
         else return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}")
-    public List<Visit> getVisits(@PathVariable long patientId) {
+    public List<VisitDto> getVisits(@PathVariable long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
-        if (patient.isPresent()) return visitService.getPatientVisits(patient.get());
+        if (patient.isPresent()) {
+            List<Visit> patientVisits = visitService.getPatientVisits(patient.get());
+            List<VisitDto> patientVisitsDto = new ArrayList<>();
+            for (Visit visit : patientVisits) {
+                patientVisitsDto.add(
+                        new VisitDto(
+                                visit.getDate(),
+                                visit.getReason(),
+                                visit.getDoctor().getUser().getFirstName(),
+                                visit.getDoctor().getUser().getLastName(),
+                                visit.getDoctor().getMedicalSpecialities(),
+                                visit.getClinic().getClinicName(),
+                                visit.getClinic().getLongitude(),
+                                visit.getClinic().getLatitude()
+                        )
+                );
+            }
+            return patientVisitsDto;
+        }
         else return new ArrayList<>();
     }
 
     @GetMapping(value = "/clinic/{clinicId}")
-    public List<Visit> getClinicVisits(@PathVariable long clinicId) {
+    public List<VisitDto> getClinicVisits(@PathVariable long clinicId) {
         Optional<Clinic> clinic = clinicService.getClinicById(clinicId);
-        if (clinic.isPresent()) return visitService.getClinicVisits(clinic.get());
+        if (clinic.isPresent()) {
+            List<Visit> clinicVisits = visitService.getClinicVisits(clinic.get());
+            List<VisitDto> clinicVisitsDto = new ArrayList<>();
+            for (Visit visit : clinicVisits) {
+                clinicVisitsDto.add(
+                        new VisitDto(
+                                visit.getDate(),
+                                visit.getReason(),
+                                visit.getDoctor().getUser().getFirstName(),
+                                visit.getDoctor().getUser().getLastName(),
+                                visit.getDoctor().getMedicalSpecialities(),
+                                visit.getClinic().getClinicName(),
+                                visit.getClinic().getLongitude(),
+                                visit.getClinic().getLatitude()
+                        )
+                );
+            }
+            return clinicVisitsDto;
+        }
         else return new ArrayList<>();
     }
 
