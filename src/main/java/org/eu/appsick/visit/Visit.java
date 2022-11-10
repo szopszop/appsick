@@ -32,6 +32,7 @@ public class Visit {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
+
     private LocalDateTime date;
     private boolean online;
     private String reason;
