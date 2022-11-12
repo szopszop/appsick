@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/visit")
+@CrossOrigin(origins = "http://localhost:3000")
 public class VisitController {
 
     private final VisitService visitService;
@@ -39,6 +40,7 @@ public class VisitController {
         if (visitById.isPresent()) {
             Visit visit = visitById.get();
             return new VisitDto(
+                    visit.getVisitId(),
                     visit.getDate(),
                     visit.getReason(),
                     visit.getDoctor().getUser().getFirstName(),
@@ -61,6 +63,7 @@ public class VisitController {
             for (Visit visit : doctorVisits) {
                 doctorVisitsDto.add(
                         new VisitDto(
+                                visit.getVisitId(),
                                 visit.getDate(),
                                 visit.getReason(),
                                 visit.getDoctor().getUser().getFirstName(),
@@ -86,6 +89,7 @@ public class VisitController {
             for (Visit visit : patientVisits) {
                 patientVisitsDto.add(
                         new VisitDto(
+                                visit.getVisitId(),
                                 visit.getDate(),
                                 visit.getReason(),
                                 visit.getDoctor().getUser().getFirstName(),
@@ -111,6 +115,7 @@ public class VisitController {
             for (Visit visit : clinicVisits) {
                 clinicVisitsDto.add(
                         new VisitDto(
+                                visit.getVisitId(),
                                 visit.getDate(),
                                 visit.getReason(),
                                 visit.getDoctor().getUser().getFirstName(),

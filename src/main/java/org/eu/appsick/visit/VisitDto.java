@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class VisitDto {
 
+    private long visitId;
     private LocalDateTime date;
     private String reason;
     private String doctorFirstName;
