@@ -1,61 +1,71 @@
 package org.eu.appsick.visit;
 
+import org.eu.appsick.clinic.Clinic;
+import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.doctor.DoctorDao;
+import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
-import org.eu.appsick.user.patient.PatientDao;
+import org.eu.appsick.user.patient.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class MyVisitService implements VisitService{
     private final VisitDao visitDao;
-    private final PatientDao patientDao;
-    private final DoctorDao doctorDao;
 
     @Autowired
-    public MyVisitService(VisitDao visitDao, PatientDao patientDao, DoctorDao doctorDao) {
+    public MyVisitService(VisitDao visitDao) {
         this.visitDao = visitDao;
-        this.patientDao = patientDao;
-        this.doctorDao = doctorDao;
     }
 
-    public Visit getById(long id) {
-        return visitDao.getVisit(id);
+    public Optional<Visit> getVisitById(long id) {
+        return visitDao.getVisitById(id);
     }
 
-    public List<Visit> getPatientVisits(long patientId) {
-        Patient patient = patientDao.getById(patientId);
-        return visitDao.getVisitList(patient);
+    public List<Visit> getPatientVisits(Patient patient) {
+        return visitDao.getVisitsByPatient(patient);
     }
 
-    public List<Visit> getDoctorVisits(long doctorId) {
-        Doctor doctor = doctorDao.getById(doctorId);
-        return visitDao.getVisitList(doctor);
+    public List<Visit> getDoctorVisits(Doctor doctor) {
+        return visitDao.getVisitsByDoctor(doctor);
+    }
+
+    public List<Visit> getClinicVisits(Clinic clinic) {
+        return visitDao.getVisitsByClinic(clinic);
     }
 
     public boolean addVisit(Visit visit) {
-        return visitDao.addVisit(visit);
+        visitDao.add(visit);
+        return true;
     }
 
-    public boolean editVisit(long visitID, Visit editedVisit) {
-        return visitDao.editVisit(
-                visitID,
-                editedVisit.getPatientId(),
-                editedVisit.getDoctorId(),
-                editedVisit.getClinicId(),
-                editedVisit.getDate(),
-                editedVisit.isOnline(),
-                editedVisit.getReason(),
-                editedVisit.getStatus()
-        );
+    public boolean editVisit(long visitId, Visit editedVisit) {
+        Optional<Visit> visit = visitDao.getVisitById(visitId);
+        if (visit.isPresent()) {
+            Visit visitToUpdate = visit.get();
+            visitToUpdate.setPatient(editedVisit.getPatient());
+            visitToUpdate.setDoctor(editedVisit.getDoctor());
+            visitToUpdate.setClinic(editedVisit.getClinic());
+            visitToUpdate.setDate(editedVisit.getDate());
+            visitToUpdate.setOnline(editedVisit.isOnline());
+            visitToUpdate.setReason(editedVisit.getReason());
+            visitToUpdate.setStatus(editedVisit.getStatus());
+            return true;
+        }
+        return false;
     }
 
     public boolean deleteVisit(long visitId) {
-        return visitDao.deleteVisit(visitDao.getVisit(visitId));
+        Optional<Visit> visit = visitDao.getVisitById(visitId);
+        if (visit.isPresent()) {
+            visitDao.remove(visit.get());
+            return true;
+        }
+        return false;
     }
 
 }

@@ -1,10 +1,12 @@
 package org.eu.appsick.clinic;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/clinic")
 public class ClinicController {
 
     private ClinicService clinicService;
@@ -14,8 +16,8 @@ public class ClinicController {
         this.clinicService = clinicService;
     }
 
-    @GetMapping("/clinic")
-    public Clinic getClinics() {
-        return clinicService.getClinic();
+    @GetMapping("/{clinicId}")
+    public Optional<Clinic> getClinicById(@PathVariable long clinicId) {
+        return clinicService.getClinicById(clinicId);
     }
 }

@@ -1,21 +1,44 @@
 package org.eu.appsick.user.doctor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eu.appsick.user.User;
+import org.eu.appsick.visit.Visit;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table
 public class Doctor {
 
+    @Id
+    @GeneratedValue
     private long doctorId;
     private String about;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Enumerated
+    @ElementCollection
     private List<Speciality> medicalSpecialities;
 
+    @JsonIgnore
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "doctor"
+    )
+    private List<Visit> visits = new ArrayList<>();
 
     public enum Speciality {
         ALLERGOLOGY,

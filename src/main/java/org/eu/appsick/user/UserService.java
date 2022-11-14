@@ -1,8 +1,11 @@
 package org.eu.appsick.user;
 
-public class UserService {
+import org.springframework.stereotype.Service;
 
-    //getUserById
+import java.util.Optional;
 
-    //getCalendarData
+@Service
+public interface UserService {
+
+    Optional<User> getUserById(long userId);
 }

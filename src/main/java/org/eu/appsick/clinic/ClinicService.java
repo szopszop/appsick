@@ -1,8 +1,8 @@
 package org.eu.appsick.clinic;
 
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 public interface ClinicService {
 
-    Clinic getClinic();
+    Optional<Clinic> getClinicById(long clinicId);
 }

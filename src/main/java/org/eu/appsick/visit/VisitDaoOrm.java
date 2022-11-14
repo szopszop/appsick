@@ -1,83 +1,52 @@
 package org.eu.appsick.visit;
 
+import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 @Repository
 public class VisitDaoOrm implements VisitDao {
-    private final List<Visit> visitList;
 
-    public VisitDaoOrm() {
-        this.visitList = new ArrayList<>();
+    private final VisitRepository visitRepository;
+
+    @Autowired
+    public VisitDaoOrm(VisitRepository visitRepository) {
+        this.visitRepository = visitRepository;
     }
 
     @Override
-    public Visit getVisit(long visitId) {
-        for (Visit visit : visitList) {
-            if (visit.getVisitId() == visitId) {
-                return visit;
-            }
-        }
-        return null;
+    public Optional<Visit> getVisitById(long visitId) {
+        return visitRepository.findVisitByVisitId(visitId);
     }
 
     @Override
-    public List<Visit> getVisitList(Patient patient) {
-        List<Visit> visits = new ArrayList<>();
-        for (Visit visit : visitList) {
-            if (visit.getPatientId() == patient.getPatientId()) {
-                visits.add(visit);
-            }
-        }
-        return visits;
+    public List<Visit> getVisitsByPatient(Patient patient) {
+        return visitRepository.findVisitsByPatient(patient);
     }
 
     @Override
-    public List<Visit> getVisitList(Doctor doctor) {
-        List<Visit> visits = new ArrayList<>();
-        for (Visit visit : visitList) {
-            if (visit.getDoctorId() == doctor.getDoctorId()) {
-                visits.add(visit);
-            }
-        }
-        return visits;
+    public List<Visit> getVisitsByDoctor(Doctor doctor) {
+        return visitRepository.findVisitsByDoctor(doctor);
     }
 
     @Override
-    public boolean addVisit(Visit visit) {
-        visit.setVisitId(155); // to remove when hybernate
-        return visitList.add(visit);
+    public List<Visit> getVisitsByClinic(Clinic clinic) {
+        return visitRepository.findVisitsByClinic(clinic);
     }
 
     @Override
-    public boolean deleteVisit(Visit visitToDelete) {
-        return visitList.remove(visitToDelete);
+    public void add(Visit visit) {
+        visitRepository.save(visit);
     }
 
     @Override
-    public boolean editVisit(long visitId,
-                             long patientId,
-                             long doctorId,
-                             long clinicId,
-                             LocalDateTime date,
-                             boolean online,
-                             String reason,
-                             Visit.VisitStatus status) {
-        Visit oldVisit = getVisit(visitId);
-        if (oldVisit != null) {
-            oldVisit.setPatientId(patientId);
-            oldVisit.setClinicId(clinicId);
-            oldVisit.setDate(date);
-            oldVisit.setOnline(online);
-            oldVisit.setReason(reason);
-            oldVisit.setStatus(status);
-        }
-        return oldVisit != null;
+    public void remove(Visit visit) {
+        visitRepository.delete(visit);
     }
+
 }
