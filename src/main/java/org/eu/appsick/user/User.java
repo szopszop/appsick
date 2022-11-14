@@ -37,6 +37,8 @@ public class User {
     private Sex sex;
     private String telephoneNumber;
     private String email;
+
+    @JsonIgnore
     private String password;
 
     public enum Sex {
