@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @WebMvcTest(VisitController.class)
 @ContextConfiguration(classes = {DoctorService.class, PatientService.class, ClinicService.class})
 public class VisitControllerTest {
-
-    private final VisitService visitService = Mockito.mock(VisitService.class);
-    private final DoctorService doctorService = Mockito.mock(DoctorService.class);
-    private final PatientService patientService = Mockito.mock(PatientService.class);
-    private final ClinicService clinicService = Mockito.mock(ClinicService.class);
+    @Mock
+    private VisitService visitService;
+    @Mock
+    private DoctorService doctorService;
+    @Mock
+    private PatientService patientService;
+    @Mock
+    private ClinicService clinicService;
+    @Mock
     private VisitController visitController;
 
     @BeforeEach
