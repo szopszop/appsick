@@ -1,15 +1,13 @@
 package org.eu.appsick.visit;
 
 import org.eu.appsick.clinic.Clinic;
-import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
-import org.eu.appsick.user.patient.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {VisitDao.class})
 class MyVisitServiceTest {
 
-    private final VisitDao visitDao = Mockito.mock(VisitDao.class);
+    @Mock
+    private VisitDao visitDao;
     private VisitService visitService;
 
     @BeforeEach
