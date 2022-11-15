@@ -3,6 +3,7 @@ package org.eu.appsick.visit;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.PatientService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -18,6 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyVisitServiceTest {
 
     private final VisitDao visitDao = Mockito.mock(VisitDao.class);
+    private VisitService visitService;
+
+    @BeforeEach
+    void init(){
+        visitService = new MyVisitService(visitDao);
+    }
 
     @Test
     void getVisitById() {
