@@ -49,7 +49,7 @@ public class VisitController {
     }
 
     @GetMapping(value = "/patient/{patientId}")
-    public List<Visit> getVisits(@PathVariable long patientId) {
+    public List<Visit> getPatientVisits(@PathVariable long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getPatientVisits(patient.get());
