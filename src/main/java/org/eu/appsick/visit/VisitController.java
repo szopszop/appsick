@@ -80,9 +80,8 @@ public class VisitController {
     }
 
     @DeleteMapping(value = "/{visitId}")
-    public ResponseEntity<String> deleteVisit(@PathVariable long visitId) {
-        return (visitService.deleteVisit(visitId)) ?
-                new ResponseEntity<>("Content successfully removed", HttpStatus.NO_CONTENT) :
-                new ResponseEntity<>("Content doesn't exist", HttpStatus.NO_CONTENT);
+    public ResponseEntity<Visit> deleteVisit(@PathVariable long visitId) {
+        visitService.deleteVisit(visitId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
