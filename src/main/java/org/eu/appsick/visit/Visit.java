@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
+import org.eu.appsick.visit.chat.ChatMessage;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +40,12 @@ public class Visit {
     private LocalDateTime date;
     private boolean online;
     private String reason;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "visit"
+    )
+    private List<ChatMessage> chatMessageHistory = new ArrayList<>();
 
     @Enumerated
     private VisitStatus status;
