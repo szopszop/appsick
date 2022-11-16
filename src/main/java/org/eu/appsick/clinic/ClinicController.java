@@ -27,11 +27,25 @@ public class ClinicController {
         return clinicService.getClinicById(clinicId);
     }
 
-    // TODO: implement new methods, this is a dummy function
+    // TODO: implement new methods, these use dummy functions
+    @GetMapping
+    public List<Clinic> getAllClinics(){
+        return dummyClinicFunction();
+    }
+
     @GetMapping("/{clinicId}/doctor")
     public List<Doctor> getDoctorsByClinic(@PathVariable long clinicId) {
+        return dummyDoctorFunction();
+    }
+
+    private List<Doctor> dummyDoctorFunction(){
         List<Doctor> doctors = new ArrayList<>();
         doctors.add(doctorService.getDoctorById(1).orElse(new Doctor()));
         return doctors;
+    }
+    private List<Clinic> dummyClinicFunction(){
+        List<Clinic> clinics = new ArrayList<>();
+        clinics.add(clinicService.getClinicById(1).orElse(new Clinic()));
+        return clinics;
     }
 }
