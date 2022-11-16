@@ -12,6 +12,9 @@ public interface VisitDao {
     Optional<Visit> getVisitById(long id);
 
     List<Visit> getVisitsByPatient(Patient patient);
+    List<Visit> getPreviousVisitsByPatient(Patient patient);
+    List<Visit> getFutureVisitsByPatient(Patient patient);
+    List<Visit> getCurrentVisitsByPatient(Patient patient);
     List<Visit> getVisitsByDoctor(Doctor doctor);
     List<Visit> getVisitsByClinic(Clinic clinic);
 

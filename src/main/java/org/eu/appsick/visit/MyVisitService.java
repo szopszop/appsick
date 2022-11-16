@@ -1,15 +1,11 @@
 package org.eu.appsick.visit;
 
 import org.eu.appsick.clinic.Clinic;
-import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
-import org.eu.appsick.user.patient.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +32,21 @@ public class MyVisitService implements VisitService{
 
     public List<Visit> getClinicVisits(Clinic clinic) {
         return visitDao.getVisitsByClinic(clinic);
+    }
+
+    @Override
+    public List<Visit> getPastVisitsByPatient(Patient patient) {
+        return visitDao.getPreviousVisitsByPatient(patient);
+    }
+
+    @Override
+    public List<Visit> getFutureVisitsByPatient(Patient patient) {
+        return visitDao.getFutureVisitsByPatient(patient);
+    }
+
+    @Override
+    public List<Visit> getCurrentVisitsByPatient(Patient patient) {
+        return visitDao.getCurrentVisitsByPatient(patient);
     }
 
     public boolean addVisit(Visit visit) {
