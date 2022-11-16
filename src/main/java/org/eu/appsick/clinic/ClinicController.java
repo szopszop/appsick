@@ -36,17 +36,19 @@ public class ClinicController {
 
     @GetMapping("/{clinicId}/doctor")
     public List<Doctor> getDoctorsByClinic(@PathVariable long clinicId) {
-        return dummyDoctorFunction();
+        return clinicId != 0 ? dummyDoctorFunction() : new ArrayList<>();
     }
 
     private List<Doctor> dummyDoctorFunction(){
         List<Doctor> doctors = new ArrayList<>();
         doctors.add(doctorService.getDoctorById(1).orElse(new Doctor()));
+        doctors.add(doctorService.getDoctorById(2).orElse(new Doctor()));
         return doctors;
     }
     private List<Clinic> dummyClinicFunction(){
         List<Clinic> clinics = new ArrayList<>();
         clinics.add(clinicService.getClinicById(1).orElse(new Clinic()));
+        clinics.add(clinicService.getClinicById(2).orElse(new Clinic()));
         return clinics;
     }
 }
