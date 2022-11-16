@@ -45,7 +45,7 @@ class MyVisitServiceTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0, patient, null, null, null, false, null, null));
+            visitList.add(new Visit(0, patient, null, null, null, false, null, null, Visit.VisitStatus.PENDING));
         }
         Mockito.when(visitDao.getVisitsByPatient(patient)).thenReturn(visitList);
         assertEquals(visitService.getPatientVisits(patient), visitList);
@@ -56,7 +56,7 @@ class MyVisitServiceTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0, null, doctor, null, null, false, null, null));
+            visitList.add(new Visit(0, null, doctor, null, null, false, null, null, Visit.VisitStatus.PENDING));
         }
         Mockito.when(visitDao.getVisitsByDoctor(doctor)).thenReturn(visitList);
         assertEquals(visitService.getDoctorVisits(doctor), visitList);
@@ -67,7 +67,7 @@ class MyVisitServiceTest {
         Clinic clinic = new Clinic();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0, null, null, clinic, null, false, null, null));
+            visitList.add(new Visit(0, null, null, clinic, null, false, null, null, Visit.VisitStatus.PENDING));
         }
         Mockito.when(visitDao.getVisitsByClinic(clinic)).thenReturn(visitList);
         assertEquals(visitService.getClinicVisits(clinic), visitList);
