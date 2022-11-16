@@ -4,13 +4,10 @@ import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,9 +42,11 @@ public class VisitDaoOrm implements VisitDao {
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(Patient patient) {
-        return visitRepository.findCurrentVisitsByPatient(patient, LocalDateTime.now());
+    public List<Visit> getCurrentVisitsByPatient(long patient_id) {
+        return visitRepository.getCurrentVisitsByPatient(patient_id);
     }
+
+
 
 
     @Override

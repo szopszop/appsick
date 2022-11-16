@@ -6,6 +6,8 @@ import org.eu.appsick.user.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,9 +47,11 @@ public class MyVisitService implements VisitService{
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(Patient patient) {
-        return visitDao.getCurrentVisitsByPatient(patient);
+    public List<Visit> getCurrentVisitsByPatient(long patient_id) {
+        return visitDao.getCurrentVisitsByPatient(patient_id);
     }
+
+
 
     public boolean addVisit(Visit visit) {
         visitDao.add(visit);

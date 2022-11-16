@@ -24,6 +24,7 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private String image;
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")

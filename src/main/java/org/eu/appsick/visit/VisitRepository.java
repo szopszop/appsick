@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +18,22 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     Optional<Visit> findVisitByVisitId(long visitId);
 
     List<Visit> findVisitsByPatient(Patient patient);
+
     @Query("SELECT v FROM Visit v WHERE v.date < current_date ")
     List<Visit> findPreviousVisitsByPatient(Patient patient);
+
     @Query("SELECT v FROM Visit v WHERE v.date > current_date ")
     List<Visit> findFutureVisitsByPatient(Patient patient);
-    @Query("SELECT v FROM Visit v WHERE v.date = :now ")
-    List<Visit> findCurrentVisitsByPatient(Patient patient, LocalDateTime now);
+
+    //    List<Visit> findVisitsByPatientAndDate_YearAndDate_MonthAndDate_DayOfMonth(Patient patient, Integer date_year, Month date_month, Integer date_dayOfMonth);
+    @Query(value = "SELECT * FROM Visit WHERE Visit.patient_id = :patient_id AND" +
+            " extract(year from Visit.date) = extract(year from now()) AND" +
+            " extract(month from Visit.date) = extract(month from now()) AND" +
+            " extract(day from Visit.date) = extract(day from now())", nativeQuery = true)
+    List<Visit> getCurrentVisitsByPatient (long patient_id);
+
     List<Visit> findVisitsByDoctor(Doctor doctor);
+
     List<Visit> findVisitsByClinic(Clinic clinic);
 
 }
