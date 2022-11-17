@@ -64,11 +64,11 @@ CREATE TABLE users (
                        birth_date date,
                        email varchar(255) NOT NULL,
                        first_name varchar(255),
-                       image varchar(255),
                        last_name varchar(255),
                        password varchar(255) NOT NULL,
                        sex int4,
-                       telephone_number varchar(255)
+                       telephone_number varchar(255),
+                       image varchar(255)
 );
 CREATE TABLE visit (
                        visit_id serial NOT NULL,
@@ -120,10 +120,15 @@ INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specia
 INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (1, 7);
 INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (1, 8);
 
-INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number) VALUES ('1997-06-24', 'fryderykakwiatkowska@teleworm.us', 'Fryderyka', 'Kwiatkowska', 'Chi2Hooh', 1, '72 451 36 19');
-INSERT INTO public.doctor (about, user_id) VALUES ('Młoda i przebojowa', 2);
+INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number, image) VALUES ('1997-06-24', 'fryderykakwiatkowska@teleworm.us', 'Fryderyka', 'Kwiatkowska', 'Chi2Hooh', 1, '72 451 36 19', 'https://www.getmaple.ca/site-content/uploads/2020/08/female_dr.jpg');
+INSERT INTO public.doctor (about, user_id) VALUES ('Młoda i przebojowa', 3);
 INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (2, 27);
 
+INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number) VALUES ('1984-12-24', 'romanwojciechowski@armyspy.com', 'Roman', 'Wojciechowski', 'eiKah1oophe', 1, '72 672 17 82');
+INSERT INTO public.doctor (about, user_id) VALUES ('Utalentowany', 4);
+INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (3, 35);
+
 INSERT INTO public.visit (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-11-10 14:54:57.000000', true, 'Dekapitacja', 0, 1, 1, 1);
+INSERT INTO public.visit (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2022-11-17 21:54:57.000000', true, 'Boli Gardło', 0, 1, 3, 1);
 INSERT INTO public.visit (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-06-10 10:53:22.001250', false, 'Starcze gadanie', 0, 2, 2, 1);
 INSERT INTO public.visit (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-12-15 17:04:27.000436', false, 'Dziadzienie', 0, 2, 2, 1);
