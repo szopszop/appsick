@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,5 +24,10 @@ public class DoctorController {
     @GetMapping("/{doctorId}")
     public Optional<Doctor> getDoctorById(@PathVariable long doctorId) {
         return doctorService.getDoctorById(doctorId);
+    }
+
+    @GetMapping("/specialities")
+    public List<Doctor.Speciality> getDoctorSpecialities() {
+        return Arrays.asList(Doctor.Speciality.values());
     }
 }
