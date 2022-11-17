@@ -124,7 +124,7 @@ INSERT INTO public.users (birth_date, email, first_name, last_name, password, se
 INSERT INTO public.doctor (about, user_id) VALUES ('Młoda i przebojowa', 3);
 INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (2, 27);
 
-INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number) VALUES ('1984-12-24', 'romanwojciechowski@armyspy.com', 'Roman', 'Wojciechowski', 'eiKah1oophe', 1, '72 672 17 82');
+INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number) VALUES ('1984-12-24', 'romanwojciechowski@armyspy.com', 'Roman', 'Wojciechowski', 'eiKah1oophe', 0, '72 672 17 82');
 INSERT INTO public.doctor (about, user_id) VALUES ('Utalentowany', 4);
 INSERT INTO public.doctor_medical_specialities (doctor_doctor_id, medical_specialities) VALUES (3, 35);
 
