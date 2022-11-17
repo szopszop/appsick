@@ -19,7 +19,8 @@ import java.util.List;
 public class Patient {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long patientId;
     private String pesel;
     private boolean premium;

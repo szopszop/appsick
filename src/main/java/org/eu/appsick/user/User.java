@@ -19,7 +19,8 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long userId;
     private String firstName;
     private String lastName;

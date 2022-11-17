@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 public class ChatMessage {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long chatId;
 
     @JsonIgnore

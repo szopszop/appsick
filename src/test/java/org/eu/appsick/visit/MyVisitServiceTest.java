@@ -21,22 +21,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(VisitService.class)
-@ContextConfiguration(classes = {VisitDao.class})
+@ContextConfiguration(classes = {VisitRepository.class})
 class MyVisitServiceTest {
 
     @Mock
-    private VisitDao visitDao;
+    private VisitRepository visitRepository;
     private VisitService visitService;
 
     @BeforeEach
     void init(){
-        visitService = new MyVisitService(visitDao);
+        visitService = new MyVisitService(visitRepository);
     }
 
     @Test
     void getVisitById() {
         Visit visit = new Visit();
-        Mockito.when(visitDao.getVisitById(visit.getVisitId())).thenReturn(Optional.of(visit));
+        Mockito.when(visitRepository.findVisitByVisitId(visit.getVisitId())).thenReturn(Optional.of(visit));
         assertEquals(visitService.getVisitById(visit.getVisitId()), Optional.of(visit));
     }
 
@@ -47,7 +47,7 @@ class MyVisitServiceTest {
         for (int i=0; i<10; i++){
             visitList.add(new Visit(0, patient, null, null, null, false, null, null, Visit.VisitStatus.PENDING));
         }
-        Mockito.when(visitDao.getVisitsByPatient(patient)).thenReturn(visitList);
+        Mockito.when(visitRepository.findVisitsByPatient(patient)).thenReturn(visitList);
         assertEquals(visitService.getPatientVisits(patient), visitList);
     }
 
@@ -58,7 +58,7 @@ class MyVisitServiceTest {
         for (int i=0; i<10; i++){
             visitList.add(new Visit(0, null, doctor, null, null, false, null, null, Visit.VisitStatus.PENDING));
         }
-        Mockito.when(visitDao.getVisitsByDoctor(doctor)).thenReturn(visitList);
+        Mockito.when(visitRepository.findVisitsByDoctor(doctor)).thenReturn(visitList);
         assertEquals(visitService.getDoctorVisits(doctor), visitList);
     }
 
@@ -69,7 +69,7 @@ class MyVisitServiceTest {
         for (int i=0; i<10; i++){
             visitList.add(new Visit(0, null, null, clinic, null, false, null, null, Visit.VisitStatus.PENDING));
         }
-        Mockito.when(visitDao.getVisitsByClinic(clinic)).thenReturn(visitList);
+        Mockito.when(visitRepository.findVisitsByClinic(clinic)).thenReturn(visitList);
         assertEquals(visitService.getClinicVisits(clinic), visitList);
     }
 
@@ -82,14 +82,14 @@ class MyVisitServiceTest {
     @DisplayName("editVisit returns true when visit exists")
     void editExistingVisit() {
         Visit visit = new Visit();
-        Mockito.when(visitDao.getVisitById(visit.getVisitId())).thenReturn(Optional.of(visit));
+        Mockito.when(visitRepository.findVisitByVisitId(visit.getVisitId())).thenReturn(Optional.of(visit));
         assertTrue(visitService.editVisit(visit.getVisitId(), visit));
     }
     @Test
     @DisplayName("editVisit returns false when visit doesn't exist")
     void editNonExistingVisit() {
         Visit visit = new Visit();
-        Mockito.when(visitDao.getVisitById(visit.getVisitId())).thenReturn(Optional.empty());
+        Mockito.when(visitRepository.findVisitByVisitId(visit.getVisitId())).thenReturn(Optional.empty());
         assertFalse(visitService.editVisit(visit.getVisitId(), visit));
     }
 
@@ -97,14 +97,14 @@ class MyVisitServiceTest {
     @DisplayName("deleteVisit returns true when visit exists")
     void deleteExistingVisit() {
         Visit visitToDelete = new Visit();
-        Mockito.when(visitDao.getVisitById(visitToDelete.getVisitId())).thenReturn(Optional.of(visitToDelete));
+        Mockito.when(visitRepository.findVisitByVisitId(visitToDelete.getVisitId())).thenReturn(Optional.of(visitToDelete));
         assertTrue(visitService.editVisit(visitToDelete.getVisitId(), visitToDelete));
     }
     @Test
     @DisplayName("deleteVisit returns false when visit doesn't exist")
     void deleteNonExistingVisit() {
         Visit visitToDelete = new Visit();
-        Mockito.when(visitDao.getVisitById(visitToDelete.getVisitId())).thenReturn(Optional.empty());
+        Mockito.when(visitRepository.findVisitByVisitId(visitToDelete.getVisitId())).thenReturn(Optional.empty());
         assertFalse(visitService.editVisit(visitToDelete.getVisitId(), visitToDelete));
     }
 }

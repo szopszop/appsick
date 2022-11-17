@@ -22,7 +22,8 @@ import java.util.List;
 public class Visit {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long visitId;
 
     @ManyToOne(fetch = FetchType.EAGER)

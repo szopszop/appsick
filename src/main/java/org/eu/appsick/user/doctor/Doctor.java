@@ -20,7 +20,8 @@ import java.util.List;
 public class Doctor {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long doctorId;
     private String about;
 

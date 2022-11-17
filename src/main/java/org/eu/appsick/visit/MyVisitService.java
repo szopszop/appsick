@@ -6,60 +6,59 @@ import org.eu.appsick.user.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MyVisitService implements VisitService{
-    private final VisitDao visitDao;
+
+    private final VisitRepository visitRepository;
 
     @Autowired
-    public MyVisitService(VisitDao visitDao) {
-        this.visitDao = visitDao;
+    public MyVisitService(VisitRepository visitRepository) {
+        this.visitRepository = visitRepository;
     }
 
     public Optional<Visit> getVisitById(long id) {
-        return visitDao.getVisitById(id);
+        return visitRepository.findVisitByVisitId(id);
     }
 
     public List<Visit> getPatientVisits(Patient patient) {
-        return visitDao.getVisitsByPatient(patient);
+        return visitRepository.findVisitsByPatient(patient);
     }
 
     public List<Visit> getDoctorVisits(Doctor doctor) {
-        return visitDao.getVisitsByDoctor(doctor);
+        return visitRepository.findVisitsByDoctor(doctor);
     }
 
     public List<Visit> getClinicVisits(Clinic clinic) {
-        return visitDao.getVisitsByClinic(clinic);
+        return visitRepository.findVisitsByClinic(clinic);
     }
 
     @Override
     public List<Visit> getPastVisitsByPatient(Patient patient) {
-        return visitDao.getPreviousVisitsByPatient(patient);
+        return visitRepository.findPreviousVisitsByPatient(patient);
     }
 
     @Override
     public List<Visit> getFutureVisitsByPatient(Patient patient) {
-        return visitDao.getFutureVisitsByPatient(patient);
+        return visitRepository.findFutureVisitsByPatient(patient);
     }
 
     @Override
     public List<Visit> getCurrentVisitsByPatient(long patient_id) {
-        return visitDao.getCurrentVisitsByPatient(patient_id);
+        return visitRepository.getCurrentVisitsByPatient(patient_id);
     }
 
 
 
     public boolean addVisit(Visit visit) {
-        visitDao.add(visit);
+        visitRepository.save(visit);
         return true;
     }
 
     public boolean editVisit(long visitId, Visit editedVisit) {
-        Optional<Visit> visit = visitDao.getVisitById(visitId);
+        Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
         if (visit.isPresent()) {
             Visit visitToUpdate = visit.get();
             visitToUpdate.setPatient(editedVisit.getPatient());
@@ -75,9 +74,9 @@ public class MyVisitService implements VisitService{
     }
 
     public boolean deleteVisit(long visitId) {
-        Optional<Visit> visit = visitDao.getVisitById(visitId);
+        Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
         if (visit.isPresent()) {
-            visitDao.remove(visit.get());
+            visitRepository.delete(visit.get());
             return true;
         }
         return false;

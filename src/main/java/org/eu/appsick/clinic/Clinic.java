@@ -19,7 +19,8 @@ import java.util.List;
 public class Clinic {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private long clinicId;
     private String clinicName;
     private String longitude;

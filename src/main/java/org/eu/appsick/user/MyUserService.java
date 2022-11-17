@@ -8,15 +8,15 @@ import java.util.Optional;
 @Service
 public class MyUserService implements UserService {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     @Autowired
-    public MyUserService(UserDao userDao) {
-        this.userDao = userDao;
+    public MyUserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public Optional<User> getUserById(long userId) {
-        return userDao.getUserById(userId);
+        return userRepository.findUserByUserId(userId);
     }
 }

@@ -8,15 +8,15 @@ import java.util.Optional;
 @Service
 public class MyPatientService implements PatientService{
 
-    private final PatientDao patientDao;
+    private final PatientRepository patientRepository;
 
     @Autowired
-    public MyPatientService(PatientDao patientDao) {
-        this.patientDao = patientDao;
+    public MyPatientService(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
     }
 
     @Override
     public Optional<Patient> getPatientById(long patientId) {
-        return patientDao.getPatientById(patientId);
+        return patientRepository.findByPatientId(patientId);
     }
 }
