@@ -112,7 +112,7 @@ public class VisitController {
     @PostMapping()
     public ResponseEntity<Visit> postVisit(@RequestBody Visit newVisit) {
         visitService.addVisit(newVisit);
-        return new ResponseEntity<>(newVisit, HttpStatus.OK);
+        return new ResponseEntity<>(newVisit, HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/{visitId}")
