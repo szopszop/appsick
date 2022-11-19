@@ -4,6 +4,10 @@ import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +39,23 @@ public class MyVisitService implements VisitService{
         return visitRepository.findVisitsByClinic(clinic);
     }
 
+
+
     @Override
-    public List<Visit> getPastVisitsByPatient(Patient patient) {
-        return visitRepository.findPreviousVisitsByPatient(patient);
+    public List<Visit> getPastVisitsByPatient(Patient patient, int page) {
+        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+        Pageable secondPageWithFiveElements = PageRequest.of(1, 5);
+
+        return visitRepository.findPreviousVisitsByPatient(patient, firstPageWithTwoElements);
     }
+
+//    Slice<Visit> findSliceBy(Pageable pageable) {
+//
+//    }
+
+
+
+
 
     @Override
     public List<Visit> getFutureVisitsByPatient(Patient patient) {
