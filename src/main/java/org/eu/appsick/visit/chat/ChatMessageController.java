@@ -25,7 +25,7 @@ public class ChatMessageController {
     }
 
     @GetMapping("/visit/{visitId}")
-    public List<ChatMessage> getChatHistoryFromVisit(@PathVariable long visitId) {
+    public List<ChatMessage> getChatHistoryFromVisit(@PathVariable Long visitId) {
         Optional<Visit> visit = visitService.getVisitById(visitId);
         if (visit.isPresent()) return chatMessageService.getChatHistoryFromVisit(visit.get());
         return new ArrayList<>();

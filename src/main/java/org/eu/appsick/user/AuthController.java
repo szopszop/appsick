@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @GetMapping("/{userId}")
-    public Optional<User> getUserByUserId(@PathVariable long userId) {
+    public Optional<User> getUserByUserId(@PathVariable Long userId) {
         return this.userService.getUserById(userId);
     }
 

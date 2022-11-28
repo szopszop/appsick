@@ -19,7 +19,7 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long chatId;
+    private Long chatId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)

@@ -16,7 +16,7 @@ public class MyClinicService implements ClinicService{
     }
 
     @Override
-    public Optional<Clinic> getClinicById(long clinicId) {
+    public Optional<Clinic> getClinicById(Long clinicId) {
         return clinicRepository.findByClinicId(clinicId);
     }
 }

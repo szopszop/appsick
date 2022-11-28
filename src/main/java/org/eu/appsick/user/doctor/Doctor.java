@@ -22,7 +22,7 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long doctorId;
+    private Long doctorId;
     private String about;
 
     @OneToOne(cascade = CascadeType.ALL)

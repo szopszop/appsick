@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class ExaminationsOrder {
 
-    private long examinationsOrderId;
+    private Long examinationsOrderId;
     private String examinationsOrderName;
     private Patient patient;
     private Doctor doctor;
@@ -20,7 +20,7 @@ public class ExaminationsOrder {
     private LocalDate examinationsOrderDate;
     private List<Examination> examinations;
 
-    public ExaminationsOrder(long examinationsOrderId, Patient patient, Doctor doctor, boolean completed, LocalDate examinationsOrderDate) {
+    public ExaminationsOrder(Long examinationsOrderId, Patient patient, Doctor doctor, boolean completed, LocalDate examinationsOrderDate) {
         this.examinationsOrderId = examinationsOrderId;
         this.patient = patient;
         this.doctor = doctor;

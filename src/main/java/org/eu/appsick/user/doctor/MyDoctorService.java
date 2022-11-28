@@ -16,7 +16,7 @@ public class MyDoctorService implements DoctorService {
     }
 
     @Override
-    public Optional<Doctor> getDoctorById(long doctorId) {
+    public Optional<Doctor> getDoctorById(Long doctorId) {
         return doctorRepository.findByDoctorId(doctorId);
     }
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
-    Optional<Visit> findVisitByVisitId(long visitId);
+    Optional<Visit> findVisitByVisitId(Long visitId);
 
     List<Visit> findVisitsByPatient(Patient patient);
 
@@ -30,7 +30,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             " extract(year from Visit.date) = extract(year from now()) AND" +
             " extract(month from Visit.date) = extract(month from now()) AND" +
             " extract(day from Visit.date) = extract(day from now())", nativeQuery = true)
-    List<Visit> getCurrentVisitsByPatient (long patient_id);
+    List<Visit> getCurrentVisitsByPatient (Long patient_id);
 
     List<Visit> findVisitsByDoctor(Doctor doctor);
 

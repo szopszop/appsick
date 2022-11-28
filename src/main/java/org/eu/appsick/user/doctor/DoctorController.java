@@ -22,7 +22,7 @@ public class DoctorController {
     }
 
     @GetMapping("/{doctorId}")
-    public Optional<Doctor> getDoctorById(@PathVariable long doctorId) {
+    public Optional<Doctor> getDoctorById(@PathVariable Long doctorId) {
         return doctorService.getDoctorById(doctorId);
     }
 

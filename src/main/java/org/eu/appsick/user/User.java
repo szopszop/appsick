@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;

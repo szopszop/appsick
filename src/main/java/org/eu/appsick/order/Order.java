@@ -10,14 +10,14 @@ import java.util.List;
 @Data
 public class Order {
 
-    private long orderId;
+    private Long orderId;
     private LocalDate orderDate;
-    private long patientId;
-    private long prescriptionId;
+    private Long patientId;
+    private Long prescriptionId;
     private List<Product> productList;
     private String deliveryAddress;
 
-    public Order(long orderId, LocalDate orderDate, long patientId, long prescriptionId, String deliveryAddress) {
+    public Order(Long orderId, LocalDate orderDate, Long patientId, Long prescriptionId, String deliveryAddress) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.patientId = patientId;

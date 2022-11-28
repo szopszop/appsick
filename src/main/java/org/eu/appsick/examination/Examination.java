@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Examination {
 
-    private long examinationId;
+    private Long examinationId;
     private String examinationName;
     private String summary;
     private boolean completed;

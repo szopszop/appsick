@@ -24,7 +24,7 @@ public class Visit {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long visitId;
+    private Long visitId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")

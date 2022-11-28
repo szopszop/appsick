@@ -21,7 +21,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long patientId;
+    private Long patientId;
     private String pesel;
     private boolean premium;
 

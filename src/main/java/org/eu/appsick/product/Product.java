@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Product {
 
-    private long productId;
+    private Long productId;
     private String productName;
     private int amount;
     private boolean drugCoverage;

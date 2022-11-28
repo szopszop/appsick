@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +35,12 @@ public class VisitController {
     }
 
     @GetMapping(value = "/{visitId}", produces = "application/json")
-    public Optional<Visit> getVisit(@PathVariable long visitId) {
+    public Optional<Visit> getVisit(@PathVariable Long visitId) {
         return visitService.getVisitById(visitId);
     }
 
     @GetMapping(value = "/doctor/{doctorId}")
-    public List<Visit> getDoctorVisits(@PathVariable long doctorId) {
+    public List<Visit> getDoctorVisits(@PathVariable Long doctorId) {
         Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
         if (doctor.isPresent()) {
             return visitService.getDoctorVisits(doctor.get());
@@ -51,7 +49,7 @@ public class VisitController {
     }
 
     @GetMapping(value = "/patient/{patientId}")
-    public List<Visit> getPatientVisits(@PathVariable long patientId) {
+    public List<Visit> getPatientVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getPatientVisits(patient.get());
@@ -60,7 +58,7 @@ public class VisitController {
     }
 
     @GetMapping(value = "/patient/{patientId}/future")
-    public List<Visit> getFutureVisits(@PathVariable long patientId) {
+    public List<Visit> getFutureVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getFutureVisitsByPatient(patient.get());
@@ -69,7 +67,7 @@ public class VisitController {
     }
 
 //    @GetMapping(value = "/patient/{patientId}/current")
-//    public List<Visit> getCurrentVisits(@PathVariable long patientId) {
+//    public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
 //        Optional<Patient> patient = patientService.getPatientById(patientId);
 //        Integer day = LocalDateTime.now().getDayOfMonth();
 //        Month month = LocalDateTime.now().getMonth();
@@ -81,7 +79,7 @@ public class VisitController {
 //        else return new ArrayList<>();
 //    }
     @GetMapping(value = "/patient/{patientId}/current")
-    public List<Visit> getCurrentVisits(@PathVariable long patientId) {
+    public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
 
 
@@ -92,7 +90,7 @@ public class VisitController {
     }
 
     @GetMapping(value = "/patient/{patientId}/past")
-    public List<Visit> getPastVisits(@PathVariable long patientId) {
+    public List<Visit> getPastVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getPastVisitsByPatient(patient.get());
@@ -101,7 +99,7 @@ public class VisitController {
     }
 
     @GetMapping(value = "/clinic/{clinicId}")
-    public List<Visit> getClinicVisits(@PathVariable long clinicId) {
+    public List<Visit> getClinicVisits(@PathVariable Long clinicId) {
         Optional<Clinic> clinic = clinicService.getClinicById(clinicId);
         if (clinic.isPresent()) {
             return visitService.getClinicVisits(clinic.get());
@@ -116,14 +114,14 @@ public class VisitController {
     }
 
     @PatchMapping(value = "/{visitId}")
-    public ResponseEntity<Visit> patchVisit(@PathVariable long visitId, @RequestBody Visit editedVisit) {
+    public ResponseEntity<Visit> patchVisit(@PathVariable Long visitId, @RequestBody Visit editedVisit) {
         return (visitService.editVisit(visitId, editedVisit)) ?
                 new ResponseEntity<>(editedVisit, HttpStatus.OK) :
                 new ResponseEntity<>(editedVisit, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{visitId}")
-    public ResponseEntity<Visit> deleteVisit(@PathVariable long visitId) {
+    public ResponseEntity<Visit> deleteVisit(@PathVariable Long visitId) {
         visitService.deleteVisit(visitId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

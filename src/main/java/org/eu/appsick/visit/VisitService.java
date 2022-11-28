@@ -11,16 +11,16 @@ import java.util.Optional;
 
 public interface VisitService {
 
-    Optional<Visit> getVisitById(long id);
+    Optional<Visit> getVisitById(Long id);
     List<Visit> getPatientVisits(Patient patient);
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
     List<Visit> getPastVisitsByPatient(Patient patient);
     List<Visit> getFutureVisitsByPatient(Patient patient);
-    List<Visit> getCurrentVisitsByPatient(long patientId);
+    List<Visit> getCurrentVisitsByPatient(Long patientId);
     boolean addVisit(Visit visit);
-    boolean editVisit(long visitID, Visit editedVisit);
+    boolean editVisit(Long visitID, Visit editedVisit);
 
-    boolean deleteVisit(long visitId);
+    boolean deleteVisit(Long visitId);
 }
 

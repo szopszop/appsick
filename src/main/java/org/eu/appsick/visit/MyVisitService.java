@@ -19,7 +19,7 @@ public class MyVisitService implements VisitService{
         this.visitRepository = visitRepository;
     }
 
-    public Optional<Visit> getVisitById(long id) {
+    public Optional<Visit> getVisitById(Long id) {
         return visitRepository.findVisitByVisitId(id);
     }
 
@@ -46,7 +46,7 @@ public class MyVisitService implements VisitService{
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(long patient_id) {
+    public List<Visit> getCurrentVisitsByPatient(Long patient_id) {
         return visitRepository.getCurrentVisitsByPatient(patient_id);
     }
 
@@ -57,7 +57,7 @@ public class MyVisitService implements VisitService{
         return true;
     }
 
-    public boolean editVisit(long visitId, Visit editedVisit) {
+    public boolean editVisit(Long visitId, Visit editedVisit) {
         Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
         if (visit.isPresent()) {
             Visit visitToUpdate = visit.get();
@@ -73,7 +73,7 @@ public class MyVisitService implements VisitService{
         return false;
     }
 
-    public boolean deleteVisit(long visitId) {
+    public boolean deleteVisit(Long visitId) {
         Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
         if (visit.isPresent()) {
             visitRepository.delete(visit.get());

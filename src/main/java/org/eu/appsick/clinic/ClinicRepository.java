@@ -8,5 +8,5 @@ import java.util.Optional;
 @Service
 public interface ClinicRepository extends JpaRepository<Clinic, Long> {
 
-    Optional<Clinic> findByClinicId(long clinicId);
+    Optional<Clinic> findByClinicId(Long clinicId);
 }

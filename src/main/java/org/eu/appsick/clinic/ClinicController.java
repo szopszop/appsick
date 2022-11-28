@@ -24,7 +24,7 @@ public class ClinicController {
     }
 
     @GetMapping("/{clinicId}")
-    public Optional<Clinic> getClinicById(@PathVariable long clinicId) {
+    public Optional<Clinic> getClinicById(@PathVariable Long clinicId) {
         return clinicService.getClinicById(clinicId);
     }
 
@@ -35,20 +35,20 @@ public class ClinicController {
     }
 
     @GetMapping("/{clinicId}/doctor")
-    public List<Doctor> getDoctorsByClinic(@PathVariable long clinicId) {
+    public List<Doctor> getDoctorsByClinic(@PathVariable Long clinicId) {
         return clinicId != 0 ? dummyDoctorFunction() : new ArrayList<>();
     }
 
     private List<Doctor> dummyDoctorFunction(){
         List<Doctor> doctors = new ArrayList<>();
-        doctors.add(doctorService.getDoctorById(1).orElse(new Doctor()));
-        doctors.add(doctorService.getDoctorById(2).orElse(new Doctor()));
+        doctors.add(doctorService.getDoctorById(1L).orElse(new Doctor()));
+        doctors.add(doctorService.getDoctorById(2L).orElse(new Doctor()));
         return doctors;
     }
     private List<Clinic> dummyClinicFunction(){
         List<Clinic> clinics = new ArrayList<>();
-        clinics.add(clinicService.getClinicById(1).orElse(new Clinic()));
-        clinics.add(clinicService.getClinicById(2).orElse(new Clinic()));
+        clinics.add(clinicService.getClinicById(1L).orElse(new Clinic()));
+        clinics.add(clinicService.getClinicById(2L).orElse(new Clinic()));
         return clinics;
     }
 }

@@ -4,5 +4,5 @@ import java.util.Optional;
 
 public interface ClinicService {
 
-    Optional<Clinic> getClinicById(long clinicId);
+    Optional<Clinic> getClinicById(Long clinicId);
 }

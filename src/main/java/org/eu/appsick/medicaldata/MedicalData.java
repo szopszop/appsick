@@ -8,8 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 class MedicalData {
 
-    private long medicalDataId;
-    private long patientId;
+    private Long medicalDataId;
+    private Long patientId;
     private int weight;
     private int height;
     private String medicalConditions;

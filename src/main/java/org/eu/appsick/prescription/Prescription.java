@@ -12,14 +12,14 @@ import java.util.List;
 @Data
 public class Prescription {
 
-    private long prescriptionId;
-    private long patientId;
-    private long doctorId;
+    private Long prescriptionId;
+    private Long patientId;
+    private Long doctorId;
     private LocalDate prescriptionDate;
     private int prescriptionCode;
     private List<Product> productList;
 
-    public Prescription(long prescriptionId, long patientId, long doctorId, LocalDate prescriptionDate, int prescriptionCode) {
+    public Prescription(Long prescriptionId, Long patientId, Long doctorId, LocalDate prescriptionDate, int prescriptionCode) {
         this.prescriptionId = prescriptionId;
         this.patientId = patientId;
         this.doctorId = doctorId;

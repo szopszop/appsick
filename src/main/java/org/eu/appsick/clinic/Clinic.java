@@ -21,7 +21,7 @@ public class Clinic {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    private long clinicId;
+    private Long clinicId;
     private String clinicName;
     private String longitude;
     private String latitude;
