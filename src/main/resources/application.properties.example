@@ -5,7 +5,8 @@ spring.datasource.username=USER
 spring.datasource.password=PASSWORD
 # jpa params
 # korzystam z istniej?cej struktury - nie jest za ka?dym razem tworzona na nowo
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.defer-datasource-initialization=true
 # wy?wietlanie w konsoli zapyta? SQL
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
