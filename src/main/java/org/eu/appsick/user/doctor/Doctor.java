@@ -1,6 +1,7 @@
 package org.eu.appsick.user.doctor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -74,6 +75,7 @@ public class Doctor {
             this.speciality = speciality;
         }
 
+        @JsonValue
         @Override
         public String toString() {
             return speciality;
