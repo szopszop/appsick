@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "doctors")
 public class Doctor {
 
     @Id
@@ -31,6 +31,7 @@ public class Doctor {
 
     @Enumerated
     @ElementCollection
+    @JoinTable(name = "medical_specialities")
     private List<Speciality> medicalSpecialities;
 
     @JsonIgnore
