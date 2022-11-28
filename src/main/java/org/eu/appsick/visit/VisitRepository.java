@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +17,12 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     List<Visit> findVisitsByPatient(Patient patient);
 
-    @Query("SELECT v FROM Visit v WHERE v.date < current_date ")
-    List<Visit> findPreviousVisitsByPatient(Patient patient);
+
+//    @Query("SELECT v FROM Visit v WHERE v.date < current_date ")
+//    List<Visit> findPreviousVisitsByPatient(Patient patient, Pageable page);
+
+    @Query(value = "SELECT v FROM Visit WHERE v.patient_id = :patientId AND v.date < current_date ORDER BY v.date DESC LIMIT :pageSize OFFSET :pageNumber", nativeQuery = true)
+    List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber);
 
     @Query("SELECT v FROM Visit v WHERE v.date > current_date ")
     List<Visit> findFutureVisitsByPatient(Patient patient);

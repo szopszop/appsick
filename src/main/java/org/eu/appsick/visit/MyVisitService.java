@@ -37,8 +37,32 @@ public class MyVisitService implements VisitService{
 
     @Override
     public List<Visit> getPastVisitsByPatient(Patient patient) {
-        return visitRepository.findPreviousVisitsByPatient(patient);
+        return null;
     }
+
+//    @Override
+//    public List<Visit> getPastVisitsByPatient(Patient patient) {
+//        return visitRepository.findPreviousVisitsByPatient(patient);
+//    }
+
+    @Override
+    public List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber) {
+        return visitRepository.findPastVisitsPagination(patientId, pageSize, pageNumber);
+    }
+
+//    @Override
+//    public List<Visit> getPastVisitsByPatient(Patient patient, int page) {
+//        return null;
+//    }
+
+
+//    @Override
+//    public List<Visit> getPastVisitsByPatient(Patient patient, int page) {
+//        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+//
+//        return visitRepository.findPreviousVisitsByPatient(patient, firstPageWithTwoElements);
+//    }
+
 
     @Override
     public List<Visit> getFutureVisitsByPatient(Patient patient) {

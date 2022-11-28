@@ -4,8 +4,6 @@ import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +14,12 @@ public interface VisitService {
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
     List<Visit> getPastVisitsByPatient(Patient patient);
+
+    List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber);
+
+
+//    List<Visit> getPastVisitsByPatient(Patient patient, int page);
+
     List<Visit> getFutureVisitsByPatient(Patient patient);
     List<Visit> getCurrentVisitsByPatient(Long patientId);
     boolean addVisit(Visit visit);

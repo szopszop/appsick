@@ -66,37 +66,36 @@ public class VisitController {
         else return new ArrayList<>();
     }
 
-//    @GetMapping(value = "/patient/{patientId}/current")
-//    public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
-//        Optional<Patient> patient = patientService.getPatientById(patientId);
-//        Integer day = LocalDateTime.now().getDayOfMonth();
-//        Month month = LocalDateTime.now().getMonth();
-//        Integer year = LocalDateTime.now().getYear();
-//
-//        if (patient.isPresent()) {
-//            return visitService.getCurrentVisitsByPatient(patient.get(), year, month, day);
-//        }
-//        else return new ArrayList<>();
-//    }
     @GetMapping(value = "/patient/{patientId}/current")
     public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
-
-
         if (patient.isPresent()) {
             return visitService.getCurrentVisitsByPatient(patient.get().getPatientId());
         }
         else return new ArrayList<>();
     }
 
+
+//    @GetMapping(value = "/patient/{patientId}/past")
+//    public List<Visit> getPastVisits(@PathVariable Long patientId) {
+//        Optional<Patient> patient = patientService.getPatientById(patientId);
+//        if (patient.isPresent()) {
+//            return visitService.getPastVisitsByPatient(patient.get(), 0);
+//        }
+//        else return new ArrayList<>();
+//    }
+
     @GetMapping(value = "/patient/{patientId}/past")
-    public List<Visit> getPastVisits(@PathVariable Long patientId) {
+    public List<Visit> getPatientVisitPagination(@PathVariable Long patientId, @RequestParam Long size, @RequestParam Long pageNumber) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.getPastVisitsByPatient(patient.get());
+            return visitService.findPastVisitsPagination(patientId, size, pageNumber);
         }
         else return new ArrayList<>();
     }
+
+
+
 
     @GetMapping(value = "/clinic/{clinicId}")
     public List<Visit> getClinicVisits(@PathVariable Long clinicId) {
