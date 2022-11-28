@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class ChatMessageDTO {
 
     private Long visitId;
-    private String author;
+    private Long userId;
     private String message;
     private LocalDateTime date;
 }

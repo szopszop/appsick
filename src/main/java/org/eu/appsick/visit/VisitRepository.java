@@ -26,10 +26,10 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     List<Visit> findFutureVisitsByPatient(Patient patient);
 
     //    List<Visit> findVisitsByPatientAndDate_YearAndDate_MonthAndDate_DayOfMonth(Patient patient, Integer date_year, Month date_month, Integer date_dayOfMonth);
-    @Query(value = "SELECT * FROM Visit WHERE Visit.patient_id = :patient_id AND" +
-            " extract(year from Visit.date) = extract(year from now()) AND" +
-            " extract(month from Visit.date) = extract(month from now()) AND" +
-            " extract(day from Visit.date) = extract(day from now())", nativeQuery = true)
+    @Query(value = "SELECT * FROM visits WHERE visits.patient_id = :patient_id AND" +
+            " extract(year from visits.date) = extract(year from now()) AND" +
+            " extract(month from visits.date) = extract(month from now()) AND" +
+            " extract(day from visits.date) = extract(day from now())", nativeQuery = true)
     List<Visit> getCurrentVisitsByPatient (Long patient_id);
 
     List<Visit> findVisitsByDoctor(Doctor doctor);
