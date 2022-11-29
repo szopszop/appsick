@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class MyChatMessageService implements ChatMessageService {
 
-    private ChatMessageRepository chatMessageRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
     @Autowired
     public MyChatMessageService(ChatMessageRepository chatMessageRepository) {

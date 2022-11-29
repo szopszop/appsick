@@ -1,5 +1,6 @@
 package org.eu.appsick.visit.chat;
 
+import org.eu.appsick.user.User;
 import org.eu.appsick.user.UserService;
 import org.eu.appsick.visit.Visit;
 import org.eu.appsick.visit.VisitService;
@@ -16,9 +17,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatMessageController {
 
-    private ChatMessageService chatMessageService;
-    private VisitService visitService;
-    private UserService userService;
+    private final ChatMessageService chatMessageService;
+    private final VisitService visitService;
+    private final UserService userService;
 
     @Autowired
     public ChatMessageController(ChatMessageService chatMessageService, VisitService visitService, UserService userService) {
@@ -39,11 +40,12 @@ public class ChatMessageController {
         List<ChatMessage> chatMessages = new ArrayList<>();
         for(ChatMessageDTO chatMessageDTO : chatMessagesDto) {
             Optional<Visit> visit = visitService.getVisitById(chatMessageDTO.getVisitId());
-            if (visit.isPresent() && userService.getUserById(chatMessageDTO.getUserId()).isPresent()) {
+            Optional<User> user = userService.getUserById(chatMessageDTO.getUserId());
+            if (visit.isPresent() && user.isPresent()) {
                 chatMessages.add(
                         new ChatMessage(
                                 visit.get(),
-                                userService.getUserById(chatMessageDTO.getUserId()).get(),
+                                user.get(),
                                 chatMessageDTO.getMessage(),
                                 chatMessageDTO.getDate()
                         )
