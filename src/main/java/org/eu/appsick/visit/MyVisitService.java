@@ -46,8 +46,8 @@ public class MyVisitService implements VisitService{
 //    }
 
     @Override
-    public List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber) {
-        return visitRepository.findPastVisitsPagination(patientId, pageSize, pageNumber);
+    public List<Visit> findPastVisitsPagination(Long patientId) {
+        return visitRepository.findPastVisitsPagination(patientId);
     }
 
 //    @Override
@@ -70,8 +70,8 @@ public class MyVisitService implements VisitService{
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(Long patient_id) {
-        return visitRepository.getCurrentVisitsByPatient(patient_id);
+    public List<Visit> getCurrentVisitsByPatient(Long patientId) {
+        return visitRepository.getCurrentVisitsByPatient(patientId);
     }
 
 

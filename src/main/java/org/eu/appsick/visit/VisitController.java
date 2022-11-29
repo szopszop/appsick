@@ -89,7 +89,7 @@ public class VisitController {
     public List<Visit> getPatientVisitPagination(@PathVariable Long patientId, @RequestParam Long size, @RequestParam Long pageNumber) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.findPastVisitsPagination(patientId, size, pageNumber);
+            return visitService.findPastVisitsPagination(patientId);
         }
         else return new ArrayList<>();
     }

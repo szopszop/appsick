@@ -21,10 +21,10 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 //    @Query("SELECT v FROM Visit v WHERE v.date < current_date ")
 //    List<Visit> findPreviousVisitsByPatient(Patient patient, Pageable page);
 
-    @Query(value = "SELECT v FROM Visit WHERE v.patient_id = :patientId AND v.date < current_date ORDER BY v.date DESC LIMIT :pageSize OFFSET :pageNumber", nativeQuery = true)
-    List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber);
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId", nativeQuery = true)
+    List<Visit> findPastVisitsPagination(Long patientId);
 
-    @Query("SELECT v FROM Visit v WHERE v.date > current_date ")
+    @Query(value = "SELECT v FROM visits v WHERE v.date > current_date", nativeQuery = true)
     List<Visit> findFutureVisitsByPatient(Patient patient);
 
     //    List<Visit> findVisitsByPatientAndDate_YearAndDate_MonthAndDate_DayOfMonth(Patient patient, Integer date_year, Month date_month, Integer date_dayOfMonth);

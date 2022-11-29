@@ -15,7 +15,7 @@ public interface VisitService {
     List<Visit> getClinicVisits(Clinic clinic);
     List<Visit> getPastVisitsByPatient(Patient patient);
 
-    List<Visit> findPastVisitsPagination(Long patientId, Long pageSize, Long pageNumber);
+    List<Visit> findPastVisitsPagination(Long patientId);
 
 
 //    List<Visit> getPastVisitsByPatient(Patient patient, int page);
