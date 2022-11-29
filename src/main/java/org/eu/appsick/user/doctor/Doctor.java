@@ -46,12 +46,12 @@ public class Doctor {
     public enum Speciality {
 
         ALLERGOLOGY("Allergology"),
-        ANESTHESIOLOGY_AND_INTENSIVE_CARE("Anesthesiology and intensive care"),
+//        ANESTHESIOLOGY_AND_INTENSIVE_CARE("Anesthesiology and intensive care"),
         GENERAL_SURGERY("General surgery"),
         LUNG_DISEASES("Lung diseases"),
         INTERNAL_DISEASES("Internal diseases"),
         INFECTIOUS_DISEASES("Infectious diseases"),
-        DERMATOLOGY_AND_VENEREOLOGY("Dermatology and venereology"),
+//        DERMATOLOGY_AND_VENEREOLOGY("Dermatology and venereology"),
         DIABETOLOGY("Diabetology"),
         ENDOCRINOLOGY("Endocrinology"),
         GERIATRICS("Geriatrics"),
