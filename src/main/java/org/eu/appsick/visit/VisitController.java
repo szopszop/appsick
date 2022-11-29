@@ -76,14 +76,6 @@ public class VisitController {
     }
 
 
-//    @GetMapping(value = "/patient/{patientId}/past")
-//    public List<Visit> getPastVisits(@PathVariable Long patientId) {
-//        Optional<Patient> patient = patientService.getPatientById(patientId);
-//        if (patient.isPresent()) {
-//            return visitService.getPastVisitsByPatient(patient.get(), 0);
-//        }
-//        else return new ArrayList<>();
-//    }
 
     @GetMapping(value = "/patient/{patientId}/past")
     public List<Visit> getPatientVisitPagination(@PathVariable Long patientId) {
