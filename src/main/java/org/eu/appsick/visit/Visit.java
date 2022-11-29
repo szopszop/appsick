@@ -1,20 +1,21 @@
 package org.eu.appsick.visit;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
 import org.eu.appsick.visit.chat.ChatMessage;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,6 +47,7 @@ public class Visit {
             cascade = CascadeType.ALL,
             mappedBy = "visit"
     )
+    @ToString.Exclude
     private List<ChatMessage> chatMessageHistory = new ArrayList<>();
 
     @Enumerated
@@ -55,6 +57,19 @@ public class Visit {
         PENDING,
         MISSED,
         MOVED,
-        COMPLETED;
+        COMPLETED
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Visit visit = (Visit) o;
+        return visitId != null && Objects.equals(visitId, visit.visitId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -66,18 +66,6 @@ public class VisitController {
         else return new ArrayList<>();
     }
 
-//    @GetMapping(value = "/patient/{patientId}/current")
-//    public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
-//        Optional<Patient> patient = patientService.getPatientById(patientId);
-//        Integer day = LocalDateTime.now().getDayOfMonth();
-//        Month month = LocalDateTime.now().getMonth();
-//        Integer year = LocalDateTime.now().getYear();
-//
-//        if (patient.isPresent()) {
-//            return visitService.getCurrentVisitsByPatient(patient.get(), year, month, day);
-//        }
-//        else return new ArrayList<>();
-//    }
     @GetMapping(value = "/patient/{patientId}/current")
     public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);

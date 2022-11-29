@@ -2,18 +2,20 @@ package org.eu.appsick.user.doctor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.eu.appsick.user.User;
 import org.eu.appsick.visit.Visit;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -69,17 +71,29 @@ public class Doctor {
         SEXOLOGY("Sexology"),
         UROLOGY("Urology");
 
-        private String speciality;
+        private final String specialityName;
 
-        Speciality(String speciality) {
-            this.speciality = speciality;
+        Speciality(String specialityName) {
+            this.specialityName = specialityName;
         }
 
         @JsonValue
         @Override
         public String toString() {
-            return speciality;
+            return specialityName;
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Doctor doctor = (Doctor) o;
+        return doctorId != null && Objects.equals(doctorId, doctor.doctorId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

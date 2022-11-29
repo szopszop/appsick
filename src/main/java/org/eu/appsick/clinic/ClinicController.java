@@ -14,8 +14,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ClinicController {
 
-    private ClinicService clinicService;
-    private DoctorService doctorService;
+    private final ClinicService clinicService;
+    private final DoctorService doctorService;
 
     @Autowired
     public ClinicController(ClinicService clinicService, DoctorService doctorService) {
