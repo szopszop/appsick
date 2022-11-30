@@ -83,4 +83,9 @@ public class MyVisitService implements VisitService{
         return false;
     }
 
+    @Override
+    public Long countVisitsByPatient(Patient patient) {
+        return visitRepository.countVisitsByPatient(patient);
+    }
+
 }

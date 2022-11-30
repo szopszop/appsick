@@ -21,5 +21,7 @@ public interface VisitService {
     boolean addVisit(Visit visit);
     boolean editVisit(Long visitID, Visit editedVisit);
     boolean deleteVisit(Long visitId);
+
+    Long countVisitsByPatient(Patient patient);
 }
 

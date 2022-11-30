@@ -33,4 +33,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     List<Visit> findVisitsByClinic(Clinic clinic);
 
+    Long countVisitsByPatient(Patient patient);
+
+
 }
