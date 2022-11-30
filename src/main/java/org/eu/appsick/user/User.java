@@ -51,7 +51,18 @@ public class User {
     }
 
     public enum Role{
-        ROLE_USER, ROLE_DOCTOR, ROLE_ADMIN
+        ROLE_PATIENT, ROLE_DOCTOR, ROLE_ADMIN
+    }
+
+    public User(LocalDate birthDate,String email,String firstName, String lastName, String password, Sex sex, String telephoneNumber,Role role ) {
+        this.birthDate = birthDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.telephoneNumber = telephoneNumber;
+        this.email = email;
+        this.role = role;
+        this.password = password;
     }
 
     @Override

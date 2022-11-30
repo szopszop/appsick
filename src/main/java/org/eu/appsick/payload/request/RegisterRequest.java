@@ -1,5 +1,6 @@
 package org.eu.appsick.payload.request;
 
+import lombok.Data;
 import org.eu.appsick.user.User;
 
 import javax.validation.constraints.Email;
@@ -7,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-
+@Data
 public class RegisterRequest {
     @NotBlank
     @Size(min = 3, max = 20)
@@ -17,14 +18,14 @@ public class RegisterRequest {
     @Size(min = 3, max = 20)
     private String lastName;
 
-    @NotBlank
+
     private LocalDate birthDate;
 
-    @NotBlank
+
     private User.Sex sex;
 
-    @NotBlank
-    private User.Role role;
+
+    private User.Role role = User.Role.ROLE_PATIENT;
 
     @NotBlank
     private String telephoneNumber;

@@ -39,6 +39,13 @@ public class Patient {
     )
     private List<Visit> visits = new ArrayList<>();
 
+
+    public Patient(String pesel, boolean premium, User user) {
+        this.pesel = pesel;
+        this.premium = premium;
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

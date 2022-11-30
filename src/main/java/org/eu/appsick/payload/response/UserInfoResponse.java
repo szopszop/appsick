@@ -5,7 +5,7 @@ import lombok.Data;
 import org.eu.appsick.user.User;
 
 
-@AllArgsConstructor
+
 @Data
 public class UserInfoResponse {
     private Long id;
@@ -13,4 +13,11 @@ public class UserInfoResponse {
     private String lastName;
     private User.Role role;
 
+
+    public UserInfoResponse(Long id, String firstName, String lastName, User.Role role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
 }
