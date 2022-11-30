@@ -17,16 +17,16 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     List<Visit> findVisitsByPatient(Patient patient);
 
-    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId LIMIT :size OFFSET :pageNumber", nativeQuery = true)
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.date < current_date ORDER BY v.date LIMIT :size OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
 
-    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.date > current_date", nativeQuery = true)
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.date > current_date ORDER BY v.date ", nativeQuery = true)
     List<Visit> findFutureVisitsByPatient(Long patientId);
 
-    @Query(value = "SELECT * FROM visits WHERE visits.patient_id = :patient_id AND" +
-            " extract(year from visits.date) = extract(year from now()) AND" +
-            " extract(month from visits.date) = extract(month from now()) AND" +
-            " extract(day from visits.date) = extract(day from now())", nativeQuery = true)
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patient_id AND" +
+            " extract(year from v.date) = extract(year from now()) AND" +
+            " extract(month from v.date) = extract(month from now()) AND" +
+            " extract(day from v.date) = extract(day from now()) ORDER BY v.date", nativeQuery = true)
     List<Visit> findCurrentVisitsByPatient (Long patient_id);
 
     List<Visit> findVisitsByDoctor(Doctor doctor);
