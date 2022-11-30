@@ -35,19 +35,20 @@ public class MyVisitService implements VisitService{
         return visitRepository.findVisitsByClinic(clinic);
     }
 
+
     @Override
-    public List<Visit> getPastVisitsByPatient(Patient patient) {
-        return visitRepository.findPreviousVisitsByPatient(patient);
+    public List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber) {
+        return visitRepository.findPastVisitsPagination(patientId, size, pageNumber);
     }
 
     @Override
-    public List<Visit> getFutureVisitsByPatient(Patient patient) {
-        return visitRepository.findFutureVisitsByPatient(patient);
+    public List<Visit> findFutureVisitsByPatient(Long patientId) {
+        return visitRepository.findFutureVisitsByPatient(patientId);
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(Long patient_id) {
-        return visitRepository.getCurrentVisitsByPatient(patient_id);
+    public List<Visit> findCurrentVisitsByPatient(Long patientId) {
+        return visitRepository.findCurrentVisitsByPatient(patientId);
     }
 
 
