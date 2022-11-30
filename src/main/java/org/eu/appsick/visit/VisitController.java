@@ -78,12 +78,13 @@ public class VisitController {
 
 
     @GetMapping(value = "/patient/{patientId}/past")
-    public List<Visit> getPatientVisitPagination(@PathVariable Long patientId) {
-        Long pageNumber = 0L;
-        Long size = 0L;
+    public List<Visit> getPatientVisitPagination(@PathVariable Long patientId, @RequestParam(required = false) Long pageNumber) {
+        Long size = 5L;
+        if (pageNumber == null) pageNumber = 0L;
+        else pageNumber = (pageNumber - 1) * size;
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.findPastVisitsPagination(patientId);
+            return visitService.findPastVisitsPagination(patientId, size, pageNumber);
         }
         else return new ArrayList<>();
     }
