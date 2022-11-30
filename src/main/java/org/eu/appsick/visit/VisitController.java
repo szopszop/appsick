@@ -61,7 +61,7 @@ public class VisitController {
     public List<Visit> getFutureVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.getFutureVisitsByPatient(patient.get());
+            return visitService.findFutureVisitsByPatient(patient.get().getPatientId());
         }
         else return new ArrayList<>();
     }
@@ -70,12 +70,10 @@ public class VisitController {
     public List<Visit> getCurrentVisits(@PathVariable Long patientId) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.getCurrentVisitsByPatient(patient.get().getPatientId());
+            return visitService.findCurrentVisitsByPatient(patient.get().getPatientId());
         }
         else return new ArrayList<>();
     }
-
-
 
     @GetMapping(value = "/patient/{patientId}/past")
     public List<Visit> getPatientVisitPagination(@PathVariable Long patientId, @RequestParam(required = false) Long pageNumber) {

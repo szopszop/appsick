@@ -35,43 +35,20 @@ public class MyVisitService implements VisitService{
         return visitRepository.findVisitsByClinic(clinic);
     }
 
-    @Override
-    public List<Visit> getPastVisitsByPatient(Patient patient) {
-        return null;
-    }
-
-//    @Override
-//    public List<Visit> getPastVisitsByPatient(Patient patient) {
-//        return visitRepository.findPreviousVisitsByPatient(patient);
-//    }
 
     @Override
-    public List<Visit> findPastVisitsPagination(Long patientId) {
-        return visitRepository.findPastVisitsPagination(patientId);
-    }
-
-//    @Override
-//    public List<Visit> getPastVisitsByPatient(Patient patient, int page) {
-//        return null;
-//    }
-
-
-//    @Override
-//    public List<Visit> getPastVisitsByPatient(Patient patient, int page) {
-//        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
-//
-//        return visitRepository.findPreviousVisitsByPatient(patient, firstPageWithTwoElements);
-//    }
-
-
-    @Override
-    public List<Visit> getFutureVisitsByPatient(Patient patient) {
-        return visitRepository.findFutureVisitsByPatient(patient);
+    public List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber) {
+        return visitRepository.findPastVisitsPagination(patientId, size, pageNumber);
     }
 
     @Override
-    public List<Visit> getCurrentVisitsByPatient(Long patientId) {
-        return visitRepository.getCurrentVisitsByPatient(patientId);
+    public List<Visit> findFutureVisitsByPatient(Long patientId) {
+        return visitRepository.findFutureVisitsByPatient(patientId);
+    }
+
+    @Override
+    public List<Visit> findCurrentVisitsByPatient(Long patientId) {
+        return visitRepository.findCurrentVisitsByPatient(patientId);
     }
 
 

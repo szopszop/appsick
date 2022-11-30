@@ -13,18 +13,13 @@ public interface VisitService {
     List<Visit> getPatientVisits(Patient patient);
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
-    List<Visit> getPastVisitsByPatient(Patient patient);
+    List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
 
-    List<Visit> findPastVisitsPagination(Long patientId);
+    List<Visit> findCurrentVisitsByPatient(Long patientId);
+    List<Visit> findFutureVisitsByPatient(Long patientId);
 
-
-//    List<Visit> getPastVisitsByPatient(Patient patient, int page);
-
-    List<Visit> getFutureVisitsByPatient(Patient patient);
-    List<Visit> getCurrentVisitsByPatient(Long patientId);
     boolean addVisit(Visit visit);
     boolean editVisit(Long visitID, Visit editedVisit);
-
     boolean deleteVisit(Long visitId);
 }
 
