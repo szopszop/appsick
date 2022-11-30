@@ -41,12 +41,17 @@ public class User {
     private Sex sex;
     private String telephoneNumber;
     private String email;
+    private Role role;
 
     @JsonIgnore
     private String password;
 
     public enum Sex {
         MALE, FEMALE
+    }
+
+    public enum Role{
+        ROLE_USER, ROLE_DOCTOR, ROLE_ADMIN
     }
 
     @Override
