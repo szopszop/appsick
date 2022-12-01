@@ -1,6 +1,7 @@
 package org.eu.appsick.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.eu.appsick.user.User;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -9,11 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-
+@Data
 public class UserDetailsImpl implements UserDetails {
 
     private Long id;
     private String email;
+
+    private String firstName;
+    private String lastName;
+    private User.Role role;
+
     @JsonIgnore
     private String password;
 
@@ -25,6 +31,13 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    public UserDetailsImpl(Long id, String firstName, String lastName, User.Role role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
     }
 
     public static UserDetailsImpl build(User user) {

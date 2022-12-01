@@ -1,13 +1,22 @@
 package org.eu.appsick.user;
 
+import org.eu.appsick.payload.request.LoginRequest;
 import org.eu.appsick.payload.request.RegisterRequest;
 import org.eu.appsick.payload.response.MessageResponse;
+import org.eu.appsick.payload.response.UserInfoResponse;
 import org.eu.appsick.security.jwt.JwtUtils;
+import org.eu.appsick.security.services.UserDetailsImpl;
 import org.eu.appsick.user.patient.Patient;
 import org.eu.appsick.user.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +70,37 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
+
+        System.out.println(loginRequest.toString());
+        System.out.println(loginRequest.getEmail());
+        System.out.println(loginRequest.getPassword());
+        System.out.println(new BCryptPasswordEncoder().encode(loginRequest.getPassword()));
+
+
+        Authentication authentication = authenticationManager
+        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+
+        System.out.println(authentication.getPrincipal());
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+
+
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,jwtCookie.toString())
+            .body(new UserInfoResponse(userDetails.getId(),
+                    userDetails.getFirstName(),
+                    userDetails.getLastName(),
+                    userDetails.getRole()));
+
+    }
+
+
 
 
 //    @Autowired

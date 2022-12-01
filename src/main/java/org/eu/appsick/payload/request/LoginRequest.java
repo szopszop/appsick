@@ -1,29 +1,38 @@
 package org.eu.appsick.payload.request;
 
 
-import javax.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@Data
+@AllArgsConstructor
 public class LoginRequest {
 
     @NotBlank
-	private String username;
+    @Size(max = 50)
+    @Email
+    private String email;
 
-	@NotBlank
-	private String password;
 
-	public String getUsername() {
-		return username;
-	}
+    private String password;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEmail(String username) {
+        this.email = email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
