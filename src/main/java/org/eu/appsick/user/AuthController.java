@@ -97,9 +97,10 @@ public class AuthController {
 
     }
     @GetMapping("/test")
-    public String helloUser(@CurrentSecurityContext(expression="authentication?.name")
-                    String email) {
-        System.out.println(email);
+    public String helloUser(@CurrentSecurityContext(expression = "authentication")
+  Authentication authentication)
+                     {
+        System.out.println(authentication.getPrincipal());
 
         return "hello  ";
     }
