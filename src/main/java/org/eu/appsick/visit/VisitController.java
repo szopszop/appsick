@@ -87,6 +87,14 @@ public class VisitController {
         else return new ArrayList<>();
     }
 
+    @GetMapping(value = "/patient/{patientId}/past/count")
+    public Long getPastPatientVisitCount(@PathVariable Long patientId) {
+        Optional<Patient> patient = patientService.getPatientById(patientId);
+        if (patient.isPresent()) {
+            return visitService.countVisitsByPatient(patient.get());
+        } else return 0L;
+    }
+
 
 
 
