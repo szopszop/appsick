@@ -96,13 +96,14 @@ public class AuthController {
                         userDetails.getRole()));
 
     }
-    @GetMapping("/test")
-    public String helloUser(@CurrentSecurityContext(expression = "authentication")
+    @GetMapping("/current")
+    public Object currentUser(@CurrentSecurityContext(expression = "authentication")
   Authentication authentication)
                      {
-        System.out.println(authentication.getPrincipal());
 
-        return "hello  ";
+                         Object principal = authentication.getPrincipal();
+
+                         return principal;
     }
 
     @PostMapping("/logout")

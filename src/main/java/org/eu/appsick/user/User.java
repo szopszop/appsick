@@ -52,8 +52,8 @@ public class User {
 
     public enum Role{
         PATIENT("ROLE_PATIENT"),
-        DOCTOR("DOCTOR"),
-        ADMIN("ADMIN");
+        DOCTOR("ROLE_DOCTOR"),
+        ADMIN("ROLE_ADMIN");
         private final String name;
 
         Role(String name) {
