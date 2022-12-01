@@ -4,9 +4,11 @@ package org.eu.appsick.security;
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
+import org.eu.appsick.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -21,7 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
-
+    private static final String ADMIN = "ADMIN";
+    private static final String PATIENT = User.Role.PATIENT.toString();
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -59,14 +62,18 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll();
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/api/visit/**").hasAuthority(PATIENT)
+                .antMatchers(HttpMethod.GET, "/api/auth/test").hasRole("PATIENT")
+                .antMatchers("/api/auth/**").permitAll();
 
         // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
-        http.headers().frameOptions().sameOrigin();
+//        http.headers().frameOptions().sameOrigin();
 
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        System.out.println(PATIENT);
 
         return http.build();
     }

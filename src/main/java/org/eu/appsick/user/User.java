@@ -51,7 +51,19 @@ public class User {
     }
 
     public enum Role{
-        ROLE_PATIENT, ROLE_DOCTOR, ROLE_ADMIN
+        PATIENT("ROLE_PATIENT"),
+        DOCTOR("DOCTOR"),
+        ADMIN("ADMIN");
+        private final String name;
+
+        Role(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     public User(LocalDate birthDate,String email,String firstName, String lastName, String password, Sex sex, String telephoneNumber,Role role ) {

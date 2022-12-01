@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -72,34 +73,43 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
-
-        System.out.println(loginRequest.toString());
-        System.out.println(loginRequest.getEmail());
-        System.out.println(loginRequest.getPassword());
-        System.out.println(new BCryptPasswordEncoder().encode(loginRequest.getPassword()));
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 
         Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         System.out.println(authentication.getPrincipal());
-    SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        System.out.println(jwtCookie);
 
 
-    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,jwtCookie.toString())
-            .body(new UserInfoResponse(userDetails.getId(),
-                    userDetails.getFirstName(),
-                    userDetails.getLastName(),
-                    userDetails.getRole()));
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(new UserInfoResponse(userDetails.getId(),
+                        userDetails.getFirstName(),
+                        userDetails.getLastName(),
+                        userDetails.getRole()));
 
     }
+    @GetMapping("/test")
+    public String helloUser(@CurrentSecurityContext(expression="authentication?.name")
+                    String email) {
+        System.out.println(email);
 
+        return "hello  ";
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUser() {
+        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body("You've been signed out!");
+    }
 
 
 

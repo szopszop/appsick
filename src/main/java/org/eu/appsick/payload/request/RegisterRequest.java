@@ -25,7 +25,7 @@ public class RegisterRequest {
     private User.Sex sex;
 
 
-    private User.Role role = User.Role.ROLE_PATIENT;
+    private User.Role role = User.Role.PATIENT;
 
     @NotBlank
     private String telephoneNumber;

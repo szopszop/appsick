@@ -25,19 +25,14 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String email, String firstName, String lastName, User.Role role, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
-
-    public UserDetailsImpl(Long id, String firstName, String lastName, User.Role role) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -46,8 +41,11 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getUserId(),
+                user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getRole(),
+                user.getPassword(),
                 authorities
         );
     }
