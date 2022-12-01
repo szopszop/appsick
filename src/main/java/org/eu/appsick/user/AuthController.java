@@ -10,6 +10,7 @@ import org.eu.appsick.user.patient.Patient;
 import org.eu.appsick.user.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
 
@@ -73,7 +74,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ResponseCookie> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 
         Authentication authentication = authenticationManager
@@ -88,12 +89,10 @@ public class AuthController {
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
         System.out.println(jwtCookie);
 
+//        return new ResponseEntity<>(jwtCookie, HttpStatus.OK);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(userDetails.getId(),
-                        userDetails.getFirstName(),
-                        userDetails.getLastName(),
-                        userDetails.getRole()));
+                .body(jwtCookie);
 
     }
     @GetMapping("/current")
