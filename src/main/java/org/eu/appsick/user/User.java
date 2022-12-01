@@ -41,12 +41,40 @@ public class User {
     private Sex sex;
     private String telephoneNumber;
     private String email;
+    private Role role;
 
     @JsonIgnore
     private String password;
 
     public enum Sex {
         MALE, FEMALE
+    }
+
+    public enum Role{
+        PATIENT("ROLE_PATIENT"),
+        DOCTOR("ROLE_DOCTOR"),
+        ADMIN("ROLE_ADMIN");
+        private final String name;
+
+        Role(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+    public User(LocalDate birthDate,String email,String firstName, String lastName, String password, Sex sex, String telephoneNumber,Role role ) {
+        this.birthDate = birthDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.telephoneNumber = telephoneNumber;
+        this.email = email;
+        this.role = role;
+        this.password = password;
     }
 
     @Override
