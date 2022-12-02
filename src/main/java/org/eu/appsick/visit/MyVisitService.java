@@ -37,7 +37,10 @@ public class MyVisitService implements VisitService{
 
 
     @Override
-    public List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber) {
+    public List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber) {
+        long size = 5L;
+        if (pageNumber == null) pageNumber = 0L;
+        else pageNumber = (pageNumber - 1) * size;
         return visitRepository.findPastVisitsPagination(patientId, size, pageNumber);
     }
 

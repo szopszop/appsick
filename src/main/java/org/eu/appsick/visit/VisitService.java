@@ -13,7 +13,7 @@ public interface VisitService {
     List<Visit> getPatientVisits(Patient patient);
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
-    List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
+    List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber);
 
     List<Visit> findCurrentVisitsByPatient(Long patientId);
     List<Visit> findFutureVisitsByPatient(Long patientId);
