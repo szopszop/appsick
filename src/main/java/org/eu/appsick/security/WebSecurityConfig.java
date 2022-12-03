@@ -4,7 +4,7 @@ package org.eu.appsick.security;
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
-import org.eu.appsick.user.User;
+import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,13 +23,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
-    private static final String ADMIN = "ADMIN";
-    private static final String PATIENT = User.Role.PATIENT.toString();
+
+    @Autowired
+    AuthEntryPointJwt unauthorizedHandler;
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+    private static final String ADMIN = Role.ADMIN.toString();
+    private static final String PATIENT = Role.PATIENT.toString();
+    private static final String DOCTOR = Role.DOCTOR.toString();
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -42,12 +45,10 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
 
@@ -56,24 +57,24 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/visit/**").hasAuthority(PATIENT)
-                .antMatchers("/api/auth/**").permitAll();
-
-        // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
-//        http.headers().frameOptions().sameOrigin();
-
-        http.authenticationProvider(authenticationProvider());
-
+                .antMatchers(HttpMethod.GET, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.PUT, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.DELETE, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.POST, "/api/visit").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, DOCTOR)
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/**").permitAll().anyRequest().authenticated();
+        http.authenticationProvider(authenticationProvider(userDetailsService));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        System.out.println(PATIENT);
-
         return http.build();
     }
 
