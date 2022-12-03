@@ -6,6 +6,7 @@ import org.eu.appsick.user.patient.Patient;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface VisitService {
 
@@ -13,7 +14,7 @@ public interface VisitService {
     List<Visit> getPatientVisits(Patient patient);
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
-    List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber);
+    List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Visit.VisitType> visitType);
 
     List<Visit> findCurrentVisitsByPatient(Long patientId);
     List<Visit> findFutureVisitsByPatient(Long patientId);

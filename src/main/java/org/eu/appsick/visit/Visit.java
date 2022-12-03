@@ -53,11 +53,21 @@ public class Visit {
     @Enumerated
     private VisitStatus status;
 
+    @Enumerated
+    private VisitType type;
+
     public enum VisitStatus {
         PENDING,
         MISSED,
         MOVED,
         COMPLETED
+    }
+
+    public enum VisitType {
+        LOCAL,
+        ONLINE,
+        EXAMINATION,
+        PRESCRIPTIONS
     }
 
     @Override

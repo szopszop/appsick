@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -76,10 +77,12 @@ public class VisitController {
     }
 
     @GetMapping(value = "/patient/{patientId}/past")
-    public List<Visit> getPatientVisitPagination(@PathVariable Long patientId, @RequestParam(required = false) Long pageNumber) {
+    public List<Visit> getPatientVisitPagination(@PathVariable Long patientId,
+                                                 @RequestParam(required = false) Long pageNumber,
+                                                 @RequestParam(required = false) Set<Visit.VisitType> visitType) {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
-            return visitService.findPastVisitsPagination(patientId, pageNumber);
+            return visitService.findPastVisitsPagination(patientId, pageNumber, visitType);
         }
         else return new ArrayList<>();
     }
