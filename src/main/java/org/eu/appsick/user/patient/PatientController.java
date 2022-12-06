@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/patient")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://appsick.eu.org", allowedHeaders = "*", allowCredentials = "true")
 public class PatientController {
 
     private PatientService patientService;
