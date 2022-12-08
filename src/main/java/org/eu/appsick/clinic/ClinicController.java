@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clinic")
-@CrossOrigin(origins = "https://appsick.eu.org", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000/", "https://appsick.eu.org"}, allowedHeaders = "*", allowCredentials = "true")
 public class ClinicController {
 
     private final ClinicService clinicService;
@@ -23,32 +23,20 @@ public class ClinicController {
         this.doctorService = doctorService;
     }
 
+    @GetMapping
+    public List<Clinic> getAllClinics(){
+        System.out.println(clinicService.getAllClinics());
+        return clinicService.getAllClinics();
+    }
+
     @GetMapping("/{clinicId}")
     public Optional<Clinic> getClinicById(@PathVariable Long clinicId) {
         return clinicService.getClinicById(clinicId);
     }
 
-    // TODO: implement new methods, these use dummy functions
-    @GetMapping
-    public List<Clinic> getAllClinics(){
-        return dummyClinicFunction();
-    }
-
     @GetMapping("/{clinicId}/doctor")
     public List<Doctor> getDoctorsByClinic(@PathVariable Long clinicId) {
-        return clinicId != 0 ? dummyDoctorFunction() : new ArrayList<>();
+        return doctorService.getDoctorsByClinic(clinicId);
     }
 
-    private List<Doctor> dummyDoctorFunction(){
-        List<Doctor> doctors = new ArrayList<>();
-        doctors.add(doctorService.getDoctorById(1L).orElse(new Doctor()));
-        doctors.add(doctorService.getDoctorById(2L).orElse(new Doctor()));
-        return doctors;
-    }
-    private List<Clinic> dummyClinicFunction(){
-        List<Clinic> clinics = new ArrayList<>();
-        clinics.add(clinicService.getClinicById(1L).orElse(new Clinic()));
-        clinics.add(clinicService.getClinicById(2L).orElse(new Clinic()));
-        return clinics;
-    }
 }
