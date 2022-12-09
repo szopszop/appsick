@@ -7,3 +7,6 @@ Backend part of our management systems for both digital & local consultations be
 ### Setup
 
 Rename <b>application.properties.example</b> file to <b>application.properties</b> <br/>and fill it with PostgreSQL database details
+
+<br />
+<img height="550" src="https://i.postimg.cc/X7jwM2sL/demo.png">
