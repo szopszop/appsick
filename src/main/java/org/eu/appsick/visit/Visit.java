@@ -60,6 +60,17 @@ public class Visit {
         COMPLETED
     }
 
+    @Enumerated
+    private VisitType type;
+
+    public enum VisitType {
+        LOCAL,
+        ONLINE,
+        EXAMINATION,
+        PRESCRIPTIONS
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
