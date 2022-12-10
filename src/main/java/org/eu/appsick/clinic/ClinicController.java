@@ -25,7 +25,6 @@ public class ClinicController {
 
     @GetMapping
     public List<Clinic> getAllClinics(){
-        System.out.println(clinicService.getAllClinics());
         return clinicService.getAllClinics();
     }
 
