@@ -19,14 +19,14 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query(value = "SELECT * " +
             "FROM visits v " +
-            "WHERE v.patient_id = :patientId AND v.date < current_date AND v.visit_type = :visitType" +
+            "WHERE v.patient_id = :patientId AND v.date < current_date AND v.type = :visitType " +
             "ORDER BY v.date LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber, Visit.VisitType visitType);
 
     @Query(value = "SELECT * " +
             "FROM visits v " +
-            "WHERE v.patient_id = :patientId AND v.date < current_date" +
+            "WHERE v.patient_id = :patientId AND v.date < current_date " +
             "ORDER BY v.date LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
