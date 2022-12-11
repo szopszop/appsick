@@ -19,7 +19,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/visit")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 public class VisitController {
 
     private final VisitService visitService;

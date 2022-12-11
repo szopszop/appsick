@@ -53,9 +53,6 @@ public class Visit {
     @Enumerated
     private VisitStatus status;
 
-    @Enumerated
-    private VisitType type;
-
     public enum VisitStatus {
         PENDING,
         MISSED,
@@ -63,12 +60,16 @@ public class Visit {
         COMPLETED
     }
 
+    @Enumerated
+    private VisitType type;
+
     public enum VisitType {
         LOCAL,
         ONLINE,
         EXAMINATION,
         PRESCRIPTIONS
     }
+
 
     @Override
     public boolean equals(Object o) {

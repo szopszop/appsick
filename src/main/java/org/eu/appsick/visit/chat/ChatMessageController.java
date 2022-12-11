@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/chats")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://appsick.eu.org")
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
