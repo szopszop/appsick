@@ -6,10 +6,7 @@ import org.eu.appsick.user.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MyVisitService implements VisitService{
@@ -41,7 +38,7 @@ public class MyVisitService implements VisitService{
     @Override
     public List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Long> visitType) {
         long size = 5L;
-        List<Visit> groupedVisits = new ArrayList<>();
+        Set<Visit> groupedVisits = new HashSet<>();
 
         if (pageNumber == null) pageNumber = 0L;
         else pageNumber = (pageNumber - 1) * size;
@@ -50,7 +47,7 @@ public class MyVisitService implements VisitService{
             for (Long type: visitType) {
                 groupedVisits.addAll(visitRepository.findPastVisitsPagination(patientId, size, pageNumber, type));
             }
-            return groupedVisits;
+            return List.copyOf(groupedVisits);
         }
     }
 

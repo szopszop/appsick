@@ -61,7 +61,9 @@ public class Visit {
     }
 
     @Enumerated
-    private VisitType type;
+    @ElementCollection
+    @JoinTable(name = "visit_types")
+    private List<VisitType> visitTypes;
 
     public enum VisitType {
         LOCAL,
