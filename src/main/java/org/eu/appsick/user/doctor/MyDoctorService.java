@@ -26,4 +26,10 @@ public class MyDoctorService implements DoctorService {
         return doctorRepository.findAll(); // TODO: change
     }
 
+    @Override
+    public List<Doctor> getDoctorsBySpeciality(Doctor.Speciality speciality) {
+        return doctorRepository.findAllByMedicalSpecialities(speciality);
+    }
+
+
 }

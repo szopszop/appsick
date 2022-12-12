@@ -14,6 +14,7 @@ INSERT INTO public.medical_specialities (doctor_doctor_id, medical_specialities)
 INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number, image, role) VALUES ('1997-06-24', 'fryderykakwiatkowska@teleworm.us', 'Fryderyka', 'Kwiatkowska', '$2a$10$K8r0CL.0c32iJ0lvN3LgbOhcUtvOBsbmZO9iswzSuvygPeAYzbLLW', 1, '72 451 36 19', 'https://www.getmaple.ca/site-content/uploads/2020/08/female_dr.jpg', 1);
 INSERT INTO public.doctors (about, user_id) VALUES ('Młoda i przebojowa', 3);
 INSERT INTO public.medical_specialities (doctor_doctor_id, medical_specialities) VALUES (2, 2);
+INSERT INTO public.medical_specialities (doctor_doctor_id, medical_specialities) VALUES (2, 8);
 
 INSERT INTO public.users (birth_date, email, first_name, last_name, password, sex, telephone_number, role) VALUES ('1984-12-24', 'romanwojciechowski@armyspy.com', 'Roman', 'Wojciechowski', '$2a$10$K8r0CL.0c32iJ0lvN3LgbOhcUtvOBsbmZO9iswzSuvygPeAYzbLLW', 0, '72 672 17 82',1);
 INSERT INTO public.doctors (about, user_id) VALUES ('Utalentowany', 4);

@@ -28,4 +28,9 @@ public class DoctorController {
     public List<Doctor.Speciality> getDoctorSpecialities() {
         return Arrays.asList(Doctor.Speciality.values());
     }
+
+    @GetMapping("/specialities/{speciality}")
+    public List<Doctor> getDoctorsBySpeciality(@PathVariable("speciality") String specialityName) {
+        Doctor.Speciality speciality = Doctor.Speciality.fromValue(specialityName);
+        return doctorService.getDoctorsBySpeciality(speciality); }
 }

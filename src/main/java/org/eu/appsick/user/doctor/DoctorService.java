@@ -7,4 +7,5 @@ public interface DoctorService {
 
     Optional<Doctor> getDoctorById(Long doctorId);
     List<Doctor> getDoctorsByClinic(Long clinicId);
+    List<Doctor> getDoctorsBySpeciality(Doctor.Speciality speciality);
 }

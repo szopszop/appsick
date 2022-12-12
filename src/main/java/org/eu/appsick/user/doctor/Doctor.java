@@ -77,6 +77,16 @@ public class Doctor {
             this.specialityName = specialityName;
         }
 
+        public static Speciality fromValue(String value) {
+            for (Speciality speciality : values()) {
+                if (speciality.specialityName.equals(value)) {
+                    return speciality;
+                }
+            }
+            throw new IllegalArgumentException("Unknown enum type");
+        }
+
+
         @JsonValue
         @Override
         public String toString() {
