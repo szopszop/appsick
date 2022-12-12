@@ -39,7 +39,7 @@ public class MyVisitService implements VisitService{
 
 
     @Override
-    public List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Visit.VisitType> visitType) {
+    public List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Long> visitType) {
         long size = 5L;
         List<Visit> groupedVisits = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class MyVisitService implements VisitService{
         else pageNumber = (pageNumber - 1) * size;
         if (visitType == null) return visitRepository.findPastVisitsPagination(patientId, size, pageNumber);
         else {
-            for (Visit.VisitType type: visitType) {
+            for (Long type: visitType) {
                 groupedVisits.addAll(visitRepository.findPastVisitsPagination(patientId, size, pageNumber, type));
             }
             return groupedVisits;

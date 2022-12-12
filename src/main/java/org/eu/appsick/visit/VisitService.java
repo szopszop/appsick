@@ -14,7 +14,7 @@ public interface VisitService {
     List<Visit> getPatientVisits(Patient patient);
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
-    List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Visit.VisitType> visitType);
+    List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Long> visitType);
 
     List<Visit> findCurrentVisitsByPatient(Long patientId);
     List<Visit> findFutureVisitsByPatient(Long patientId);
