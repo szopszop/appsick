@@ -70,7 +70,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/visit").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, DOCTOR)
+                .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/**").permitAll().anyRequest().authenticated();
         http.authenticationProvider(authenticationProvider(userDetailsService));

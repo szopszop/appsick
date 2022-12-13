@@ -39,6 +39,10 @@ public class Visit {
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
+    @Enumerated
+    @JoinTable(name = "medical_specialities")
+    private Doctor.Speciality doctorSpeciality;
+
     private LocalDateTime date;
     private boolean online;
     private String reason;
