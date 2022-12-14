@@ -67,4 +67,6 @@ INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, p
 INSERT INTO public.visit_types VALUES (12, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2017-11-05 10:15:27.000436', false, 'Badania okresowe', 2, 5, 5, 1);
 INSERT INTO public.visit_types VALUES (13, 3);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2022-12-13 10:15:27.000436', false, 'Badania okresowe', 2, 5, 5, 1);
+INSERT INTO public.visit_types VALUES (13, 3);
 

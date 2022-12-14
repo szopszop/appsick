@@ -49,6 +49,22 @@ public class User {
     public enum Sex {
         MALE, FEMALE
     }
+    public enum Provider {
+        LOCAL, GOOGLE
+    }
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+
 
     public enum Role{
         PATIENT("ROLE_PATIENT"),

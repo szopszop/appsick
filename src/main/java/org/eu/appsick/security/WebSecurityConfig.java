@@ -4,6 +4,7 @@ package org.eu.appsick.security;
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
+import org.eu.appsick.user.CustomOAuth2UserService;
 import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,11 +72,19 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/**").permitAll().anyRequest().authenticated();
+                .antMatchers("/api/auth/**", "/oauth/**", "/api/auth/login/oauth2/**").permitAll()
+                .antMatchers("/**").permitAll().anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oAuth2UserService);
         http.authenticationProvider(authenticationProvider(userDetailsService));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
 
 }
