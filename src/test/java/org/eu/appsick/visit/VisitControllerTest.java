@@ -56,7 +56,7 @@ class VisitControllerTest {
     @Test
     void getVisit() {
         Visit newVisit = new Visit();
-        long visitId = newVisit.getVisitId();
+        Long visitId = newVisit.getVisitId();
         Mockito.when(visitService.getVisitById(visitId)).thenReturn(Optional.of(newVisit));
         assertEquals(visitController.getVisit(visitId), Optional.of(newVisit));
     }
@@ -66,7 +66,7 @@ class VisitControllerTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(2L, null, doctor, null, null, false, null, null, null, Visit.VisitStatus.PENDING, null));
+            visitList.add(new Visit(2L, null, doctor, null, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
         }
         Mockito.when(doctorService.getDoctorById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
         Mockito.when(visitService.getDoctorVisits(doctor)).thenReturn(visitList);
@@ -78,7 +78,7 @@ class VisitControllerTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(2L, patient, null, null, null, false, null, null, null, Visit.VisitStatus.PENDING, null));
+            visitList.add(new Visit(2L, patient, null, null, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
         }
         Mockito.when(patientService.getPatientById(patient.getPatientId())).thenReturn(Optional.of(patient));
         Mockito.when(visitService.getPatientVisits(patient)).thenReturn(visitList);
