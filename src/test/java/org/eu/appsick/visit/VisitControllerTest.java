@@ -2,6 +2,7 @@ package org.eu.appsick.visit;
 
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
+import org.eu.appsick.mail.EmailService;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
@@ -37,6 +38,8 @@ class VisitControllerTest {
     @Mock
     private ClinicService clinicService;
     @Mock
+    private EmailService emailService;
+    @Mock
     private VisitController visitController;
 
     @BeforeEach
@@ -45,7 +48,8 @@ class VisitControllerTest {
                 visitService,
                 doctorService,
                 patientService,
-                clinicService
+                clinicService,
+                emailService
         );
     }
 
@@ -62,7 +66,7 @@ class VisitControllerTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(2L, null, doctor, null, null, false, null, null, Visit.VisitStatus.PENDING));
+            visitList.add(new Visit(2L, null, doctor, null, null, false, null, null, null, Visit.VisitStatus.PENDING, null));
         }
         Mockito.when(doctorService.getDoctorById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
         Mockito.when(visitService.getDoctorVisits(doctor)).thenReturn(visitList);
@@ -74,7 +78,7 @@ class VisitControllerTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(2L, patient, null, null, null, false, null, null, Visit.VisitStatus.PENDING));
+            visitList.add(new Visit(2L, patient, null, null, null, false, null, null, null, Visit.VisitStatus.PENDING, null));
         }
         Mockito.when(patientService.getPatientById(patient.getPatientId())).thenReturn(Optional.of(patient));
         Mockito.when(visitService.getPatientVisits(patient)).thenReturn(visitList);
@@ -86,7 +90,7 @@ class VisitControllerTest {
         Clinic clinic = new Clinic();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(2L, null, null, clinic, null, false, null, null, Visit.VisitStatus.PENDING));
+            visitList.add(new Visit(2L, null, null, clinic, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
         }
         Mockito.when(clinicService.getClinicById(clinic.getClinicId())).thenReturn(Optional.of(clinic));
         Mockito.when(visitService.getClinicVisits(clinic)).thenReturn(visitList);
@@ -104,10 +108,10 @@ class VisitControllerTest {
     @Test
     @DisplayName("Patch Visit Returns HTTP Status OK when visit exists")
     void patchVisitReturnsHttpStatusOkWhenVisitExists() {
-        Visit oldVisit = new Visit(2L, null, null, null, null,
-                false, null, null, Visit.VisitStatus.PENDING);
-        Visit newVisit = new Visit(2L, null, null, null, null,
-                true, null, null, Visit.VisitStatus.PENDING);
+        Visit oldVisit = new Visit(2L, null, null, null, null, null,
+                false, null, null, Visit.VisitStatus.PENDING, null);
+        Visit newVisit = new Visit(2L, null, null, null, null, null,
+                true, null, null, Visit.VisitStatus.PENDING, null);
         Mockito.when(visitService.editVisit(oldVisit.getVisitId(), newVisit)).thenReturn(true);
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(newVisit, HttpStatus.OK);
         assertEquals(visitController.patchVisit(oldVisit.getVisitId(), newVisit), expectedResponse);
@@ -115,10 +119,10 @@ class VisitControllerTest {
     @Test
     @DisplayName("Patch Visit Returns HTTP Status NOT FOUND when visit doesn't exist")
     void patchVisitReturnsHttpStatusOkWhenVisitDoesNotExists() {
-        Visit oldVisit = new Visit(2L, null, null, null, null,
-                false, null, null, Visit.VisitStatus.PENDING);
-        Visit newVisit = new Visit(2L, null, null, null, null,
-                true, null, null, Visit.VisitStatus.PENDING);
+        Visit oldVisit = new Visit(2L, null, null, null, null, null,
+                false, null, null, Visit.VisitStatus.PENDING, null);
+        Visit newVisit = new Visit(2L, null, null, null, null, null,
+                true, null, null, Visit.VisitStatus.PENDING, null);
         Mockito.when(visitService.editVisit(oldVisit.getVisitId(), newVisit)).thenReturn(false);
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(newVisit, HttpStatus.NOT_FOUND);
         assertEquals(visitController.patchVisit(oldVisit.getVisitId(), newVisit), expectedResponse);
