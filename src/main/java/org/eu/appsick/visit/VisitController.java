@@ -2,6 +2,7 @@ package org.eu.appsick.visit;
 
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
+import org.eu.appsick.mail.EmailService;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
@@ -23,13 +24,15 @@ public class VisitController {
     private final DoctorService doctorService;
     private final PatientService patientService;
     private final ClinicService clinicService;
+    private final EmailService emailService;
 
     @Autowired
-    public VisitController(VisitService visitService, DoctorService doctorService, PatientService patientService, ClinicService clinicService) {
+    public VisitController(VisitService visitService, DoctorService doctorService, PatientService patientService, ClinicService clinicService, EmailService emailService) {
         this.visitService = visitService;
         this.doctorService = doctorService;
         this.patientService = patientService;
         this.clinicService = clinicService;
+        this.emailService = emailService;
     }
 
     @GetMapping(value = "/{visitId}", produces = "application/json")
@@ -104,6 +107,7 @@ public class VisitController {
     @PostMapping()
     public ResponseEntity<Visit> postVisit(@RequestBody Visit newVisit) {
         visitService.addVisit(newVisit);
+        emailService.sendInfoAboutSuccessfulVisitRegistration(newVisit.getPatient().getUser().getEmail(), newVisit);
         return new ResponseEntity<>(newVisit, HttpStatus.CREATED);
     }
 

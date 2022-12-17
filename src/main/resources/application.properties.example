@@ -17,3 +17,11 @@ spring.sql.init.mode=always
 appsick.jwtCookieName= appsick
 appsick.jwtSecret= appSickSecretKey
 appsick.jwtExpirationMs= 11160000
+
+#email
+spring.mail.host=EMAIL_HOST
+spring.mail.port=587
+spring.mail.username=EMAIL_USER
+spring.mail.password=EMAIL_PASS
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true

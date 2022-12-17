@@ -1,5 +1,6 @@
 package org.eu.appsick.user;
 
+import org.eu.appsick.mail.EmailService;
 import org.eu.appsick.payload.request.LoginRequest;
 import org.eu.appsick.payload.request.RegisterRequest;
 import org.eu.appsick.payload.response.MessageResponse;
@@ -21,15 +22,18 @@ public class AuthController {
 
     private final UserService userService;
     private final PatientService patientService;
+    private final EmailService emailService;
 
     @Autowired
-    public AuthController(UserService userService, PatientService patientService) {
+    public AuthController(UserService userService, PatientService patientService, EmailService emailService) {
         this.userService = userService;
         this.patientService = patientService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerPatient(@Valid @RequestBody RegisterRequest registerRequest) {
+        emailService.sendInfoAboutSuccessfulUserRegistration(registerRequest.getEmail());
         return patientService.addNewPatient(registerRequest);
     }
 
