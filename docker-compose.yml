@@ -24,18 +24,18 @@ services:
     environment:
       APPSICK_JWTCOOKIENAME: appsick
       APPSICK_JWTEXPIRATIONMS: '11160000'
-      APPSICK_JWTSECRET: 00882740fdc11cefecab5fcb2b26cb0a6840fe66c8ee81585c45f321f54bd22c
+      APPSICK_JWTSECRET: JWT_SECRET
       SPRING_DATASOURCE_PASSWORD: compose-postgres
       SPRING_DATASOURCE_URL: jdbc:postgresql://appsick-db:5432/compose-postgres
       SPRING_DATASOURCE_USERNAME: compose-postgres
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
       SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
-      SPRING_MAIL_HOST: smtp-appsick.alwaysdata.net
-      SPRING_MAIL_PASSWORD: 123Password!123Password!123Password!123Password!
+      SPRING_MAIL_HOST: SMTP_MAIL_HOST
+      SPRING_MAIL_PASSWORD: SMTP_MAIL_PASS
       SPRING_MAIL_PORT: '587'
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
-      SPRING_MAIL_USERNAME: no-reply@appsick.eu.org
+      SPRING_MAIL_USERNAME: SMTP_MAIL_USER
       SPRING_SQL_INIT_MODE: always
     image: appsick-spring
     ports:
