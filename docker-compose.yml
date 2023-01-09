@@ -1,0 +1,44 @@
+services:
+  appsick-db:
+    container_name: appsick-db
+    environment:
+      POSTGRES_PASSWORD: compose-postgres
+      POSTGRES_USER: compose-postgres
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test: ["CMD-SHELL", "pg_isready -U compose-postgres"]
+      timeout: 5s
+    image: postgres:13.9-alpine
+    ports:
+      - published: 5432
+        target: 5432
+  appsick-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: appsick-spring
+    depends_on:
+      appsick-db:
+        condition: service_healthy
+    environment:
+      APPSICK_JWTCOOKIENAME: appsick
+      APPSICK_JWTEXPIRATIONMS: '11160000'
+      APPSICK_JWTSECRET: 00882740fdc11cefecab5fcb2b26cb0a6840fe66c8ee81585c45f321f54bd22c
+      SPRING_DATASOURCE_PASSWORD: compose-postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://appsick-db:5432/compose-postgres
+      SPRING_DATASOURCE_USERNAME: compose-postgres
+      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_MAIL_HOST: smtp-appsick.alwaysdata.net
+      SPRING_MAIL_PASSWORD: 123Password!123Password!123Password!123Password!
+      SPRING_MAIL_PORT: '587'
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      SPRING_MAIL_USERNAME: no-reply@appsick.eu.org
+      SPRING_SQL_INIT_MODE: always
+    image: appsick-spring
+    ports:
+      - published: 8080
+        target: 8080
+version: '3.9'
