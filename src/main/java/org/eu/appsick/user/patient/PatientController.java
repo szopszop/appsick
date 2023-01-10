@@ -10,15 +10,18 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:3000/", "https://appsick.eu.org"}, allowedHeaders = "*", allowCredentials = "true")
 public class PatientController {
 
-    private PatientService patientService;
+    private final PatientService patientService;
 
     @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }
 
-    @GetMapping("/{patientId}")
-    public Optional<Patient> getPatientById(@PathVariable Long patientId) {
-        return patientService.getPatientById(patientId);
+    @GetMapping("/{id}")
+    public Optional<Patient> getPatientById(@PathVariable Long id,
+                                            @RequestParam(required = false, name = "user_id") boolean isUserId) {
+        if (isUserId) return patientService.getPatientByUserId(id);
+        return patientService.getPatientById(id);
     }
+
 }
