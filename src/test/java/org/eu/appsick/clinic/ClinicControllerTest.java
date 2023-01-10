@@ -21,15 +21,11 @@ import java.util.*;
 @ContextConfiguration(classes = {DoctorService.class, ClinicService.class})
 public class ClinicControllerTest {
 
-    @Mock
     private ClinicController clinicController;
-
     @Mock
     private ClinicService clinicService;
-
     @Mock
     private DoctorService doctorService;
-
     private Random random = new Random();
 
     @BeforeEach

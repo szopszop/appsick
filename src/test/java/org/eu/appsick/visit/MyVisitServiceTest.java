@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +28,7 @@ class MyVisitServiceTest {
     @Mock
     private VisitRepository visitRepository;
     private VisitService visitService;
+    private Random random = new Random();
 
     @BeforeEach
     void init(){
@@ -45,7 +47,18 @@ class MyVisitServiceTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0L, patient, null, null, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
+            visitList.add(new Visit(
+                    random.nextLong(),
+                    patient,
+                    null,
+                    null,
+                    null,
+                    null,
+                    false,
+                    null,
+                    null,
+                    Visit.VisitStatus.PENDING,
+                    null));
         }
         Mockito.when(visitRepository.findVisitsByPatient(patient)).thenReturn(visitList);
         assertEquals(visitService.getPatientVisits(patient), visitList);
@@ -56,8 +69,18 @@ class MyVisitServiceTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0L, null, doctor, null, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
-        }
+            visitList.add(new Visit(
+                    random.nextLong(),
+                    null,
+                    doctor,
+                    null,
+                    null,
+                    null,
+                    false,
+                    null,
+                    null,
+                    Visit.VisitStatus.PENDING,
+                    null));        }
         Mockito.when(visitRepository.findVisitsByDoctor(doctor)).thenReturn(visitList);
         assertEquals(visitService.getDoctorVisits(doctor), visitList);
     }
@@ -67,8 +90,18 @@ class MyVisitServiceTest {
         Clinic clinic = new Clinic();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(0L, null, null, clinic, null, null, false, null, null, Visit.VisitStatus.PENDING, null));
-        }
+            visitList.add(new Visit(
+                    random.nextLong(),
+                    null,
+                    null,
+                    clinic,
+                    null,
+                    null,
+                    false,
+                    null,
+                    null,
+                    Visit.VisitStatus.PENDING,
+                    null));        }
         Mockito.when(visitRepository.findVisitsByClinic(clinic)).thenReturn(visitList);
         assertEquals(visitService.getClinicVisits(clinic), visitList);
     }
