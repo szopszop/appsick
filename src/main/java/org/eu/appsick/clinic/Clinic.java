@@ -2,6 +2,7 @@ package org.eu.appsick.clinic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.visit.Visit;
 import org.hibernate.Hibernate;
 
@@ -35,6 +36,10 @@ public class Clinic {
             mappedBy = "clinic"
     )
     private List<Visit> visits = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "doctors_in_clinic")
+    private List<Doctor> doctors = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
