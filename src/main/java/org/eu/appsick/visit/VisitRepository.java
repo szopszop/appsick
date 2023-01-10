@@ -33,10 +33,6 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
 
-
-
-
-
     @Query(value = "SELECT * " +
             "FROM visits v " +
             "WHERE v.patient_id = :patientId AND v.date > current_date " +

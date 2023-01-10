@@ -4,6 +4,7 @@ import org.eu.appsick.payload.request.LoginRequest;
 import org.eu.appsick.payload.request.RegisterRequest;
 import org.eu.appsick.security.jwt.JwtUtils;
 import org.eu.appsick.security.services.UserDetailsImpl;
+import org.eu.appsick.visit.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +47,7 @@ public class MyUserService implements UserService {
         User user = new User(registerRequest.getBirthDate(), registerRequest.getEmail(), registerRequest.getFirstName(), registerRequest.getLastName(),
                 encoder.encode(registerRequest.getPassword()),
                 registerRequest.getSex(), registerRequest.getTelephoneNumber(), registerRequest.getRole());
+        user.setProvider(User.Provider.LOCAL);
         userRepository.save(user);
         return user;
     }
@@ -63,12 +65,13 @@ public class MyUserService implements UserService {
         System.out.println(authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-        return jwtCookie;
+        return jwtUtils.generateJwtCookie(userDetails);
     }
 
     @Override
     public ResponseCookie logoutUser() {
         return jwtUtils.getCleanJwtCookie();
     }
+
+
 }

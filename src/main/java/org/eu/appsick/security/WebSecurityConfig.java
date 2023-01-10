@@ -4,6 +4,9 @@ package org.eu.appsick.security;
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
+import org.eu.appsick.user.CustomOAuth2User;
+import org.eu.appsick.user.CustomOAuth2UserService;
+import org.eu.appsick.user.MyUserService;
 import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +18,17 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -29,6 +39,10 @@ public class WebSecurityConfig {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    CustomOAuth2UserService oAuth2UserService;
+
 
     private static final String ADMIN = Role.ADMIN.toString();
     private static final String PATIENT = Role.PATIENT.toString();
@@ -71,11 +85,27 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/**").permitAll().anyRequest().authenticated();
+                .antMatchers("/api/auth/**", "/oauth/**", "/login/oauth2/**").permitAll()
+                .antMatchers("/**").permitAll().anyRequest().authenticated()
+                .and()
+                    .oauth2Login()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("http://localhost:3000/", true)
+                    .userInfoEndpoint()
+                    .userService(oAuth2UserService)
+                .and()
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+                        userDetailsService.processOAuthPostLogin(oAuth2User.getEmail());
+                        response.sendRedirect("http://localhost:3000/");
+                    }
+                });
         http.authenticationProvider(authenticationProvider(userDetailsService));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
 }
