@@ -74,3 +74,24 @@ INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, p
 INSERT INTO public.visit_types VALUES (16, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 2, 1);
 INSERT INTO public.visit_types VALUES (17, 3);
+
+-- Random doctors are assigned to random clinics
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
+
