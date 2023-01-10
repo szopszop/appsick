@@ -38,8 +38,11 @@ public class Clinic {
     private List<Visit> visits = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "doctors_in_clinic")
-    private List<Doctor> doctors = new ArrayList<>();
+    @JoinTable(
+            name = "doctors_in_clinic",
+            joinColumns = @JoinColumn(name = "clinic_clinic_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctors_doctor_id"))
+    private List<Doctor> availableDoctors = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

@@ -3,6 +3,7 @@ package org.eu.appsick.user.doctor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
+import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.User;
 import org.eu.appsick.visit.Visit;
 import org.hibernate.Hibernate;
@@ -42,6 +43,10 @@ public class Doctor {
             mappedBy = "doctor"
     )
     private List<Visit> visits = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "availableDoctors")
+    private List<Clinic> clinics = new ArrayList<>();
 
     public enum Speciality {
 
