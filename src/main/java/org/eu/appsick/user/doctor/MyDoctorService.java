@@ -23,7 +23,7 @@ public class MyDoctorService implements DoctorService {
 
     @Override
     public List<Doctor> getDoctorsByClinic(Long clinicId) {
-        return doctorRepository.findAll(); // TODO: change
+        return doctorRepository.findAllByClinicId(clinicId);
     }
 
     @Override
