@@ -25,8 +25,5 @@ public class MyClinicService implements ClinicService{
     public List<Clinic> getAllClinics() {
         return clinicRepository.findAll();
     }
-    @Override
-    public List<Clinic> getClinicsByDoctor() {
-        return null;
-    }
+
 }
