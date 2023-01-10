@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(VisitService.class)
 @ContextConfiguration(classes = {VisitRepository.class})
-class MyVisitServiceTest {
+class VisitServiceTest {
 
     @Mock
     private VisitRepository visitRepository;
