@@ -60,10 +60,28 @@ public class Visit {
     private VisitStatus status;
 
     public enum VisitStatus {
-        PENDING,
-        MISSED,
-        MOVED,
-        COMPLETED
+        PENDING("PENDING"),
+        MISSED("MISSED"),
+        MOVED("MOVED"),
+        COMPLETED("COMPLETED");
+
+        private final String visitStatus;
+
+        VisitStatus(String visitStatus) {
+            this.visitStatus = visitStatus;
+        }
+
+
+        public static VisitStatus fromValue(String value) {
+            for (VisitStatus visitStatus : values()) {
+                if (visitStatus.visitStatus.equals(value)) {
+                    return visitStatus;
+                }
+            }
+            System.out.println(value + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            throw new IllegalArgumentException("Unknown enum type");
+        }
+
     }
 
     @Enumerated
@@ -91,4 +109,6 @@ public class Visit {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 }

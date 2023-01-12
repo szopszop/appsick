@@ -104,4 +104,22 @@ public class MyVisitService implements VisitService{
         return visitRepository.countVisitsByPatient(patient);
     }
 
+    @Override
+    public boolean editStatusVisit(Long visitId, String statusVisit) {
+
+        Optional<Visit> visit = visitRepository.findVisitByVisitId(visitId);
+        if (visit.isPresent()) {
+            Visit visitToUpdate = visit.get();
+            visitToUpdate.setStatus(Visit.VisitStatus.fromValue(statusVisit));
+            visitRepository.save(visitToUpdate);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Visit> findVisitsByPatientAndStatusCompleted(Long patientId, int status) {
+        return visitRepository.findVisitsByPatientAndStatusCompleted(patientId, status);
+    }
+
 }

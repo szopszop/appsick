@@ -46,6 +46,7 @@ public class VisitController {
         Optional<Doctor> doctor = doctorService.getDoctorById(doctorId);
         if (doctor.isPresent()) {
             return visitService.getDoctorVisits(doctor.get());
+
         }
         else return new ArrayList<>();
     }
@@ -135,4 +136,25 @@ public class VisitController {
         visitService.deleteVisit(visitId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping(value = "/status/{visitId}")
+    public ResponseEntity<String> putStatusVisit(@PathVariable Long visitId, @RequestBody String status){
+        System.out.println("dupa");
+        System.out.println(status);
+        visitService.editStatusVisit(visitId, status);
+        return (visitService.editStatusVisit(visitId, status)) ?
+                new ResponseEntity<>(status, HttpStatus.OK) :
+                new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/status/completed/{patientId}")
+    public List<Visit> getVisitStatusCompleted(@PathVariable Long patientId){
+        int status = 3;
+        Optional<Patient> patient = patientService.getPatientById(patientId);
+        if (patient.isPresent()) {
+            return visitService.findVisitsByPatientAndStatusCompleted(patientId, status);
+        }
+        else return new ArrayList<>();
+    }
+
 }

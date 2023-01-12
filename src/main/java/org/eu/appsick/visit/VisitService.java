@@ -25,5 +25,8 @@ public interface VisitService {
     boolean deleteVisit(Long visitId);
 
     Long countVisitsByPatient(Patient patient);
+    boolean editStatusVisit(Long visitId, String statusVisit);
+
+    List<Visit> findVisitsByPatientAndStatusCompleted(Long patientId, int status);
 }
 

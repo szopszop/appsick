@@ -62,4 +62,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     Long countVisitsByPatient(Patient patient);
 
 
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.status = :status", nativeQuery = true )
+    List<Visit> findVisitsByPatientAndStatusCompleted(Long patientId, int status);
+
 }

@@ -81,6 +81,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.PUT, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.DELETE, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+                .antMatchers(HttpMethod.PUT, "/api/visit/status/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.POST, "/api/visit").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
