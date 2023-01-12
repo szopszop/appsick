@@ -21,6 +21,16 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     @Query(value = "SELECT * " +
             "FROM visits v " +
             "JOIN visit_types ON visit_types.visit_visit_id = v.visit_id " +
+            "WHERE v.doctor_id = :doctorId AND  EXTRACT(YEAR FROM v.date)  =  :year " +
+                                        "AND EXTRACT(MONTH FROM v.date) =  :month AND " +
+                                        "EXTRACT(DAY FROM v.date )=  :day  " +
+            "ORDER BY v.date  ", nativeQuery = true)
+    List<Visit> findVisitForDoctorInParticularDay(Long doctorId, int year, int month, int day);
+
+
+    @Query(value = "SELECT * " +
+            "FROM visits v " +
+            "JOIN visit_types ON visit_types.visit_visit_id = v.visit_id " +
             "WHERE v.patient_id = :patientId AND v.date < current_date AND visit_types.visit_types = :visitType " +
             "ORDER BY v.date  DESC LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)

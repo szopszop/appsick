@@ -1,5 +1,6 @@
 package org.eu.appsick.visit;
 
+import org.eu.appsick.Utis.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
@@ -49,6 +50,11 @@ public class MyVisitService implements VisitService{
             }
             return List.copyOf(groupedVisits);
         }
+    }
+
+    public List<Visit> getDoctorVisitsInParticularDay(Doctor doctor, VisitDate date) {
+
+        return visitRepository.findVisitForDoctorInParticularDay(doctor.getDoctorId(), date.getYear(),date.getMonth(),date.getDay());
     }
 
     @Override

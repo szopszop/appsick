@@ -1,5 +1,6 @@
 package org.eu.appsick.visit;
 
+import org.eu.appsick.Utis.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
@@ -85,6 +86,17 @@ public class VisitController {
             return visitService.findPastVisitsPagination(patientId, pageNumber, visitType);
         }
         else return new ArrayList<>();
+    }
+
+    @PostMapping(value = "/doctor/{doctorId}/day")
+    public List<Visit> getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
+
+        Optional<Doctor> doc = doctorService.getDoctorById(doctorId);
+
+        if(doc.isPresent()){
+            return visitService.getDoctorVisitsInParticularDay(doc.get(), day);
+        }
+        return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}/past/count")

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

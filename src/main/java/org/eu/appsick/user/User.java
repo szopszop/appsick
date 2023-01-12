@@ -29,13 +29,7 @@ public class User {
     private LocalDate birthDate;
     private String image;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Patient patient;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Doctor doctor;
 
     @Enumerated
     private Sex sex;

@@ -66,14 +66,18 @@ INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, p
 INSERT INTO public.visit_types VALUES (13, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2022-12-13 10:20:00.000436', false, 'Periodic examinations', 2, 5, 5, 1);
 INSERT INTO public.visit_types VALUES (13, 3);
-INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-11-10 14:40:00.000000', true, 'Headache', 0, 1, 1, 1);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-11-10 14:45:00.000000', true, 'Headache', 0, 1, 1, 1);
 INSERT INTO public.visit_types VALUES (14, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2022-11-17 21:00:00.000000', true, 'Dizziness', 0, 1, 3, 1);
 INSERT INTO public.visit_types VALUES (15, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-06-10 10:40:00.001250', true, 'Dizziness', 0, 2, 2, 1);
 INSERT INTO public.visit_types VALUES (16, 3);
-INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 2, 1);
-INSERT INTO public.visit_types VALUES (17, 3);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO public.visit_types VALUES (18, 3);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO public.visit_types VALUES (19, 3);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO visit_types VALUES (20, 3);
 
 -- Random doctors are assigned to random clinics
 INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
@@ -95,3 +99,21 @@ INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()
 INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
 INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
 
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (1,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (2,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (3,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (4,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (5,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (6,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (7,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (8,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
+VALUES (9,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
