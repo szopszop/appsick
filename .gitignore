@@ -39,3 +39,4 @@ build/
 *.env
 .env
 application.yml
+credentials.json
