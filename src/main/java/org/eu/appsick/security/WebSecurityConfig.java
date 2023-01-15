@@ -3,10 +3,12 @@ package org.eu.appsick.security;
 
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
+import org.eu.appsick.security.jwt.JwtUtils;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
 import org.eu.appsick.user.CustomOAuth2User;
 import org.eu.appsick.user.CustomOAuth2UserService;
-import org.eu.appsick.user.MyUserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,10 +46,14 @@ public class WebSecurityConfig {
     @Autowired
     CustomOAuth2UserService oAuth2UserService;
 
+    @Autowired
+    JwtUtils jwtUtils;
+
 
     private static final String ADMIN = Role.ADMIN.toString();
     private static final String PATIENT = Role.PATIENT.toString();
     private static final String DOCTOR = Role.DOCTOR.toString();
+    private final Logger LOGGER = LogManager.getLogger(this.getClass());
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -98,8 +105,17 @@ public class WebSecurityConfig {
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-                        userDetailsService.processOAuthPostLogin(oAuth2User.getEmail());
+                        String oAuth2UserEmail = ((CustomOAuth2User) authentication.getPrincipal()).getEmail();
+                        userDetailsService.processOAuthPostLogin(oAuth2UserEmail);
+                        String jwtToken = jwtUtils.generateTokenFromUserEmail(oAuth2UserEmail);
+                        LOGGER.debug("Oauth2 Authentication Success Handler");
+                        LOGGER.debug("User email: " + oAuth2UserEmail);
+                        LOGGER.debug("User token: " + jwtToken);
+                        Cookie cookie = new Cookie("appsick", jwtToken);
+                        cookie.setPath("/api");
+                        cookie.setMaxAge(7 * 24 * 60 * 60);
+                        cookie.setHttpOnly(true);
+                        response.addCookie(cookie);
                         response.sendRedirect("http://localhost:3000/");
                     }
                 });

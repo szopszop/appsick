@@ -36,4 +36,5 @@ build/
 .logs/
 *.log
 *.properties
-
+*.env
+.env

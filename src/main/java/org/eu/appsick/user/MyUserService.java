@@ -4,7 +4,6 @@ import org.eu.appsick.payload.request.LoginRequest;
 import org.eu.appsick.payload.request.RegisterRequest;
 import org.eu.appsick.security.jwt.JwtUtils;
 import org.eu.appsick.security.services.UserDetailsImpl;
-import org.eu.appsick.visit.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,7 +64,7 @@ public class MyUserService implements UserService {
         System.out.println(authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return jwtUtils.generateJwtCookie(userDetails);
+        return jwtUtils.generateJwtCookie(userDetails.getEmail());
     }
 
     @Override

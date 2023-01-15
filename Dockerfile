@@ -1,6 +1,6 @@
 FROM openjdk:17-alpine
 
-ADD target/appsick-0.1.2-SNAPSHOT.jar appsick.jar
+ADD target/appsick-0.2.1-SNAPSHOT.jar appsick.jar
 
 ENTRYPOINT ["java", "-jar", "appsick.jar"]
 
