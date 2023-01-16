@@ -99,21 +99,21 @@ INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()
 INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
 INSERT INTO public.doctors_in_clinic VALUES (FLOOR(random()*5)+2, FLOOR(random()*8)+1);
 
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (1,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (2,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (3,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (4,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (5,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (6,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (7,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (8,'2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
-INSERT INTO public.chat_messages (chat_id, date, message, user_id, visit_id)
-VALUES (9,'2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 2, 1);
+INSERT INTO public.chat_messages (date, message, user_id, visit_id)
+VALUES ('2016-11-05 10:00:00.000436', 'jakis message', 1, 1);
