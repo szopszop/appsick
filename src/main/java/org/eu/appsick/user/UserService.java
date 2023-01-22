@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> getUserById(Long userId);
+    Optional<User> getUserByEmail(String email);
     void addUser(User user);
     User addUser(RegisterRequest registerRequest);
     boolean isUserExistsByEmail(RegisterRequest registerRequest);

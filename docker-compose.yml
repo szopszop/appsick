@@ -29,6 +29,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://appsick-db:5432/compose-postgres
       SPRING_DATASOURCE_USERNAME: compose-postgres
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
       SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
       SPRING_MAIL_HOST: SMTP_MAIL_HOST
       SPRING_MAIL_PASSWORD: SMTP_MAIL_PASS

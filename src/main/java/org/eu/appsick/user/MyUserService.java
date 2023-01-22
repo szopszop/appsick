@@ -37,6 +37,11 @@ public class MyUserService implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
     public void addUser(User user) {
         userRepository.save(user);
     }
@@ -60,8 +65,6 @@ public class MyUserService implements UserService {
     public ResponseCookie authenticateUser(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-        System.out.println("post w loginiie");
-        System.out.println(authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return jwtUtils.generateJwtCookie(userDetails.getEmail());

@@ -27,7 +27,7 @@ public class Patient {
     private String pesel;
     private boolean premium;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -1,14 +1,14 @@
 package org.eu.appsick.security;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
 import org.eu.appsick.security.jwt.JwtUtils;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
 import org.eu.appsick.user.CustomOAuth2User;
 import org.eu.appsick.user.CustomOAuth2UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -105,12 +105,9 @@ public class WebSecurityConfig {
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        String oAuth2UserEmail = ((CustomOAuth2User) authentication.getPrincipal()).getEmail();
-                        userDetailsService.processOAuthPostLogin(oAuth2UserEmail);
-                        String jwtToken = jwtUtils.generateTokenFromUserEmail(oAuth2UserEmail);
-                        LOGGER.debug("Oauth2 Authentication Success Handler");
-                        LOGGER.debug("User email: " + oAuth2UserEmail);
-                        LOGGER.debug("User token: " + jwtToken);
+                        CustomOAuth2User oAuth2User = ((CustomOAuth2User) authentication.getPrincipal());
+                        userDetailsService.processOAuthPostLogin(oAuth2User);
+                        String jwtToken = jwtUtils.generateTokenFromUserEmail(oAuth2User.getEmail());
                         Cookie cookie = new Cookie("appsick", jwtToken);
                         cookie.setPath("/api");
                         cookie.setMaxAge(7 * 24 * 60 * 60);

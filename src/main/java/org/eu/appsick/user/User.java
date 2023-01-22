@@ -2,8 +2,6 @@ package org.eu.appsick.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.patient.Patient;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -21,14 +19,13 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
     private Long userId;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
     private String image;
-
 
 
     @Enumerated
@@ -39,28 +36,18 @@ public class User {
 
     @JsonIgnore
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     public enum Sex {
         MALE, FEMALE
     }
+
     public enum Provider {
         LOCAL, GOOGLE
     }
 
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
-
-    public Provider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
-
-
-
-    public enum Role{
+    public enum Role {
         PATIENT("ROLE_PATIENT"),
         DOCTOR("ROLE_DOCTOR"),
         ADMIN("ROLE_ADMIN");
@@ -76,7 +63,7 @@ public class User {
         }
     }
 
-    public User(LocalDate birthDate,String email,String firstName, String lastName, String password, Sex sex, String telephoneNumber,Role role ) {
+    public User(LocalDate birthDate, String email, String firstName, String lastName, String password, Sex sex, String telephoneNumber, Role role) {
         this.birthDate = birthDate;
         this.firstName = firstName;
         this.lastName = lastName;
