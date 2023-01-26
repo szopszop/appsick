@@ -1,5 +1,7 @@
 ### AppSick
 
+https://appsick.eu.org
+
 Backend part of our management systems for both digital & local consultations between a patient and a doctor.  Allows user to book visits, online chats with doctors, order drugs and such. The frontend part can be found in github repository at "appsick-react" name.
 
 <hr />
