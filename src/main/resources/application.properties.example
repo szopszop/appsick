@@ -25,3 +25,9 @@ spring.mail.username=EMAIL_USER
 spring.mail.password=EMAIL_PASS
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+appsick.mail.debug=false
+appsick.mail.protocol=smtp
+
+spring.security.oauth2.client.registration.google.client-id=CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=CLIENT_SECRET
+spring.security.oauth2.client.registration.google.scope=email,profile

@@ -4,6 +4,9 @@ import org.eu.appsick.Utis.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
+import org.eu.appsick.security.services.UserDetailsImpl;
+import org.eu.appsick.user.User;
+import org.eu.appsick.user.UserService;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
@@ -11,9 +14,13 @@ import org.eu.appsick.user.patient.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -24,14 +31,16 @@ public class VisitController {
     private final VisitService visitService;
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final UserService userService;
     private final ClinicService clinicService;
     private final EmailService emailService;
 
     @Autowired
-    public VisitController(VisitService visitService, DoctorService doctorService, PatientService patientService, ClinicService clinicService, EmailService emailService) {
+    public VisitController(VisitService visitService, DoctorService doctorService, PatientService patientService, UserService userService, ClinicService clinicService, EmailService emailService) {
         this.visitService = visitService;
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.userService = userService;
         this.clinicService = clinicService;
         this.emailService = emailService;
     }
@@ -47,8 +56,7 @@ public class VisitController {
         if (doctor.isPresent()) {
             return visitService.getDoctorVisits(doctor.get());
 
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}")
@@ -56,8 +64,7 @@ public class VisitController {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getPatientVisits(patient.get());
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}/future")
@@ -65,8 +72,7 @@ public class VisitController {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.findFutureVisitsByPatient(patient.get().getPatientId());
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}/current")
@@ -74,8 +80,7 @@ public class VisitController {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.findCurrentVisitsByPatient(patient.get().getPatientId());
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @GetMapping(value = "/patient/{patientId}/past")
@@ -85,16 +90,15 @@ public class VisitController {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.findPastVisitsPagination(patientId, pageNumber, visitType);
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @PostMapping(value = "/doctor/{doctorId}/day")
-    public List<Visit> getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
+    public List<Visit> getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId) {
 
         Optional<Doctor> doc = doctorService.getDoctorById(doctorId);
 
-        if(doc.isPresent()){
+        if (doc.isPresent()) {
             return visitService.getDoctorVisitsInParticularDay(doc.get(), day);
         }
         return new ArrayList<>();
@@ -113,14 +117,16 @@ public class VisitController {
         Optional<Clinic> clinic = clinicService.getClinicById(clinicId);
         if (clinic.isPresent()) {
             return visitService.getClinicVisits(clinic.get());
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
     @PostMapping()
-    public ResponseEntity<Visit> postVisit(@RequestBody Visit newVisit) {
+    public ResponseEntity<Visit> postVisit(@RequestBody Visit newVisit,
+                                           Authentication authentication) {
         visitService.addVisit(newVisit);
-        emailService.sendInfoAboutSuccessfulVisitRegistration(newVisit.getPatient().getUser().getEmail(), newVisit);
+        UserDetailsImpl currentUser = ((UserDetailsImpl) authentication.getPrincipal());
+        Optional<User> user = userService.getUserByEmail(currentUser.getEmail());
+        user.ifPresent(value -> emailService.sendInfoAboutSuccessfulVisitRegistration((value).getEmail(), newVisit));
         return new ResponseEntity<>(newVisit, HttpStatus.CREATED);
     }
 
@@ -138,7 +144,7 @@ public class VisitController {
     }
 
     @PutMapping(value = "/status/{visitId}")
-    public ResponseEntity<String> putStatusVisit(@PathVariable Long visitId, @RequestBody String status){
+    public ResponseEntity<String> putStatusVisit(@PathVariable Long visitId, @RequestBody String status) {
         System.out.println("dupa");
         System.out.println(status);
         visitService.editStatusVisit(visitId, status);
@@ -148,13 +154,12 @@ public class VisitController {
     }
 
     @GetMapping(value = "/status/completed/{patientId}")
-    public List<Visit> getVisitStatusCompleted(@PathVariable Long patientId){
+    public List<Visit> getVisitStatusCompleted(@PathVariable Long patientId) {
         int status = 3;
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.findVisitsByPatientAndStatusCompleted(patientId, status);
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
     }
 
 }

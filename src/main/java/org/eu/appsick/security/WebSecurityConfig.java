@@ -11,6 +11,7 @@ import org.eu.appsick.user.CustomOAuth2User;
 import org.eu.appsick.user.CustomOAuth2UserService;
 import org.eu.appsick.user.User.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -49,6 +50,8 @@ public class WebSecurityConfig {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Value("${appsick.frontend.url}")
+    private String frontendUrl;
 
     private static final String ADMIN = Role.ADMIN.toString();
     private static final String PATIENT = Role.PATIENT.toString();
@@ -98,7 +101,7 @@ public class WebSecurityConfig {
                 .and()
                     .oauth2Login()
                     .loginPage("/login")
-                    .defaultSuccessUrl("http://localhost:3000/", true)
+                    .defaultSuccessUrl(frontendUrl, true)
                     .userInfoEndpoint()
                     .userService(oAuth2UserService)
                 .and()
@@ -113,7 +116,7 @@ public class WebSecurityConfig {
                         cookie.setMaxAge(7 * 24 * 60 * 60);
                         cookie.setHttpOnly(true);
                         response.addCookie(cookie);
-                        response.sendRedirect("http://localhost:3000/");
+                        response.sendRedirect(frontendUrl);
                     }
                 });
         http.authenticationProvider(authenticationProvider(userDetailsService));
