@@ -111,11 +111,7 @@ public class WebSecurityConfig {
                         CustomOAuth2User oAuth2User = ((CustomOAuth2User) authentication.getPrincipal());
                         userDetailsService.processOAuthPostLogin(oAuth2User);
                         String jwtToken = jwtUtils.generateTokenFromUserEmail(oAuth2User.getEmail());
-                        Cookie cookie = new Cookie("appsick", jwtToken);
-                        cookie.setPath("/api");
-                        cookie.setMaxAge(7 * 24 * 60 * 60);
-                        cookie.setHttpOnly(true);
-                        response.addCookie(cookie);
+                        response.setHeader("Set-Cookie", "appsick=" + jwtToken + "; Path=/api; Max-Age=604800; Secure; SameSite=None");
                         response.sendRedirect(frontendUrl);
                     }
                 });
