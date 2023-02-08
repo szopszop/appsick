@@ -15,5 +15,9 @@ Rename <b>application.properties.example</b> file to <b>application.properties</
 
 https://github.com/OchotaDariusz/appsick-react
 
+<hr />
 <br />
-<img height="550" src="https://i.postimg.cc/X7jwM2sL/demo.png">
+
+# Demo
+
+[![APPSICK DEMO](https://img.youtube.com/vi/lisbaJT8LfU/0.jpg)](https://www.youtube.com/watch?v=lisbaJT8LfU)
