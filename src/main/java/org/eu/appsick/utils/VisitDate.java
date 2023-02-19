@@ -1,4 +1,4 @@
-package org.eu.appsick.Utis;
+package org.eu.appsick.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

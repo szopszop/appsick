@@ -1,6 +1,6 @@
 package org.eu.appsick.visit;
 
-import org.eu.appsick.Utis.VisitDate;
+import org.eu.appsick.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
@@ -145,8 +145,6 @@ public class VisitController {
 
     @PutMapping(value = "/status/{visitId}")
     public ResponseEntity<String> putStatusVisit(@PathVariable Long visitId, @RequestBody String status) {
-        System.out.println("dupa");
-        System.out.println(status);
         visitService.editStatusVisit(visitId, status);
         return (visitService.editStatusVisit(visitId, status)) ?
                 new ResponseEntity<>(status, HttpStatus.OK) :
