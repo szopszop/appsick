@@ -47,18 +47,11 @@ class VisitServiceTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    patient,
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));
+            visitList.add(new VisitBuilder()
+                    .setPatient(patient)
+                    .setVisitId(random.nextLong())
+                    .build()
+            );
         }
         Mockito.when(visitRepository.findVisitsByPatient(patient)).thenReturn(visitList);
         assertEquals(visitService.getPatientVisits(patient), visitList);
@@ -69,18 +62,12 @@ class VisitServiceTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    null,
-                    doctor,
-                    null,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));        }
+            visitList.add(new VisitBuilder()
+                    .setDoctor(doctor)
+                    .setVisitId(random.nextLong())
+                    .build()
+            );
+        }
         Mockito.when(visitRepository.findVisitsByDoctor(doctor)).thenReturn(visitList);
         assertEquals(visitService.getDoctorVisits(doctor), visitList);
     }
@@ -90,18 +77,12 @@ class VisitServiceTest {
         Clinic clinic = new Clinic();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    null,
-                    null,
-                    clinic,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));        }
+            visitList.add(new VisitBuilder()
+                    .setClinic(clinic)
+                    .setVisitId(random.nextLong())
+                    .build()
+            );
+        }
         Mockito.when(visitRepository.findVisitsByClinic(clinic)).thenReturn(visitList);
         assertEquals(visitService.getClinicVisits(clinic), visitList);
     }

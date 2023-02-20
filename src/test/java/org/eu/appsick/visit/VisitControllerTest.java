@@ -3,7 +3,9 @@ package org.eu.appsick.visit;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
+import org.eu.appsick.security.services.UserDetailsImpl;
 import org.eu.appsick.user.User;
+import org.eu.appsick.user.UserService;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.doctor.DoctorService;
 import org.eu.appsick.user.patient.Patient;
@@ -17,6 +19,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -38,12 +41,14 @@ class VisitControllerTest {
     @Mock
     private PatientService patientService;
     @Mock
+    private UserService userService;
+    @Mock
     private ClinicService clinicService;
     @Mock
     private EmailService emailService;
     @Mock
     private VisitController visitController;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     @BeforeEach
     void init(){
@@ -51,6 +56,7 @@ class VisitControllerTest {
                 visitService,
                 doctorService,
                 patientService,
+                userService,
                 clinicService,
                 emailService
         );
@@ -69,18 +75,12 @@ class VisitControllerTest {
         Doctor doctor = new Doctor();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));        }
+            visitList.add(
+                    new VisitBuilder().
+                            setStatus(Visit.VisitStatus.PENDING).
+                            build()
+            );
+        }
         Mockito.when(doctorService.getDoctorById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
         Mockito.when(visitService.getDoctorVisits(doctor)).thenReturn(visitList);
         assertEquals(visitController.getDoctorVisits(doctor.getDoctorId()), visitList);
@@ -91,18 +91,12 @@ class VisitControllerTest {
         Patient patient = new Patient();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    patient,
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));        }
+            visitList.add(new VisitBuilder()
+                    .setVisitId(random.nextLong())
+                    .setPatient(patient)
+                    .build()
+            );
+        }
         Mockito.when(patientService.getPatientById(patient.getPatientId())).thenReturn(Optional.of(patient));
         Mockito.when(visitService.getPatientVisits(patient)).thenReturn(visitList);
         assertEquals(visitController.getPatientVisits(patient.getPatientId()), visitList);
@@ -113,18 +107,12 @@ class VisitControllerTest {
         Clinic clinic = new Clinic();
         List<Visit> visitList = new ArrayList<>();
         for (int i=0; i<10; i++){
-            visitList.add(new Visit(
-                    random.nextLong(),
-                    null,
-                    null,
-                    clinic,
-                    null,
-                    null,
-                    false,
-                    null,
-                    null,
-                    Visit.VisitStatus.PENDING,
-                    null));        }
+            visitList.add(new VisitBuilder()
+                    .setVisitId(random.nextLong())
+                    .setClinic(clinic)
+                    .build()
+            );
+        }
         Mockito.when(clinicService.getClinicById(clinic.getClinicId())).thenReturn(Optional.of(clinic));
         Mockito.when(visitService.getClinicVisits(clinic)).thenReturn(visitList);
         assertEquals(visitController.getClinicVisits(clinic.getClinicId()), visitList);
@@ -136,20 +124,29 @@ class VisitControllerTest {
         user.setEmail("example@email.com");
         Patient patient = new Patient();
         patient.setUser(user);
-        Visit visit = new Visit(random.nextLong(), patient, null, null, null, null,
-                false, null, null, Visit.VisitStatus.PENDING, null);
+        Visit visit = new VisitBuilder().setVisitId(random.nextLong()).build();
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(visit, HttpStatus.CREATED);
         Mockito.when(visitService.addVisit(visit)).thenReturn(true);
-        assertEquals(visitController.postVisit(visit), expectedResponse);
+        Authentication authentication = Mockito.mock(Authentication.class);
+        Mockito.when(authentication.getPrincipal()).thenReturn(
+                new UserDetailsImpl(0L,
+                        "",
+                        "First",
+                        "Last",
+                        null,
+                        null,
+                        null
+                        )
+        );
+        assertEquals(visitController.postVisit(visit, authentication), expectedResponse);
     }
 
     @Test
     @DisplayName("Patch Visit Returns HTTP Status OK when visit exists")
     void patchVisitReturnsHttpStatusOkWhenVisitExists() {
-        Visit oldVisit = new Visit(random.nextLong(), null, null, null, null, null,
-                false, null, null, Visit.VisitStatus.PENDING, null);
-        Visit newVisit = new Visit(random.nextLong(), null, null, null, null, null,
-                true, null, null, Visit.VisitStatus.PENDING, null);
+        Long randomId = random.nextLong();
+        Visit oldVisit = new VisitBuilder().setVisitId(randomId).setOnline(false).build();
+        Visit newVisit = new VisitBuilder().setVisitId(randomId).setOnline(true).build();
         Mockito.when(visitService.editVisit(oldVisit.getVisitId(), newVisit)).thenReturn(true);
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(newVisit, HttpStatus.OK);
         assertEquals(visitController.patchVisit(oldVisit.getVisitId(), newVisit), expectedResponse);
@@ -157,10 +154,9 @@ class VisitControllerTest {
     @Test
     @DisplayName("Patch Visit Returns HTTP Status NOT FOUND when visit doesn't exist")
     void patchVisitReturnsHttpStatusOkWhenVisitDoesNotExists() {
-        Visit oldVisit = new Visit(random.nextLong(), null, null, null, null, null,
-                false, null, null, Visit.VisitStatus.PENDING, null);
-        Visit newVisit = new Visit(random.nextLong(), null, null, null, null, null,
-                true, null, null, Visit.VisitStatus.PENDING, null);
+        Long randomId = random.nextLong();
+        Visit oldVisit = new VisitBuilder().setVisitId(randomId).setOnline(false).build();
+        Visit newVisit = new VisitBuilder().setVisitId(randomId).setOnline(true).build();
         Mockito.when(visitService.editVisit(oldVisit.getVisitId(), newVisit)).thenReturn(false);
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(newVisit, HttpStatus.NOT_FOUND);
         assertEquals(visitController.patchVisit(oldVisit.getVisitId(), newVisit), expectedResponse);
@@ -168,8 +164,7 @@ class VisitControllerTest {
 
     @Test
     void deleteVisit() {
-        Visit visitToDelete = new Visit(random.nextLong(), null, null, null, null, null,
-                true, null, null, Visit.VisitStatus.PENDING, null);
+        Visit visitToDelete = new VisitBuilder().setVisitId(random.nextLong()).build();
         Mockito.when(visitService.deleteVisit(visitToDelete.getVisitId())).thenReturn(true);
         ResponseEntity<Visit> expectedResponse = new ResponseEntity<>(HttpStatus.NO_CONTENT);
         assertEquals(visitController.deleteVisit(visitToDelete.getVisitId()), expectedResponse);
