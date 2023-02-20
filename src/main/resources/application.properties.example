@@ -28,6 +28,8 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 appsick.mail.debug=false
 appsick.mail.protocol=smtp
 
+appsick.frontend.url=http://localhost:3000/
+
 spring.security.oauth2.client.registration.google.client-id=CLIENT_ID
 spring.security.oauth2.client.registration.google.client-secret=CLIENT_SECRET
 spring.security.oauth2.client.registration.google.scope=email,profile
