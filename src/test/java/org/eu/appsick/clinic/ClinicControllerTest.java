@@ -1,9 +1,8 @@
 package org.eu.appsick.clinic;
 
 import org.eu.appsick.user.doctor.Doctor;
+import org.eu.appsick.user.doctor.DoctorBuilder;
 import org.eu.appsick.user.doctor.DoctorService;
-import org.eu.appsick.user.patient.PatientService;
-import org.eu.appsick.visit.VisitController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +25,7 @@ public class ClinicControllerTest {
     private ClinicService clinicService;
     @Mock
     private DoctorService doctorService;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     @BeforeEach
     void init(){
@@ -35,13 +34,7 @@ public class ClinicControllerTest {
 
     @Test
     void getClinicById(){
-        Clinic clinic = new Clinic(
-                random.nextLong(),
-                "Test Clinic",
-                "0",
-                "0",
-                null,
-                null);
+        Clinic clinic = new ClinicBuilder().setClinicId(random.nextLong()).build();
         Mockito.when(clinicService.getClinicById(clinic.getClinicId()))
                 .thenReturn(Optional.of(clinic));
         assertEquals(clinicController.getClinicById(clinic.getClinicId()), Optional.of(clinic));
@@ -51,13 +44,7 @@ public class ClinicControllerTest {
         List<Clinic> clinics = new ArrayList<>();
         for (int i=0; i<10; i++){
             clinics.add(
-                    new Clinic(
-                            random.nextLong(),
-                            "Test Clinic " + i,
-                            "0",
-                            "0",
-                            null,
-                            null)
+                    new ClinicBuilder().setClinicId(random.nextLong()).build()
             );
         }
         Mockito.when(clinicService.getAllClinics()).thenReturn(clinics);
@@ -68,24 +55,13 @@ public class ClinicControllerTest {
     void getDoctorsByClinic(){
         List<Doctor> doctors = new ArrayList<>();
         for (int i=0; i<10; i++){
-            doctors.add(
-                    new Doctor(
-                            random.nextLong(),
-                            "Test Doctor" + i,
-                            null,
-                            null,
-                            null,
-                            null)
+            doctors.add(new DoctorBuilder()
+                    .setDoctorId(random.nextLong())
+                    .setAbout("Test Doctor " + i)
+                    .build()
             );
         }
-        Clinic clinic = new Clinic(
-                42L,
-                "Test Clinic",
-                "0",
-                "0",
-                null,
-                doctors
-        );
+        Clinic clinic = new ClinicBuilder().setClinicId(42L).setAvailableDoctors(doctors).build();
         Mockito.when(doctorService.getDoctorsByClinic(clinic.getClinicId())).thenReturn(doctors);
         assertEquals(clinicController.getDoctorsByClinic(clinic.getClinicId()), doctors);
     }

@@ -33,13 +33,7 @@ public class ClinicServiceTest {
 
     @Test
     void getClinicById(){
-        Clinic clinic = new Clinic(
-                random.nextLong(),
-                "Test Clinic",
-                "0",
-                "0",
-                null,
-                null);
+        Clinic clinic = new ClinicBuilder().setClinicId(random.nextLong()).build();
         Mockito.when(clinicRepository.findByClinicId(clinic.getClinicId()))
                 .thenReturn(Optional.of(clinic));
         assertEquals(clinicService.getClinicById(clinic.getClinicId()), Optional.of(clinic));
@@ -50,13 +44,7 @@ public class ClinicServiceTest {
         List<Clinic> clinics = new ArrayList<>();
         for (int i=0; i<10; i++){
             clinics.add(
-                    new Clinic(
-                            random.nextLong(),
-                            "Test Clinic " + i,
-                            "0",
-                            "0",
-                            null,
-                            null)
+                    new ClinicBuilder().setClinicName("Test Clinic " + i).build()
             );
         }
         Mockito.when(clinicRepository.findAll()).thenReturn(clinics);
