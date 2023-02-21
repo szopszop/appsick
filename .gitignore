@@ -18,6 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
+*.yml
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +32,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.logs/
+*.log
+*.properties
+*.env
+.env
+credentials.json
