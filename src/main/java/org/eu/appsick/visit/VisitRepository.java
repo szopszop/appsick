@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface VisitRepository extends JpaRepository<Visit, Long> {
@@ -31,14 +30,17 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     @Query(value = "SELECT * " +
             "FROM visits v " +
             "JOIN visit_types ON visit_types.visit_visit_id = v.visit_id " +
-            "WHERE v.patient_id = :patientId AND v.date < current_date AND visit_types.visit_types = :visitType " +
+            "WHERE (v.patient_id = :patientId AND v.date < current_date AND visit_types.visit_types = :visitType) " +
+            "OR (v.patient_id = :patientId AND v.date = current_date AND visit_types.visit_types = :visitType " +
+            "AND v.status <> 0) " +
             "ORDER BY v.date  DESC LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber, Long visitType);
 
     @Query(value = "SELECT * " +
             "FROM visits v " +
-            "WHERE v.patient_id = :patientId AND v.date < current_date " +
+            "WHERE (v.patient_id = :patientId AND v.date < current_date) " +
+            "OR (v.patient_id = :patientId AND v.date = current_date AND v.status <> 0) " +
             "ORDER BY v.date DESC LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
@@ -49,11 +51,11 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             "ORDER BY v.date ", nativeQuery = true)
     List<Visit> findFutureVisitsByPatient(Long patientId);
 
-    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patient_id AND" +
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND" +
             " extract(year from v.date) = extract(year from now()) AND" +
             " extract(month from v.date) = extract(month from now()) AND" +
             " extract(day from v.date) = extract(day from now()) ORDER BY v.date", nativeQuery = true)
-    List<Visit> findCurrentVisitsByPatient (Long patient_id);
+    List<Visit> findCurrentVisitsByPatient (Long patientId);
 
     List<Visit> findVisitsByDoctor(Doctor doctor);
 
