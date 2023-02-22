@@ -21,8 +21,8 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             "FROM visits v " +
             "JOIN visit_types ON visit_types.visit_visit_id = v.visit_id " +
             "WHERE v.doctor_id = :doctorId AND  EXTRACT(YEAR FROM v.date)  =  :year " +
-                                        "AND EXTRACT(MONTH FROM v.date) =  :month AND " +
-                                        "EXTRACT(DAY FROM v.date )=  :day  " +
+            "AND EXTRACT(MONTH FROM v.date) =  :month AND " +
+            "EXTRACT(DAY FROM v.date )=  :day  " +
             "ORDER BY v.date  ", nativeQuery = true)
     List<Visit> findVisitForDoctorInParticularDay(Long doctorId, int year, int month, int day);
 
@@ -30,24 +30,25 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     @Query(value = "SELECT * " +
             "FROM visits v " +
             "JOIN visit_types ON visit_types.visit_visit_id = v.visit_id " +
-            "WHERE (v.patient_id = :patientId AND v.date < current_date AND visit_types.visit_types = :visitType) " +
-            "OR (v.patient_id = :patientId AND v.date = current_date AND visit_types.visit_types = :visitType " +
-            "AND v.status <> 0) " +
+            "WHERE (v.patient_id = :patientId AND v.date < CAST(now() AS timestamp) + interval '1 hour' AND visit_types.visit_types = :visitType " +
+            "AND v.status != 0) " +
+            "OR (v.patient_id = :patientId AND v.date = CAST(now() AS timestamp) + interval '1 hour' AND visit_types.visit_types = :visitType " +
+            "AND v.status != 0) " +
             "ORDER BY v.date  DESC LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber, Long visitType);
 
     @Query(value = "SELECT * " +
             "FROM visits v " +
-            "WHERE (v.patient_id = :patientId AND v.date < current_date) " +
-            "OR (v.patient_id = :patientId AND v.date = current_date AND v.status <> 0) " +
+            "WHERE (v.patient_id = :patientId AND v.date < CAST(now() AS timestamp) + interval '1 hour') AND v.status != 0 " +
+            "OR (v.patient_id = :patientId AND v.date = CAST(now() AS timestamp) + interval '1 hour' AND v.status != 0) " +
             "ORDER BY v.date DESC LIMIT :size " +
             "OFFSET :pageNumber", nativeQuery = true)
     List<Visit> findPastVisitsPagination(Long patientId, Long size, Long pageNumber);
 
     @Query(value = "SELECT * " +
             "FROM visits v " +
-            "WHERE v.patient_id = :patientId AND v.date > current_date " +
+            "WHERE v.patient_id = :patientId AND v.date > CAST(now() AS timestamp) + interval '1 hour' " +
             "ORDER BY v.date ", nativeQuery = true)
     List<Visit> findFutureVisitsByPatient(Long patientId);
 
@@ -55,7 +56,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             " extract(year from v.date) = extract(year from now()) AND" +
             " extract(month from v.date) = extract(month from now()) AND" +
             " extract(day from v.date) = extract(day from now()) ORDER BY v.date", nativeQuery = true)
-    List<Visit> findCurrentVisitsByPatient (Long patientId);
+    List<Visit> findCurrentVisitsByPatient(Long patientId);
 
     List<Visit> findVisitsByDoctor(Doctor doctor);
 
@@ -63,8 +64,6 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Long countVisitsByPatient(Patient patient);
 
-
-    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.status = :status", nativeQuery = true )
+    @Query(value = "SELECT * FROM visits v WHERE v.patient_id = :patientId AND v.status = :status", nativeQuery = true)
     List<Visit> findVisitsByPatientAndStatusCompleted(Long patientId, int status);
-
 }
