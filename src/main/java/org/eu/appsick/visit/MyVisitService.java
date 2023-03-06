@@ -1,9 +1,11 @@
 package org.eu.appsick.visit;
 
-import org.eu.appsick.Utis.VisitDate;
+import net.minidev.json.JSONArray;
+import org.eu.appsick.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
+import org.eu.appsick.utils.VisitArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +54,13 @@ public class MyVisitService implements VisitService{
         }
     }
 
-    public List<Visit> getDoctorVisitsInParticularDay(Doctor doctor, VisitDate date) {
+    public JSONArray getDoctorVisitsInParticularDay(Doctor doctor, VisitDate date) {
+        List<Visit> visitForDoctorInParticularDay = visitRepository.findVisitForDoctorInParticularDay(
+                doctor.getDoctorId(), date.getYear(), date.getMonth(), date.getDay());
+        VisitArray visits = new VisitArray(visitForDoctorInParticularDay);
 
-        return visitRepository.findVisitForDoctorInParticularDay(doctor.getDoctorId(), date.getYear(),date.getMonth(),date.getDay());
+
+        return visits.getAvailableSlots();
     }
 
     @Override

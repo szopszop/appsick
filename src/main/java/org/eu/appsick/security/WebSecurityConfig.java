@@ -3,6 +3,7 @@ package org.eu.appsick.security;
 
 import org.eu.appsick.security.jwt.AuthEntryPointJwt;
 import org.eu.appsick.security.jwt.AuthTokenFilter;
+import org.eu.appsick.security.jwt.JwtUtils;
 import org.eu.appsick.security.services.UserDetailsServiceImpl;
 import org.eu.appsick.user.CustomOAuth2User;
 import org.eu.appsick.user.CustomOAuth2UserService;
@@ -43,6 +44,8 @@ public class WebSecurityConfig {
     @Autowired
     CustomOAuth2UserService oAuth2UserService;
 
+    @Autowired
+    VisitAccessFilter visitAccessFilter;
 
     private static final String ADMIN = Role.ADMIN.toString();
     private static final String PATIENT = Role.PATIENT.toString();
@@ -73,28 +76,30 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.PUT, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.DELETE, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.POST, "/api/visit").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
-                .antMatchers("/api/auth/**", "/oauth/**", "/login/oauth2/**").permitAll()
-                .antMatchers("/**").permitAll().anyRequest().authenticated()
-                .and()
-                    .oauth2Login()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("http://localhost:3000/", true)
-                    .userInfoEndpoint()
-                    .userService(oAuth2UserService)
-                .and()
-                .successHandler(new AuthenticationSuccessHandler() {
+            .addFilterBefore(visitAccessFilter, UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.PUT, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.DELETE, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.POST, "/api/visit").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.GET, "/api/clinic/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.GET, "/api/patient/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
+            .antMatchers("/api/auth/**", "/oauth/**", "/login/oauth2/**").permitAll()
+            .antMatchers("/**").permitAll().anyRequest().authenticated()
+            .and()
+            .oauth2Login()
+            .loginPage("/login")
+            .defaultSuccessUrl("http://localhost:3000/", true)
+            .userInfoEndpoint()
+            .userService(oAuth2UserService)
+            .and()
+            .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();

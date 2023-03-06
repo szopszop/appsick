@@ -1,6 +1,7 @@
 package org.eu.appsick.visit;
 
-import org.eu.appsick.Utis.VisitDate;
+import net.minidev.json.JSONArray;
+import org.eu.appsick.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
@@ -57,12 +58,15 @@ public class VisitController {
             return visitService.getPatientVisits(patient.get());
         }
         else return new ArrayList<>();
+
     }
 
     @GetMapping(value = "/patient/{patientId}/future")
     public List<Visit> getFutureVisits(@PathVariable Long patientId) {
+        System.out.println("patiernt controllled + id " + patientId);
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
+            System.out.println("patiernt w srodku + id " + patient.get().getPatientId());
             return visitService.findFutureVisitsByPatient(patient.get().getPatientId());
         }
         else return new ArrayList<>();
@@ -89,14 +93,12 @@ public class VisitController {
     }
 
     @PostMapping(value = "/doctor/{doctorId}/day")
-    public List<Visit> getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
-
+    public JSONArray getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
         Optional<Doctor> doc = doctorService.getDoctorById(doctorId);
-
         if(doc.isPresent()){
-            return visitService.getDoctorVisitsInParticularDay(doc.get(), day);
+            return  visitService.getDoctorVisitsInParticularDay(doc.get(), day);
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @GetMapping(value = "/patient/{patientId}/past/count")
