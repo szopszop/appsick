@@ -48,6 +48,8 @@ public class WebSecurityConfig {
     CustomOAuth2UserService oAuth2UserService;
 
     @Autowired
+    VisitAccessFilter visitAccessFilter;
+    @Autowired
     JwtUtils jwtUtils;
 
     @Value("${appsick.frontend.url}")
@@ -83,10 +85,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .addFilterBefore(visitAccessFilter, UsernamePasswordAuthenticationFilter.class)
                 .antMatchers(HttpMethod.GET, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.PUT, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)

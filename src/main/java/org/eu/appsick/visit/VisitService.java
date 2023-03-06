@@ -1,5 +1,6 @@
 package org.eu.appsick.visit;
 
+import net.minidev.json.JSONArray;
 import org.eu.appsick.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;

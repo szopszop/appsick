@@ -1,8 +1,6 @@
 package org.eu.appsick.prescription;
 
 import org.eu.appsick.product.Product;
-import org.eu.appsick.user.doctor.Doctor;
-import org.eu.appsick.user.patient.Patient;
 import lombok.Data;
 
 import java.time.LocalDate;
