@@ -1,5 +1,6 @@
 package org.eu.appsick.security.jwt;
 
+
 import io.jsonwebtoken.*;
 import org.eu.appsick.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
@@ -96,6 +97,8 @@ public class JwtUtils {
                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
                    .compact();
     }
+
+
 
 
 }
