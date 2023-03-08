@@ -1,4 +1,4 @@
-package org.eu.appsick.utils;
+package org.eu.appsick.visit.utils;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;

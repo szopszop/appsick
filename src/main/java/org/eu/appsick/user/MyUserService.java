@@ -67,7 +67,7 @@ public class MyUserService implements UserService {
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return jwtUtils.generateJwtCookie(userDetails.getEmail());
+        return jwtUtils.generateJwtCookie(userDetails);
     }
 
     @Override

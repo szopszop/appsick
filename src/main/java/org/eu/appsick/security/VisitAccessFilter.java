@@ -1,7 +1,6 @@
 package org.eu.appsick.security;
 
 import org.eu.appsick.security.jwt.JwtUtils;
-import org.eu.appsick.user.patient.MyPatientService;
 import org.eu.appsick.user.patient.Patient;
 
 import org.eu.appsick.user.patient.PatientRepository;
@@ -39,11 +38,11 @@ public class VisitAccessFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private String getUserIdFromPatientId(String patientId) {
+
+    private String getUserEmailFromPatientId(String patientId) {
         Optional<Patient> patient = patientRepository.findByPatientId(Long.valueOf(patientId));
         return patient.map(value -> value.getUser()
-                                         .getUserId()
-                                         .toString())
+                              .getEmail())
                       .orElse(null);
     }
 
@@ -53,9 +52,9 @@ public class VisitAccessFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
         String token = jwtUtils.getJwtFromCookies(request);
         if (token != null && jwtUtils.validateJwtToken(token)) {
-            String userId = String.valueOf(jwtUtils.getUserIdFromJwtToken(token));
+            String userEmail = String.valueOf(jwtUtils.getUserEmailFromJwtToken(token));
             String patientId = extractPatientId(request.getRequestURI());
-            if (patientId != null && userId != null && ! userId.equals(getUserIdFromPatientId(patientId))) {
+            if (patientId != null && userEmail != null && ! userEmail.equals(getUserEmailFromPatientId(patientId))) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }

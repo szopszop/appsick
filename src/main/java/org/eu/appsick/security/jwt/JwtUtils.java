@@ -1,6 +1,5 @@
 package org.eu.appsick.security.jwt;
 
-
 import io.jsonwebtoken.*;
 import org.eu.appsick.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
@@ -38,8 +37,8 @@ public class JwtUtils {
     }
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-        String jwt = generateTokenFromUserEmail(userPrincipal.getEmail(), userPrincipal.getId());
-//    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(7 * 24 * 60 * 60).secure(true).sameSite("None").build();
+        String jwt = generateTokenFromUserEmail(userPrincipal.getEmail());
+//     ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(7 * 24 * 60 * 60).secure(true).sameSite("None").build();
         return ResponseCookie.from(jwtCookie, jwt)
                              .path("/api")
                              .maxAge(7 * 24 * 60 * 60)
@@ -61,14 +60,12 @@ public class JwtUtils {
                    .getSubject();
     }
 
-    public Long getUserIdFromJwtToken(String token){
-       int user_id = (int) Jwts.parser()
-                               .setSigningKey(jwtSecret)
-                               .parseClaimsJws(token)
-                               .getBody()
-                               .get("USER_ID");
-
-        return (long) user_id;
+    public String getUserEmailFromJwtToken(String token) {
+        return Jwts.parser()
+                             .setSigningKey(jwtSecret)
+                             .parseClaimsJws(token)
+                             .getBody()
+                             .getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
@@ -91,17 +88,14 @@ public class JwtUtils {
         return false;
     }
 
-    public String generateTokenFromUserEmail(String email, Long id) {
+    public String generateTokenFromUserEmail(String email) {
         return Jwts.builder()
                    .setSubject(email)
                    .setIssuedAt(new Date())
                    .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                   .claim("USER_ID", id)
                    .compact();
     }
-
-
 
 
 }

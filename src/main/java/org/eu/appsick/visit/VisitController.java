@@ -1,7 +1,7 @@
 package org.eu.appsick.visit;
 
 import net.minidev.json.JSONArray;
-import org.eu.appsick.utils.VisitDate;
+import org.eu.appsick.visit.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
@@ -99,7 +99,7 @@ public class VisitController {
     public JSONArray getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
         Optional<Doctor> doc = doctorService.getDoctorById(doctorId);
         if(doc.isPresent()){
-            return  visitService.getDoctorVisitsInParticularDay(doc.get(), day);
+            return  visitService.getDoctorAvailableSlots(doc.get(), day);
         }
         return null;
     }
