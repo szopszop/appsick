@@ -25,7 +25,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String firstName, String lastName, User.Role role, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String email, String firstName, String lastName, User.Role role, String password,
+                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -37,8 +38,8 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>(Collections.singleton(
-                new SimpleGrantedAuthority(user.getRole().toString())));
-
+                new SimpleGrantedAuthority(user.getRole()
+                                               .toString())));
         return new UserDetailsImpl(
                 user.getUserId(),
                 user.getEmail(),
@@ -49,7 +50,6 @@ public class UserDetailsImpl implements UserDetails {
                 authorities
         );
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,6 +69,8 @@ public class UserDetailsImpl implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public Long getId() { return id; }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -90,17 +92,13 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
-    UserDetailsImpl user = (UserDetailsImpl) o;
-    return Objects.equals(id, user.id);
-  }
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserDetailsImpl user = (UserDetailsImpl) o;
+        return Objects.equals(id, user.id);
+    }
 }

@@ -1,6 +1,7 @@
 package org.eu.appsick.visit;
 
-import org.eu.appsick.utils.VisitDate;
+import net.minidev.json.JSONArray;
+import org.eu.appsick.visit.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.user.doctor.Doctor;
 import org.eu.appsick.user.patient.Patient;
@@ -16,7 +17,7 @@ public interface VisitService {
     List<Visit> getDoctorVisits(Doctor doctor);
     List<Visit> getClinicVisits(Clinic clinic);
     List<Visit> findPastVisitsPagination(Long patientId, Long pageNumber, Set<Long> visitType);
-    List<Visit> getDoctorVisitsInParticularDay(Doctor doc, VisitDate day);
+    JSONArray getDoctorAvailableSlots(Doctor doc, VisitDate day);
     List<Visit> findCurrentVisitsByPatient(Long patientId);
     List<Visit> findFutureVisitsByPatient(Long patientId);
 

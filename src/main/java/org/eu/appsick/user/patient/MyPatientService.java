@@ -32,6 +32,8 @@ public class MyPatientService implements PatientService{
         return patientRepository.findPatientByUserId(userId);
     }
 
+
+
     @Override
     public ResponseEntity<MessageResponse> addNewPatient(RegisterRequest registerRequest) {
         if (userService.isUserExistsByEmail(registerRequest)) {
@@ -42,6 +44,7 @@ public class MyPatientService implements PatientService{
         patientRepository.save(patient);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
 
 
 }

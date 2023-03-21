@@ -11,4 +11,5 @@ public interface PatientService {
     Optional<Patient> getPatientById(Long patientId);
     ResponseEntity<MessageResponse> addNewPatient(RegisterRequest registerRequest);
     Optional<Patient> getPatientByUserId(Long userId);
+
 }

@@ -72,11 +72,11 @@ INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, p
 INSERT INTO public.visit_types VALUES (15, 3);
 INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2021-06-10 10:40:00.001250', true, 'Dizziness', 0, 2, 2, 1);
 INSERT INTO public.visit_types VALUES (16, 3);
-INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-01-25 12:30:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
 INSERT INTO public.visit_types VALUES (18, 3);
-INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-01-25 12:45:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
 INSERT INTO public.visit_types VALUES (19, 3);
-INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-12-15 17:20:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
+INSERT INTO public.visits (date, online, reason, status, clinic_id, doctor_id, patient_id) VALUES ('2023-01-25 13:00:00.000436', false, 'Periodic examinations', 0, 2, 1, 1);
 INSERT INTO visit_types VALUES (20, 3);
 
 -- Random doctors are assigned to random clinics

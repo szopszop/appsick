@@ -1,6 +1,7 @@
 package org.eu.appsick.visit;
 
-import org.eu.appsick.utils.VisitDate;
+import net.minidev.json.JSONArray;
+import org.eu.appsick.visit.utils.VisitDate;
 import org.eu.appsick.clinic.Clinic;
 import org.eu.appsick.clinic.ClinicService;
 import org.eu.appsick.mail.EmailService;
@@ -64,7 +65,8 @@ public class VisitController {
         Optional<Patient> patient = patientService.getPatientById(patientId);
         if (patient.isPresent()) {
             return visitService.getPatientVisits(patient.get());
-        } else return new ArrayList<>();
+        }else return new ArrayList<>();
+
     }
 
     @GetMapping(value = "/patient/{patientId}/future")
@@ -94,14 +96,12 @@ public class VisitController {
     }
 
     @PostMapping(value = "/doctor/{doctorId}/day")
-    public List<Visit> getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId) {
-
+    public JSONArray getDoctorVisitsByDay(@RequestBody VisitDate day, @PathVariable Long doctorId){
         Optional<Doctor> doc = doctorService.getDoctorById(doctorId);
-
-        if (doc.isPresent()) {
-            return visitService.getDoctorVisitsInParticularDay(doc.get(), day);
+        if(doc.isPresent()){
+            return  visitService.getDoctorAvailableSlots(doc.get(), day);
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @GetMapping(value = "/patient/{patientId}/past/count")

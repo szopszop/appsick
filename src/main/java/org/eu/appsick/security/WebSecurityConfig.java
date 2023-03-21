@@ -20,6 +20,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +30,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,6 +48,8 @@ public class WebSecurityConfig {
     CustomOAuth2UserService oAuth2UserService;
 
     @Autowired
+    VisitAccessFilter visitAccessFilter;
+    @Autowired
     JwtUtils jwtUtils;
 
     @Value("${appsick.frontend.url}")
@@ -57,6 +59,12 @@ public class WebSecurityConfig {
     private static final String PATIENT = Role.PATIENT.toString();
     private static final String DOCTOR = Role.DOCTOR.toString();
     private final Logger LOGGER = LogManager.getLogger(this.getClass());
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -81,11 +89,15 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.cors().and().csrf().disable()
+
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .addFilterBefore(visitAccessFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
                 .antMatchers(HttpMethod.PATCH, "/api/visit/**").hasAnyAuthority(ADMIN, PATIENT, DOCTOR)
